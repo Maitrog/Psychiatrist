@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/CabinetScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/InvenroryScene.unity
+    guid: 0c8f5817ff7a0884496d7b0fbcdce941
+  - enabled: 1
+    path: Assets/Scenes/PacientJournalScene.unity
+    guid: 6951b8d32698fcd45b8905d9fd24c122
+  - enabled: 1
+    path: Assets/Scenes/TaskBoardScene.unity
+    guid: 262ed8e9b968fa340a498025d0215154
+  - enabled: 1
+    path: Assets/Scenes/TreatmentScene.unity
+    guid: eebb012695aea184d88584c3763a3830
   m_configObjects: {}
