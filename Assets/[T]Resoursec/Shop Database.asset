@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Shop Database
   m_EditorClassIdentifier: 
   database: {fileID: 11400000, guid: beb28379f3021f448acc291ee14b40dc, type: 2}
-  costs: 0400000005000000340000000100000002000000
+  costs: 0400000005000000050000000100000002000000

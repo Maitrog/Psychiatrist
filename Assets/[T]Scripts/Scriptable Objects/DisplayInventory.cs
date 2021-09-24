@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class DisplayInventory : MonoBehaviour
 {
     public MouseItem mouseItem = new MouseItem();
-
+    private CanvasScaler canvasScaler;
     //public GameObject shop;
     public GameObject inventoryPrefab;
     public InventoryObject inventory;
@@ -92,11 +92,11 @@ public class DisplayInventory : MonoBehaviour
         //    obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
         //    itemsDisplayed.Add(slot, obj);
         //}
-
+        /*
         itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.container.items.Length; i++)
         {
-            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
+            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, this.transform.GetChild(0).transform);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
 
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
@@ -108,6 +108,19 @@ public class DisplayInventory : MonoBehaviour
 
             itemsDisplayed.Add(obj, inventory.container.items[i]);
         }
+        */
+        itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+        var img = this.transform.GetChild(0);
+        int i = 0;
+        foreach (Transform obj in img)
+        {
+            if (obj.tag == "Slot")
+            {
+                itemsDisplayed.Add(obj.gameObject, inventory.container.items[i]);
+            }
+            i++;
+        }
+        Debug.Log(itemsDisplayed.Count);
     }
     private void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
@@ -219,6 +232,25 @@ public class DisplayInventory : MonoBehaviour
         return new Vector3(X_START + (X_SPACE_BETWEEN_ITEMS * (i % NUMBER_OF_COLUMNS)),Y_START + ((-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMNS))), 0f);
     }
 
+    private Vector2 ScreenScale
+    {
+        get
+        {
+            if (canvasScaler == null)
+            {
+                canvasScaler = GetComponentInParent<CanvasScaler>();
+            }
+
+            if (canvasScaler)
+            {
+                return new Vector2(canvasScaler.referenceResolution.x / Screen.width, canvasScaler.referenceResolution.y / Screen.height);
+            }
+            else
+            {
+                return Vector2.one;
+            }
+        }
+    }
 }
 
 public class MouseItem
