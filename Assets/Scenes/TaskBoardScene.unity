@@ -1426,6 +1426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd9bb487ee4e9c4b8a82a696f3c555e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBecomeCurrent: 1
+  pacientObject: {fileID: 11400000, guid: 6754720dd635a5248b02a7d65f67bcd5, type: 2}
   Panel: {fileID: 1602839448}
   hairMalePrefabs:
   - {fileID: 7803090545748149759, guid: 321868eeb1ad9114a9ac0caa4d59151c, type: 3}
