@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 387d0037ab8609049a33900784aa80d8, type: 3}
-  m_Name: CurrentPacient
+  m_Name: CurrentPatient
   m_EditorClassIdentifier: 
   hair: {fileID: 3634497611491136372, guid: 321868eeb1ad9114a9ac0caa4d59151c, type: 3}
   face: {fileID: 6969628885654840041, guid: e8a1cff7e0c6b274ea74bed9b39242cc, type: 3}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Pacient", menuName = "Pacient")]
-public class PacientSO : ScriptableObject
+public class PatientSO : ScriptableObject
 {
     
     public GameObject hair;
@@ -20,7 +20,7 @@ public class PacientSO : ScriptableObject
     public double Strength;
     public HashSet<Characters> Characters;
     
-    public void BecomeCurrent(Pacient pacient, GameObject newHair, GameObject newFace, GameObject newBody)
+    public void BecomeCurrent(Patient pacient, GameObject newHair, GameObject newFace, GameObject newBody)
     {
         hair = newHair;
         face = newFace;
