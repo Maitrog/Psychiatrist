@@ -4,6 +4,7 @@ public enum ItemType
 {
     Tablets,
     Devices,
+    Methods,
     Default
 }
 
@@ -21,6 +22,9 @@ public abstract class ItemObject : ScriptableObject
     public string description;
     public ItemAttribute[] attributes;
 
+    public Characters character;
+    public int toxicity;
+
     public Item CreateItem()
     {
         Item newItem = new Item(this);
@@ -33,9 +37,15 @@ public class Item
 {
     public string Name;
     public int Id;
+    public ItemType type;
+    public int toxicity;
+    public Characters character;
     public ItemAttribute[] attributes;
     public Item(ItemObject item)
     {
+        character = item.character;
+        toxicity = item.toxicity;
+        type = item.type;
         Name = item.name;
         Id = item.Id;
         attributes = new ItemAttribute[item.attributes.Length];

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +17,7 @@ public class PatientSO : ScriptableObject
     public double MaxToxic;
     public double Toxic;
     public double Strength;
+    [SerializeField]
     public HashSet<Characters> Characters;
     
     public void BecomeCurrent(Patient pacient, GameObject newHair, GameObject newFace, GameObject newBody)
@@ -36,5 +36,7 @@ public class PatientSO : ScriptableObject
         Strength = pacient.Strength;
 
         Characters = new HashSet<Characters>(pacient.Characters);
+        //foreach (var c in pacient.Characters)
+            //Characters.Add(c);
     }
 }

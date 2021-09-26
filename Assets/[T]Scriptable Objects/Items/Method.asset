@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f003674fbe60d54ba09e867a6085815, type: 3}
-  m_Name: Yellow
+  m_Script: {fileID: 11500000, guid: fd8d86f696a9c9f4fb878be75443bbd6, type: 3}
+  m_Name: Method
   m_EditorClassIdentifier: 
-  Id: 3
-  uiDisplay: {fileID: 21300000, guid: 1dc7bf5e0e51a6940939d095a8163e00, type: 3}
-  type: 0
-  description: Yellow tablet
+  Id: 4
+  uiDisplay: {fileID: 21300000, guid: d2f017e302a9cfc4c82bf7d3aa03d1b6, type: 3}
+  type: 2
+  description: Simple method
   attributes: []
-  character: 1
-  toxicity: 10
+  character: 8
+  toxicity: 13
