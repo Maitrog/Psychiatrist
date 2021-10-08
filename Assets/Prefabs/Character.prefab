@@ -51,3 +51,11 @@ MonoBehaviour:
   hair: {fileID: 0}
   face: {fileID: 0}
   body: {fileID: 0}
+  Sex: 0
+  Name: 
+  Surname: 
+  Patronymic: 
+  Age: 0
+  MaxToxic: 0
+  Toxic: 0
+  Strength: 0
