@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Pacient", menuName = "Pacient")]
+[CreateAssetMenu(fileName = "New Patient", menuName = "Patient")]
 public class PatientSO : ScriptableObject
 {
-    
+
     public GameObject hair;
     public GameObject face;
     public GameObject body;
@@ -18,23 +18,34 @@ public class PatientSO : ScriptableObject
     public double MaxToxic;
     public double Toxic;
     public double Strength;
-    public HashSet<Characters> Characters;
-    
-    public void BecomeCurrent(Patient pacient, GameObject newHair, GameObject newFace, GameObject newBody)
+    public List<Characters> Characters;
+
+    public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace, GameObject newBody)
     {
         hair = newHair;
         face = newFace;
         body = newBody;
 
-        Sex = pacient.Sex;
-        Name = pacient.Name;
-        Surname = pacient.Surname;
-        Patronymic = pacient.Patronymic;
-        Age = pacient.Age;
-        MaxToxic = pacient.MaxToxic;
-        Toxic = pacient.Toxic;
-        Strength = pacient.Strength;
+        Sex = patient.Sex;
+        Name = patient.Name;
+        Surname = patient.Surname;
+        Patronymic = patient.Patronymic;
+        Age = patient.Age;
+        MaxToxic = patient.MaxToxic;
+        Toxic = patient.Toxic;
+        Strength = patient.Strength;
 
-        Characters = new HashSet<Characters>(pacient.Characters);
+        Characters = new List<Characters>(patient.Characters);
+    }
+
+    public static bool operator ==(PatientSO patientSO, Patient patient)
+    {
+        return patientSO.Sex == patient.Sex && patientSO.Name == patient.Name && patientSO.Surname == patient.Surname &&
+                patientSO.Patronymic == patient.Patronymic && patientSO.Age == patient.Age && patientSO.MaxToxic == patient.MaxToxic && 
+                patientSO.Strength == patient.Strength && patientSO.Toxic == patient.Toxic;
+    }
+    public static bool operator !=(PatientSO patientSO, Patient patient)
+    {
+        return !(patientSO == patient);
     }
 }
