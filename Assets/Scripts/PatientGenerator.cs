@@ -5,76 +5,75 @@ using UnityEngine;
 
 public class PatientGenerator : MonoBehaviour
 {
-    //добавлять данные в заранее созданный scriptable object CurrentPacient только в том случае, 
-    //если квест на поимку завершен успешно, CurrentPacient можкет быть только один
-    public bool canBecomeCurrent = true;
-    public PatientSO pacientObject;
+    public CurrentTargetsSO currentTargetsSO;
 
-
-    public GameObject Panel;
+    public GameObject searchPanel;
     public Hair[] hairMalePrefabs;
     public Hair[] hairFemalePrefabs;
     public Face[] facePrefabs;
     public Body[] bodyPrefabs;
     public Patient characterPrefab;
-
-    private readonly List<Patient> characters = new List<Patient>();
     // Start is called before the first frame update
     void Start()
     {
-        while (characters.Count < 4)
+        for (int i = 0; i < currentTargetsSO.isReady.Count; i++)
         {
-            SpawnCharacter(characters.Count);
+            if (currentTargetsSO.isReady[i])
+            {
+                GeneratePatient(i);
+            }
+            else
+            {
+                RenderPatient(i, currentTargetsSO.currentTarget[i].face, currentTargetsSO.currentTarget[i].hair, currentTargetsSO.currentTarget[i].body);
+                SpawnPatient(i, currentTargetsSO.currentTarget[i]);
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (currentTargetsSO.count < 4)
+        {
+            for (int i = 0; i < currentTargetsSO.isReady.Count; i++)
+            {
+                if (currentTargetsSO.isReady[i])
+                {
+                    GeneratePatient(i);
+                }
+            }
+        }
     }
 
-    private void SpawnCharacter(int index)
+    private void GeneratePatient(int index)
     {
-        //для ScriptableObject
         GameObject faceSO;
         GameObject hairSO;
         GameObject bodySO;
-
-
-
-        float scale = ScreenSize.GetScreenToWorldWidth;
-        var characterTransform = Panel.transform.GetChild(index);
-        var gameObject = characterTransform.gameObject;
-        Hair newHair;
-        Patient patient = gameObject.GetComponent<Patient>();
-
-        patient.Sex = (Sex)UnityEngine.Random.Range(0, 2);
-        patient.Age = UnityEngine.Random.Range(18, 75);
-        patient.MaxToxic = UnityEngine.Random.Range(10f, 30f);
-        patient.Strength = UnityEngine.Random.Range(0, 10);
+        NameDb nameDb = new NameDb();
+        NormalRandom normal = new NormalRandom();
+        Patient patient = new Patient
+        {
+            Sex = (Sex)UnityEngine.Random.Range(0, 2),
+            Age = UnityEngine.Random.Range(18, 75),
+            MaxToxic = normal.NextDouble(10f, 30f),
+            Strength = normal.Next(1, 10)
+        };
 
         faceSO = facePrefabs[UnityEngine.Random.Range(0, facePrefabs.Length)].gameObject;
-        Face newFace = Instantiate(faceSO.GetComponent<Face>());
-        newFace.transform.SetParent(characterTransform);
-        newFace.transform.position = new Vector3(newFace.transform.position.x, newFace.transform.position.y, 100);
-        newFace.transform.localPosition = new Vector3(0, 75.0f, 0);
-
         bodySO = bodyPrefabs[UnityEngine.Random.Range(0, bodyPrefabs.Length)].gameObject;
-        Body newBody = Instantiate(bodySO.GetComponent<Body>());
-        newBody.transform.SetParent(characterTransform);
-        newBody.transform.position = newFace.transform.position + newFace.bottom.localPosition * scale - newBody.top.localPosition * scale;
-        newBody.transform.localPosition = new Vector3(newBody.transform.localPosition.x, newBody.transform.localPosition.y, 0);
 
         Array values = Enum.GetValues(typeof(Characters));
-        while (patient.Characters.Count < 3)
+        HashSet<Characters> characters = new HashSet<Characters>();
+        while (characters.Count < 3)
         {
-            patient.Characters.Add((Characters)UnityEngine.Random.Range(0, values.Length));
+            characters.Add((Characters)UnityEngine.Random.Range(0, values.Length));
         }
+
+        patient.Characters.AddRange(characters);
 
         if (patient.Sex == Sex.MALE)
         {
-            NameDb nameDb = gameObject.AddComponent<NameDb>();
             List<string> names = nameDb.GetAllMaleName();
             List<string> surnames = nameDb.GetAllMaleSurname();
             List<string> patronymics = nameDb.GetAllMalePatronymic();
@@ -83,14 +82,9 @@ public class PatientGenerator : MonoBehaviour
             patient.Patronymic = patronymics[UnityEngine.Random.Range(0, patronymics.Count)];
 
             hairSO = hairMalePrefabs[UnityEngine.Random.Range(0, hairMalePrefabs.Length)].gameObject;
-            newHair = Instantiate(hairSO.GetComponent<Hair>());
-            newHair.transform.SetParent(characterTransform);
-            newHair.transform.position = newFace.transform.position + newFace.top.localPosition * scale - newHair.bottom.localPosition * scale;
-            newHair.transform.localPosition = new Vector3(newHair.transform.localPosition.x, newHair.transform.localPosition.y, -1);
         }
         else
         {
-            NameDb nameDb = gameObject.AddComponent<NameDb>();
             List<string> names = nameDb.GetAllFemaleName();
             List<string> surnames = nameDb.GetAllFemaleSurname();
             List<string> patronymics = nameDb.GetAllFemalePatronymic();
@@ -98,24 +92,79 @@ public class PatientGenerator : MonoBehaviour
             patient.Surname = surnames[UnityEngine.Random.Range(0, surnames.Count)];
             patient.Patronymic = patronymics[UnityEngine.Random.Range(0, patronymics.Count)];
 
-            hairSO = hairFemalePrefabs[UnityEngine.Random.Range(0, hairMalePrefabs.Length)].gameObject;
-            newHair = Instantiate(hairSO.GetComponent<Hair>());
-            newHair.transform.SetParent(characterTransform);
-            newHair.transform.position = newFace.transform.position + newFace.top.localPosition * scale - newHair.bottom.localPosition * scale;
-            newHair.transform.localPosition = new Vector3(newHair.transform.localPosition.x, newHair.transform.localPosition.y, -1);
+            hairSO = hairFemalePrefabs[UnityEngine.Random.Range(0, hairFemalePrefabs.Length)].gameObject;
         }
-        patient.hair = newHair;
-        patient.face = newFace;
-        patient.body = newBody;
 
-        characters.Add(patient);
-        
-        //передаем данные в scriptable object, чтобы потом получить всю информациб о пациенте в любой другой сцене
-        if (canBecomeCurrent)
-        {
-            pacientObject.BecomeCurrent(patient, hairSO, faceSO, bodySO);
-            canBecomeCurrent = false;
-        }
-        
+        Patient spawnedPatient = RenderPatient(index, faceSO, hairSO, bodySO);
+
+        patient.hair = spawnedPatient.hair;
+        patient.face = spawnedPatient.face;
+        patient.body = spawnedPatient.body;
+
+        SpawnPatient(index, patient);
+        currentTargetsSO.AddPatient(index, patient, hairSO, faceSO, bodySO);
+    }
+
+    private Patient RenderPatient(int index, GameObject faceSO, GameObject hairSO, GameObject bodySO)
+    {
+        float scale = ScreenSize.GetScreenToWorldWidth;
+        var parentTransform = searchPanel.transform.GetChild(index).GetChild(0);
+
+        Face newFace = Instantiate(faceSO.GetComponent<Face>());
+        newFace.transform.SetParent(parentTransform);
+        newFace.transform.position = new Vector3(newFace.transform.position.x, newFace.transform.position.y, 100);
+        newFace.transform.localPosition = new Vector3(0, 75.0f, 0);
+
+        Body newBody = Instantiate(bodySO.GetComponent<Body>());
+        newBody.transform.SetParent(parentTransform);
+        newBody.transform.position = newFace.transform.position + newFace.bottom.localPosition * scale - newBody.top.localPosition * scale;
+        newBody.transform.localPosition = new Vector3(newBody.transform.localPosition.x, newBody.transform.localPosition.y, 0);
+
+        Hair newHair = Instantiate(hairSO.GetComponent<Hair>());
+        newHair.transform.SetParent(parentTransform);
+        newHair.transform.position = newFace.transform.position + newFace.top.localPosition * scale - newHair.bottom.localPosition * scale;
+        newHair.transform.localPosition = new Vector3(newHair.transform.localPosition.x, newHair.transform.localPosition.y, -1);
+
+        return new Patient() { hair = newHair, face = newFace, body = newBody };
+    }
+
+    private void SpawnPatient(int index, Patient _patient)
+    {
+        var characterTransform = searchPanel.transform.GetChild(index).GetChild(0);
+        var gameObject = characterTransform.gameObject;
+        Patient patient = gameObject.GetComponent<Patient>();
+        patient.Age = _patient.Age;
+        patient.Sex = _patient.Sex;
+        patient.Name = _patient.Name;
+        patient.Surname = _patient.Surname;
+        patient.Patronymic = _patient.Patronymic;
+        patient.MaxToxic = _patient.MaxToxic;
+        patient.Strength = _patient.Strength;
+        patient.Toxic = _patient.Toxic;
+        patient.Characters = new List<Characters>(_patient.Characters);
+
+        patient.hair = _patient.hair;
+        patient.face = _patient.face;
+        patient.body = _patient.body;
+    }
+
+    private void SpawnPatient(int index, PatientSO _patient)
+    {
+        var characterTransform = searchPanel.transform.GetChild(index).GetChild(0);
+        var gameObject = characterTransform.gameObject;
+        Patient patient = gameObject.GetComponent<Patient>();
+        patient.Age = _patient.Age;
+        patient.Sex = _patient.Sex;
+        patient.Name = _patient.Name;
+        patient.Surname = _patient.Surname;
+        patient.Patronymic = _patient.Patronymic;
+        patient.MaxToxic = _patient.MaxToxic;
+        patient.Strength = _patient.Strength;
+        patient.Toxic = _patient.Toxic;
+        patient.Characters = new List<Characters>(_patient.Characters);
+
+        patient.hair = _patient.hair.GetComponent<Hair>();
+        patient.face = _patient.face.GetComponent<Face>();
+        patient.body = _patient.body.GetComponent<Body>();
     }
 }
