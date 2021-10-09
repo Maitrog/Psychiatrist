@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Pacient : MonoBehaviour
 {
+
     public Hair hair;
     public Face face;
     public Body body;
@@ -16,15 +18,13 @@ public class Pacient : MonoBehaviour
     public double MaxToxic;
     public double Toxic = 0;
     public double Strength;
-    public HashSet<Characters> Characters = new HashSet<Characters>();
+    public List<Characters> Characters = new List<Characters>();
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -33,20 +33,33 @@ public class Pacient : MonoBehaviour
 
 public enum Characters
 {
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
-    SEVEN,
-    EIGHT,
-    NINE,
-    TEN
+    IRRITABILITY,
+    ANXIETY,
+    PARANOIA,
+    HYPERACTIVITY,
+    APATHY,
+    FATIGUE,
+    HYSTERICS,
+    PANIC_ATTACKS,
+    DELIRIUM,
+    HALLUCINATIONS,
+    SINCERITY,
+    OPTIMISM,
+    INCREASED_EMPATHY,
+    INDIFFERENCE,
+    ENVY,
+    SUSPICIOUS,
+    VANITY,
+    SELFISHNESS,
+    MAX
+
 }
+
+
 
 public enum Sex
 {
     MALE,
     FEMALE
 }
+
