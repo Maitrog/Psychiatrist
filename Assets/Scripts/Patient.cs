@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Patient : MonoBehaviour
 {
-
     public Hair hair;
     public Face face;
     public Body body;
@@ -24,7 +22,6 @@ public class Patient : MonoBehaviour
     {
 
     }
-
     void Update()
     {
 
@@ -54,12 +51,8 @@ public enum Characters
     MAX
 
 }
-
-
-
 public enum Sex
 {
     MALE,
     FEMALE
 }
-
