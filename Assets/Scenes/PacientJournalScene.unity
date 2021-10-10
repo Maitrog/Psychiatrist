@@ -286,7 +286,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1893648089}
-        m_TargetAssemblyTypeName: newtext, Assembly-CSharp
+        m_TargetAssemblyTypeName: ButtonTextManager, Assembly-CSharp
         m_MethodName: button1
         m_Mode: 1
         m_Arguments:
@@ -1881,7 +1881,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1893648089}
-        m_TargetAssemblyTypeName: newtext, Assembly-CSharp
+        m_TargetAssemblyTypeName: ButtonTextManager, Assembly-CSharp
         m_MethodName: button4
         m_Mode: 1
         m_Arguments:
@@ -2680,7 +2680,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1893648085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a5ac22bdee693c45b17435196336671, type: 3}
+  m_Script: {fileID: 11500000, guid: dae383fa59d486a488b6277b897a8395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   but1: {fileID: 41699410}
@@ -2695,7 +2695,7 @@ MonoBehaviour:
   Text6: {fileID: 29157555}
   Text7: {fileID: 474118951}
   Text8: {fileID: 1399930870}
-  DialogText: {fileID: 1893648087}
+  DialogText: {fileID: 0}
   DialogTexts: []
 --- !u!1 &1895831284
 GameObject:
