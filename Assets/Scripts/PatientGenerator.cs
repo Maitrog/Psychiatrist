@@ -98,7 +98,7 @@ public class PatientGenerator : MonoBehaviour
             patient.Surname = surnames[UnityEngine.Random.Range(0, surnames.Count)];
             patient.Patronymic = patronymics[UnityEngine.Random.Range(0, patronymics.Count)];
 
-            hairSO = hairFemalePrefabs[UnityEngine.Random.Range(0, hairMalePrefabs.Length)].gameObject;
+            hairSO = hairFemalePrefabs[UnityEngine.Random.Range(0, hairFemalePrefabs.Length)].gameObject;
             newHair = Instantiate(hairSO.GetComponent<Hair>());
             newHair.transform.SetParent(characterTransform);
             newHair.transform.position = newFace.transform.position + newFace.top.localPosition * scale - newHair.bottom.localPosition * scale;
