@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pacient : MonoBehaviour
+public class Patient : MonoBehaviour
 {
 
     public Hair hair;
