@@ -14,6 +14,10 @@ public class Board : MonoBehaviour
     public PatientSO curPatient;
     public int playerScore = 0;
     public int aiScore = 0;
+    public List<Cell> playerCells = new List<Cell>();
+    public List<Cell> aiCells = new List<Cell>();
+    public char[,] board = new char[9, 9];
+    private int minimaxDepth = 3;
 
     public bool CanSelect(Cell curCell, int turn)//можем ли мы выбрать данный гекс
     {
@@ -78,12 +82,6 @@ public class Board : MonoBehaviour
         List<Cell> changedCells = new List<Cell>();
         int i = cell.pos.First;
         int j = cell.pos.Second;
-        changedCells.Add(new Cell(i, j - 1));
-        changedCells.Add(new Cell(i, j + 1/*, cell.id*/));
-        changedCells.Add(new Cell(i - 1, j - 1/*, cell.id*/));
-        changedCells.Add(new Cell(i - 1, j/*, cell.id*/));
-        changedCells.Add(new Cell(i + 1, j/*, cell.id*/));
-        changedCells.Add(new Cell(i + 1, j + 1/*, cell.id*/));
 
         changedCells.Add(new Cell(i, j - 1/*, cell.id*/, Owners.AI));
         changedCells.Add(new Cell(i, j + 1/*, cell.id*/, Owners.AI));
@@ -95,8 +93,33 @@ public class Board : MonoBehaviour
         return changedCells;
     }
 
+    public int Minimax(int score, bool maximizingPlayer, ref List<Cell> playerCells, ref List<Cell> aiCells, ref char[,] board)//ai - maximize, player - minimize
+    {
+        //стоп условие
+        if (maximizingPlayer)//check move and afetrmove
+        {
+            int maxScore = System.Int32.MinValue;
+            for (int i = 0; i < aiCells.Count; i++)
+            {
+
+            }
+        }
+        else
+        {
+
+        }
+        return score;
+    }
+
     private void Awake()
     {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                board[i, j] = '-';
+            }
+        }
         container = new AllCells();
     }
 }
@@ -185,7 +208,7 @@ public class Cell //: System.IComparable<Cell>//отдельный гекс
             return false;
 
         Cell c = obj as Cell;
-        if ((this.pos.First == c.pos.First) && (this.pos.Second == c.pos.Second))
+        if ((this.pos.First == c.pos.First) && (this.pos.Second == c.pos.Second)/* && (this.owner == c.owner)*/)
             return true;
         else
             return false;
@@ -193,7 +216,7 @@ public class Cell //: System.IComparable<Cell>//отдельный гекс
 
     public bool Equals(Cell obj)
     {
-        return obj != null && (this.pos.First == obj.pos.First) && (this.pos.Second == obj.pos.Second);
+        return obj != null && (this.pos.First == obj.pos.First) && (this.pos.Second == obj.pos.Second) /*&& (this.owner == obj.owner)*/;
     }
 
     public override int GetHashCode()
