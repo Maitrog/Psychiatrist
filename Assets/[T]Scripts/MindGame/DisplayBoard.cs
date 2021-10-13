@@ -8,7 +8,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
     public Dictionary<GameObject, Cell> cellsDisplayed = new Dictionary<GameObject, Cell>();
     public Dictionary<Cell, GameObject> objectsDisplayed = new Dictionary<Cell, GameObject>();
     public Board board;
-    public int turn = 0;
+    private bool turn = true;
     public Cell curCell = new Cell();
     public GameObject playerScore;
     public GameObject aiScore;
@@ -56,10 +56,10 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                         count++;
                     }
                 }
-                board.container.cells[i] = new Cell(row, col, i);
+                board.container.cells[i] = new Cell(row, col/*, i*/);
                 cellsDisplayed.Add(obj.gameObject, board.container.cells[i]);
                 objectsDisplayed.Add(board.container.cells[i], obj.gameObject);
-                Debug.Log(board.container.cells[i].pos.ToString() + " " + board.container.cells[i].id);
+                Debug.Log(board.container.cells[i].pos.ToString()/* + " " + board.container.cells[i].id*/);
                 i++;
                 col++;
             }
@@ -83,62 +83,10 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
     public void OnPointerClick(PointerEventData eventData) //разбить на функции
     {
         GameObject go = eventData.pointerCurrentRaycast.gameObject;
-        if (go.transform.tag == "Slot")
+        if (go.transform.tag == "Slot" && turn)
         {
-            if (curCell.id == -1 && cellsDisplayed[go].owner == Owners.Player)//смотрим можем ли мы передвинуть эту соту (если она принадлежит игроку, то она может стать текущей)
-            {
-                curCell = cellsDisplayed[go];//она становится текущей
-                Color color;
-                color = go.GetComponent<Image>().color;
-                color.a = 1f;
-                go.GetComponent<Image>().color = color;//меняем ее цвет на цвет игрокв
-                Debug.Log("curCell id: " + curCell.id);
-            }
-            else if (curCell.id == cellsDisplayed[go].id)//смотрим, попал ли игрок по уже выбранной соте, если да, то его выбор сбрасывается
-            {
-                curCell = new Cell();
-                if (cellsDisplayed[go].owner == Owners.Neutral)
-                {
-                    Color color;
-                    color = go.GetComponent<Image>().color;
-                    color.a = 0.588f;
-                    go.GetComponent<Image>().color = color;
-                }
-                Debug.Log("Deselected");
-            }
-            else if (curCell.id >= 0 && cellsDisplayed[go].owner != Owners.Player) //смотрим, можем ли мы туда походить
-            {
-                Debug.Log("Where id: " + cellsDisplayed[go].id);
-                int distance = board.Move(curCell, cellsDisplayed[go]);
-                Debug.Log("Distance: " + distance);
-                if (distance == 1)
-                {
-                    cellsDisplayed[go].ChangeOwner(Owners.Player);
-                    Color color;
-                    color = go.GetComponent<Image>().color;
-                    color.a = 1f;
-                    go.GetComponent<Image>().color = color;//меняем ее цвет на цвет игрокв
-                    curCell = new Cell();//сбрасываем curCell, так как мы походили
-                }
-                else if (distance == 2)
-                {
-                    GameObject toNeutral = objectsDisplayed[curCell];
-                    cellsDisplayed[toNeutral].ChangeOwner(Owners.Neutral);
-                    Color color;
-                    color = toNeutral.GetComponent<Image>().color;
-                    color.a = 0.588f;
-                    toNeutral.GetComponent<Image>().color = color;
-
-
-
-
-                    cellsDisplayed[go].ChangeOwner(Owners.Player);
-                    color = go.GetComponent<Image>().color;
-                    color.a = 1f;
-                    go.GetComponent<Image>().color = color;//меняем ее цвет на цвет игрокв
-                    curCell = new Cell();//сбрасываем curCell, так как мы походили
-                }
-            }
+            Debug.Log(cellsDisplayed[go].ToString());
+            HandleTouch(go);
         }
     }
 
@@ -146,4 +94,77 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
     {
 
     }
+
+    public Color ChangeColor(Color color, float a)
+    {
+        color.a = a;
+        return color;
+    }
+
+    public void HandleTouch(GameObject go)
+    {
+        if (curCell.pos.First == -1 && cellsDisplayed[go].owner == Owners.Player)//смотрим можем ли мы передвинуть эту соту (если она принадлежит игроку, то она может стать текущей)
+        {
+            curCell = cellsDisplayed[go];//она становится текущей
+        }
+        else if ((curCell.pos.First == cellsDisplayed[go].pos.First) && (curCell.pos.Second== cellsDisplayed[go].pos.Second))//смотрим, попал ли игрок по уже выбранной соте, если да, то его выбор сбрасывается
+        {
+            curCell = new Cell();
+            if (cellsDisplayed[go].owner == Owners.Neutral)
+            {
+                go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
+            }
+        }
+        else if (curCell.pos.First >= 0 && cellsDisplayed[go].owner != Owners.Player) //смотрим, можем ли мы туда походить
+        {
+            int distance = board.Move(curCell, cellsDisplayed[go]);
+            switch (distance)
+            {
+                case 1:
+                    //cellsDisplayed[go].ChangeOwner(Owners.Player);
+                    go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
+                    curCell = new Cell();//сбрасываем curCell, так как мы походили
+                    if (turn)
+                        cellsDisplayed[go].ChangeOwner(Owners.Player);
+                    else
+                        cellsDisplayed[go].ChangeOwner(Owners.AI);
+
+                    AfterMoveChangeDisplay(cellsDisplayed[go]);
+                    ChangeTurn();
+                    break;
+                case 2:
+                    GameObject toNeutral = objectsDisplayed[curCell];
+                    cellsDisplayed[toNeutral].ChangeOwner(Owners.Neutral);
+                    toNeutral.GetComponent<Image>().color = ChangeColor(toNeutral.GetComponent<Image>().color, 0.588f);
+
+                    if (turn)
+                        cellsDisplayed[go].ChangeOwner(Owners.Player);
+                    else
+                        cellsDisplayed[go].ChangeOwner(Owners.AI);
+                    go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
+                    curCell = new Cell();//сбрасываем curCell, так как мы походили
+
+                    ChangeTurn();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void AfterMoveChangeDisplay(Cell cellPos)
+    {
+        foreach (Cell cell in board.AfterMove(cellPos))
+        {
+            if (objectsDisplayed.ContainsKey(cell))
+            {
+                objectsDisplayed[cell].GetComponent<Image>().color = ChangeColor(objectsDisplayed[cell].GetComponent<Image>().color, 1f);
+                if (turn)
+                    cellsDisplayed[objectsDisplayed[cell]].ChangeOwner(Owners.Player);
+                else
+                    cellsDisplayed[objectsDisplayed[cell]].ChangeOwner(Owners.AI);
+            }
+        }
+    }
 }
+

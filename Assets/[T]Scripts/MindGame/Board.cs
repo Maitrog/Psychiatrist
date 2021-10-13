@@ -73,9 +73,24 @@ public class Board : MonoBehaviour
     {
         
     }
-    public List<Cell> AfterMove(Cell fromCell, Cell toCell)
+    public List<Cell> AfterMove(Cell cell)//ѕќћ≈Ќя“№ ѕ–ќ¬≈– ” я„≈≈  „“ќЅџ Ќ≈ ƒ≈Ћј“№ 12 ƒ”ѕЋ» ј“ќ¬
     {
         List<Cell> changedCells = new List<Cell>();
+        int i = cell.pos.First;
+        int j = cell.pos.Second;
+        changedCells.Add(new Cell(i, j - 1));
+        changedCells.Add(new Cell(i, j + 1/*, cell.id*/));
+        changedCells.Add(new Cell(i - 1, j - 1/*, cell.id*/));
+        changedCells.Add(new Cell(i - 1, j/*, cell.id*/));
+        changedCells.Add(new Cell(i + 1, j/*, cell.id*/));
+        changedCells.Add(new Cell(i + 1, j + 1/*, cell.id*/));
+
+        changedCells.Add(new Cell(i, j - 1/*, cell.id*/, Owners.AI));
+        changedCells.Add(new Cell(i, j + 1/*, cell.id*/, Owners.AI));
+        changedCells.Add(new Cell(i - 1, j - 1/*, cell.id*/, Owners.AI));
+        changedCells.Add(new Cell(i - 1, j/*, cell.id*/, Owners.AI));
+        changedCells.Add(new Cell(i + 1, j/*, cell.id*/, Owners.AI));
+        changedCells.Add(new Cell(i + 1, j + 1/*, cell.id*/, Owners.AI));
 
         return changedCells;
     }
@@ -96,24 +111,24 @@ public class AllCells//массив всех гексов доски
     }
 }
 //[System.Serializable]
-public class Cell//отдельный гекс
+public class Cell //: System.IComparable<Cell>//отдельный гекс
 {
     public Pair<int, int> pos = new Pair<int, int>();
     public Owners owner;
-    public int id;
+    //public int id;
 
     public Cell()
     {
         owner = Owners.Neutral;
         pos.First = -1;
         pos.Second = -1;
-        id = -1;
+        //id = -1;
     }
-    
-    public Cell(int _row, int _col, int _id)
+
+    public Cell(int _row, int _col, /*int _id,*/ Owners _owner = Owners.Neutral)
     {
-        owner = Owners.Neutral;
-        id = _id;
+        owner = _owner;
+        //id = _id;
         pos.First = _row;
         pos.Second = _col;
     }
@@ -131,7 +146,59 @@ public class Cell//отдельный гекс
 
     public void SetId(int id)
     {
-        this.id = id;
+        //this.id = id;
+    }
+    
+    public static bool operator ==(Cell cell1, Cell cell2)
+    {
+        return (cell1.pos.First == cell2.pos.First) && (cell1.pos.Second == cell2.pos.Second);
+    }
+
+    public static bool operator !=(Cell cell1, Cell cell2)
+    {
+        return !(cell1.pos.First == cell2.pos.First) && (cell1.pos.Second == cell2.pos.Second);
+    }
+    
+    public override string ToString()
+    {
+        return this.pos.ToString() + " " /*+ this.id.ToString()*/ + " " + this.owner.ToString();
+    }
+
+    //public int CompareTo(Cell obj)
+    //{
+    //    Cell c = obj as Cell;
+    //    if (c != null)
+    //    {
+    //        if ((this.pos.First == c.pos.First) && (this.pos.Second == c.pos.Second))
+    //            return 0;
+    //        else
+    //            return this.id >= c.id ? 1 : -1;
+    //    }
+    //    else
+    //        throw new System.NotImplementedException();
+    //}
+
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null)
+            return false;
+
+        Cell c = obj as Cell;
+        if ((this.pos.First == c.pos.First) && (this.pos.Second == c.pos.Second))
+            return true;
+        else
+            return false;
+    }
+
+    public bool Equals(Cell obj)
+    {
+        return obj != null && (this.pos.First == obj.pos.First) && (this.pos.Second == obj.pos.Second);
+    }
+
+    public override int GetHashCode()
+    {
+        return this.pos.First + this.pos.Second;
     }
 }
 
