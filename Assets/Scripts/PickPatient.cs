@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickPatient : MonoBehaviour
 {
     public GameObject searchPanel;
     public GameObject pickedPatientPanel;
+    public CurrentParamedicObject currentParamedicObject;
+    public GameObject orderliesPanel;
+    public GameObject selectableParamedicPrefab;
 
     public void Pick(int patientNumber)
     {
@@ -31,9 +35,20 @@ public class PickPatient : MonoBehaviour
         {
             Debug.Log($"Character is empty; Exception: {e.Message}");
         }
+        for (int i = 0; i < orderliesPanel.transform.childCount; i++)
+        {
+            Destroy(orderliesPanel.transform.GetChild(i).gameObject);
+        }
         Patient pickedPatient = DisplayPatient(patientNumber);
         DisplayInfo(pickedPatient);
         pickedPatientPanel.SetActive(true);
+
+        for (int i = 0; i < currentParamedicObject.currentParamedics.Count; i++)
+        {
+            GameObject parent = CreatParamedicPrefab(orderliesPanel);
+            RenderParamedic(currentParamedicObject.currentParamedics[i].photo, parent.transform);
+            SpawnParamedic(parent, currentParamedicObject.currentParamedics[i]);
+        }
     }
 
     private void DisplayInfo(Patient pickedPatient)
@@ -86,5 +101,33 @@ public class PickPatient : MonoBehaviour
         pickedPatient.Characters = new List<Characters>(patient.Characters);
 
         return pickedPatient;
+    }
+
+    private GameObject CreatParamedicPrefab(GameObject paramedic)
+    {
+        GameObject pref = Instantiate(selectableParamedicPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        pref.transform.SetParent(paramedic.transform);
+        pref.transform.localPosition = new Vector3(pref.transform.localPosition.x, pref.transform.localPosition.y, 0);
+        pref.transform.localScale = new Vector3(1, 1, 1);
+        return pref;
+    }
+    private void RenderParamedic(GameObject photoSO, Transform parentTransform)
+    {
+        Photo photo = Instantiate(photoSO.GetComponent<Photo>());
+        photo.transform.SetParent(parentTransform.GetChild(0));
+        photo.transform.position = new Vector3(photo.transform.position.x, photo.transform.position.y, 100);
+        photo.transform.localPosition = new Vector3(0, 0, -3);
+    }
+    private void SpawnParamedic(GameObject parent, ParamedicObject paramedicObject)
+    {
+        var gameObject = parent.transform.GetChild(0);
+        Paramedic paramedic = gameObject.GetComponent<Paramedic>();
+        paramedic.Sex = paramedicObject.Sex;
+        paramedic.Name = paramedicObject.Name;
+        paramedic.Surname = paramedicObject.Surname;
+        paramedic.Patronymic = paramedicObject.Patronymic;
+        paramedic.Strength = paramedicObject.Strength;
+
+        paramedic.photo = paramedicObject.photo.GetComponent<Photo>();
     }
 }
