@@ -12,7 +12,6 @@ public class NormalRandom : System.Random
         {
             double result = prevSample;
             prevSample = double.NaN;
-            Debug.Log(result);
             return result;
         }
 
@@ -25,11 +24,7 @@ public class NormalRandom : System.Random
         }
         while (u <= -1 || v <= -1 || s >= 1 || s == 0);
         double r = Math.Sqrt(-2 * Math.Log(s) / s);
-        Debug.Log($"u: {u}");
-        Debug.Log($"v: {v}");
-        Debug.Log($"r: {r}");
         prevSample = r * v;
-        Debug.Log(r * u);
         return r * u;
     }
 

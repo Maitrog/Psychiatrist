@@ -12,7 +12,6 @@ public class PatientGenerator : MonoBehaviour
     public Hair[] hairFemalePrefabs;
     public Face[] facePrefabs;
     public Body[] bodyPrefabs;
-    public Patient characterPrefab;
     // Start is called before the first frame update
     void Start()
     {
