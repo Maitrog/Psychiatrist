@@ -22,10 +22,11 @@ public class CurrentParamedicObject : ScriptableObject
 
     internal void DeleteAll()
     {
-        for (int i = 0; i < currentParamedics.Count; i++)
+        int count = currentParamedics.Count;
+        for (int i = 0; i < count; i++)
         {
             AssetDatabase.DeleteAsset($"Assets/Scriptable Object/Paramedic/{i}.asset");
-            currentParamedics.RemoveAt(i);
+            currentParamedics.RemoveAt(0);
         }
     }
 }
