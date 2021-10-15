@@ -35,7 +35,7 @@ public class NormalRandom : System.Random
         int res;
         do
         {
-            res = (int)(Sample() * d + d + minValue);
+            res = (int)(Sample() * d + 0.3 + minValue);
         }
         while (res < minValue || res > maxValue);
         return res;
@@ -48,7 +48,7 @@ public class NormalRandom : System.Random
         double res;
         do
         {
-            res = Sample() * d + d + minValue;
+            res = Sample() * d + 0.3 + minValue;
         }
         while (res < minValue || res > maxValue);
         return res;
