@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   green: {r: 0, g: 1, b: 0.043137256, a: 255}
+  selectedParamedic: {fileID: 11400000, guid: f240d9de712202741aaa514f6a64ae30, type: 2}
   currentlySelected: 0
 --- !u!61 &8252406604355015351
 BoxCollider2D:
@@ -116,7 +117,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 100}
+  m_Size: {x: 200, y: 200}
   m_EdgeRadius: 0
 --- !u!1 &8301173821455923291
 GameObject:
