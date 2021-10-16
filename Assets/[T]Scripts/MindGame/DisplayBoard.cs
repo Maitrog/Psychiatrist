@@ -59,14 +59,16 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                 board.container.cells[i] = new Cell(row, col/*, i*/);
                 cellsDisplayed.Add(obj.gameObject, board.container.cells[i]);
                 objectsDisplayed.Add(board.container.cells[i], obj.gameObject);
-                board.board[row, col] = 'n';
-                Debug.Log(board.container.cells[i].pos.ToString()/* + " " + board.container.cells[i].id*/);
+                board.gameBoard[row, col] = 'n';
+                //Debug.Log(board.container.cells[i].pos.ToString()/* + " " + board.container.cells[i].id*/);
                 i++;
                 col++;
             }
         }
 
         board.container.cells[0].ChangeOwner(Owners.Player);
+        board.gameBoard[0, 0] = 'p';
+        board.gameBoard[8, 8] = 'a';
         board.container.cells[60].ChangeOwner(Owners.AI);
         board.playerCells.Add(board.container.cells[0]);
         board.aiCells.Add(board.container.cells[60]);
@@ -77,10 +79,19 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
     public void ChangeTurn()
     {
         turn = false;
-        List<Cell> tmpPlayer = board.playerCells;
-        List<Cell> tmpAi = board.aiCells;
-        char[,] tmpBoard = board.board;
-        board.Minimax(board.aiCells.Count - board.playerCells.Count, true, ref tmpPlayer, ref tmpAi, ref tmpBoard);
+        char[,] tmpBoard = board.gameBoard;
+        Pair<int, int> start = new Pair<int, int>(-1, -1);
+        int res = board.Minimax(start, true,  tmpBoard, 0);
+        int posy = res / 10;
+        int posx = res % 10;
+        if (posy > 9 || posx > 9 || posy < 0 || posx < 0)
+            return;
+        Cell change = new Cell(posy, posx);
+        cellsDisplayed[objectsDisplayed[change]].ChangeOwner(Owners.AI);
+        board.aiCells.Add(change);
+        board.gameBoard[posy, posx] = 'a';
+        objectsDisplayed[change].GetComponent<Image>().color = ChangeColor(objectsDisplayed[change].GetComponent<Image>().color, 0.588f, 0f, 0f, 0f);
+        AfterMoveChangeDisplay(change);
         turn = true;
     }
     public void UpdateHexes(List<Cell> changedCells)
@@ -137,7 +148,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                     {
                         cellsDisplayed[go].ChangeOwner(Owners.Player);
                         board.playerCells.Add(cellsDisplayed[go]);
-                        board.board[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second] = 'p';
+                        board.gameBoard[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second] = 'p';
                     }
 
                     AfterMoveChangeDisplay(cellsDisplayed[go]);
@@ -152,7 +163,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                     {
                         cellsDisplayed[go].ChangeOwner(Owners.Player);
                         board.playerCells.Add(cellsDisplayed[go]);
-                        board.board[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second] = 'p';
+                        board.gameBoard[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second] = 'p';
                     }
 
                     go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
@@ -180,14 +191,14 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                         objectsDisplayed[cell].GetComponent<Image>().color = ChangeColor(objectsDisplayed[cell].GetComponent<Image>().color, 1f);
                         cellsDisplayed[objectsDisplayed[cell]].ChangeOwner(Owners.Player);
                         board.playerCells.Add(cellsDisplayed[objectsDisplayed[cell]]);
-                        board.board[cellsDisplayed[objectsDisplayed[cell]].pos.First, cellsDisplayed[objectsDisplayed[cell]].pos.Second] = 'p';
+                        board.gameBoard[cellsDisplayed[objectsDisplayed[cell]].pos.First, cellsDisplayed[objectsDisplayed[cell]].pos.Second] = 'p';
                     }
                     else
                     {
                         objectsDisplayed[cell].GetComponent<Image>().color = ChangeColor(objectsDisplayed[cell].GetComponent<Image>().color, 1f, 0f, 0f, 0f);
                         cellsDisplayed[objectsDisplayed[cell]].ChangeOwner(Owners.AI);
                         board.aiCells.Add(cellsDisplayed[objectsDisplayed[cell]]);
-                        board.board[cellsDisplayed[objectsDisplayed[cell]].pos.First, cellsDisplayed[objectsDisplayed[cell]].pos.Second] = 'a';
+                        board.gameBoard[cellsDisplayed[objectsDisplayed[cell]].pos.First, cellsDisplayed[objectsDisplayed[cell]].pos.Second] = 'a';
                     }
                 }
             }
