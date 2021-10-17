@@ -11,7 +11,7 @@ public class ParamedicObject : ScriptableObject
     public string Name;
     public string Surname;
     public string Patronymic;
-    public double Strength;
+    public int Speed;
 
     public void BecomeCurrent(Paramedic paramedic, GameObject newPhoto)
     {
@@ -21,6 +21,6 @@ public class ParamedicObject : ScriptableObject
         Name = paramedic.Name;
         Surname = paramedic.Surname;
         Patronymic = paramedic.Patronymic;
-        Strength = paramedic.Strength;
+        Speed = paramedic.Speed;
     }
 }

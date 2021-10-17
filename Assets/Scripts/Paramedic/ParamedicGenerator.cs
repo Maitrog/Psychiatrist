@@ -45,7 +45,7 @@ public class ParamedicGenerator : MonoBehaviour
         Paramedic paramedic = new Paramedic
         {
             Sex = (Sex)Random.Range(0, 2),
-            Strength = normal.Next(1, 10)
+            Speed = normal.Next(1, 10)
         };
 
         photoSO = photos[Random.Range(0, photos.Length)].gameObject;
@@ -105,7 +105,7 @@ public class ParamedicGenerator : MonoBehaviour
         paramedic.Name = newParamedic.Name;
         paramedic.Surname = newParamedic.Surname;
         paramedic.Patronymic = newParamedic.Patronymic;
-        paramedic.Strength = newParamedic.Strength;
+        paramedic.Speed = newParamedic.Speed;
 
         paramedic.photo = newParamedic.photo;
     }
@@ -117,7 +117,7 @@ public class ParamedicGenerator : MonoBehaviour
         paramedic.Name = paramedicObject.Name;
         paramedic.Surname = paramedicObject.Surname;
         paramedic.Patronymic = paramedicObject.Patronymic;
-        paramedic.Strength = paramedicObject.Strength;
+        paramedic.Speed = paramedicObject.Speed;
 
         paramedic.photo = paramedicObject.photo.GetComponent<Photo>();
     }

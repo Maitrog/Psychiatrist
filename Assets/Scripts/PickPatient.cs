@@ -65,7 +65,7 @@ public class PickPatient : MonoBehaviour
         patronymicUGUI.text = "Отчество: " + pickedPatient.Patronymic;
         ageUGUI.text = "Возраст: " + pickedPatient.Age.ToString();
         sexUGUI.text = "Пол: " + (pickedPatient.Sex == Sex.MALE ? "М" : "Ж");
-        strengthUGUI.text = "Сила: " + pickedPatient.Strength.ToString();
+        strengthUGUI.text = "Сила: " + pickedPatient.Speed.ToString();
     }
 
     private Patient DisplayPatient(int patientNumber)
@@ -97,7 +97,7 @@ public class PickPatient : MonoBehaviour
         pickedPatient.Age = patient.Age;
         pickedPatient.MaxToxic = patient.MaxToxic;
         pickedPatient.Toxic = patient.Toxic;
-        pickedPatient.Strength = patient.Strength;
+        pickedPatient.Speed = patient.Speed;
         pickedPatient.Characters = new List<Characters>(patient.Characters);
 
         return pickedPatient;
@@ -126,7 +126,7 @@ public class PickPatient : MonoBehaviour
         paramedic.Name = paramedicObject.Name;
         paramedic.Surname = paramedicObject.Surname;
         paramedic.Patronymic = paramedicObject.Patronymic;
-        paramedic.Strength = paramedicObject.Strength;
+        paramedic.Speed = paramedicObject.Speed;
 
         paramedic.photo = paramedicObject.photo.GetComponent<Photo>();
     }

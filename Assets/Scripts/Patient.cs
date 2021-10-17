@@ -15,7 +15,7 @@ public class Patient : MonoBehaviour
     public int Age;
     public double MaxToxic;
     public double Toxic = 0;
-    public double Strength;
+    public double Speed;
     public List<Characters> Characters = new List<Characters>();
 
     // Start is called before the first frame update

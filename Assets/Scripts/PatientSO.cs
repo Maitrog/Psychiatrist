@@ -17,7 +17,7 @@ public class PatientSO : ScriptableObject
     public int Age;
     public double MaxToxic;
     public double Toxic;
-    public double Strength;
+    public double Speed;
     public List<Characters> Characters;
 
     public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace, GameObject newBody)
@@ -33,7 +33,7 @@ public class PatientSO : ScriptableObject
         Age = patient.Age;
         MaxToxic = patient.MaxToxic;
         Toxic = patient.Toxic;
-        Strength = patient.Strength;
+        Speed = patient.Speed;
 
         Characters = new List<Characters>(patient.Characters);
     }
@@ -42,7 +42,7 @@ public class PatientSO : ScriptableObject
     {
         return patientSO.Sex == patient.Sex && patientSO.Name == patient.Name && patientSO.Surname == patient.Surname &&
                 patientSO.Patronymic == patient.Patronymic && patientSO.Age == patient.Age && patientSO.MaxToxic == patient.MaxToxic && 
-                patientSO.Strength == patient.Strength && patientSO.Toxic == patient.Toxic;
+                patientSO.Speed == patient.Speed && patientSO.Toxic == patient.Toxic;
     }
     public static bool operator !=(PatientSO patientSO, Patient patient)
     {

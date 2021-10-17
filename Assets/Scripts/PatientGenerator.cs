@@ -56,7 +56,7 @@ public class PatientGenerator : MonoBehaviour
             Sex = (Sex)UnityEngine.Random.Range(0, 2),
             Age = UnityEngine.Random.Range(18, 75),
             MaxToxic = normal.NextDouble(10f, 30f),
-            Strength = normal.Next(1, 10)
+            Speed = normal.Next(1, 10)
         };
 
         faceSO = facePrefabs[UnityEngine.Random.Range(0, facePrefabs.Length)].gameObject;
@@ -138,7 +138,7 @@ public class PatientGenerator : MonoBehaviour
         patient.Surname = _patient.Surname;
         patient.Patronymic = _patient.Patronymic;
         patient.MaxToxic = _patient.MaxToxic;
-        patient.Strength = _patient.Strength;
+        patient.Speed = _patient.Speed;
         patient.Toxic = _patient.Toxic;
         patient.Characters = new List<Characters>(_patient.Characters);
 
@@ -158,7 +158,7 @@ public class PatientGenerator : MonoBehaviour
         patient.Surname = _patient.Surname;
         patient.Patronymic = _patient.Patronymic;
         patient.MaxToxic = _patient.MaxToxic;
-        patient.Strength = _patient.Strength;
+        patient.Speed = _patient.Speed;
         patient.Toxic = _patient.Toxic;
         patient.Characters = new List<Characters>(_patient.Characters);
 

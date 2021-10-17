@@ -10,7 +10,7 @@ public class Paramedic : MonoBehaviour
     public string Name;
     public string Surname;
     public string Patronymic;
-    public double Strength;
+    public int Speed;
     // Start is called before the first frame update
     void Start()
     {
