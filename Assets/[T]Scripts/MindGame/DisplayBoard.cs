@@ -74,7 +74,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         board.aiCells.Add(board.container.cells[60]);
 
         objectsDisplayed[board.container.cells[0]].GetComponent<Image>().color = ChangeColor(objectsDisplayed[board.container.cells[0]].GetComponent<Image>().color, 1f);
-        objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color = ChangeColor(objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color, 0.588f, 0f, 0f, 0f);
+        objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color = ChangeColor(objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color, 1f, 0f, 0f, 0f);
     }
     public void ChangeTurn()
     {
@@ -90,7 +90,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         cellsDisplayed[objectsDisplayed[change]].ChangeOwner(Owners.AI);
         board.aiCells.Add(change);
         board.gameBoard[posy, posx] = 'a';
-        objectsDisplayed[change].GetComponent<Image>().color = ChangeColor(objectsDisplayed[change].GetComponent<Image>().color, 0.588f, 0f, 0f, 0f);
+        objectsDisplayed[change].GetComponent<Image>().color = ChangeColor(objectsDisplayed[change].GetComponent<Image>().color, 1f, 0f, 0f, 0f);
         AfterMoveChangeDisplay(change);
         turn = true;
     }
@@ -103,7 +103,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         GameObject go = eventData.pointerCurrentRaycast.gameObject;
         if (go.transform.tag == "Slot" && turn)
         {
-            Debug.Log(cellsDisplayed[go].ToString());
+            Debug.Log(cellsDisplayed[go].ToString() + " " + board.gameBoard[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second].ToString());
             HandleTouch(go);
         }
     }

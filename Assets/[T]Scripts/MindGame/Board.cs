@@ -17,7 +17,7 @@ public class Board : MonoBehaviour
     public List<Cell> playerCells = new List<Cell>();
     public List<Cell> aiCells = new List<Cell>();
     public char[,] gameBoard = new char[9, 9];
-    private int minimaxDepth = 3;
+    private int minimaxDepth = 2;
 
     public bool CanSelect(Cell curCell, int turn)//можем ли мы выбрать данный гекс
     {
@@ -93,20 +93,12 @@ public class Board : MonoBehaviour
         return changedCells;
     }
 
+    bool first = true;
+
     public int Minimax(Pair<int, int> curPos, bool maximizingPlayer, char[,] board, int depth)//ai - maximize, player - minimize
     {
-        /*
-        Debug.Log("DEPTH: " + depth);
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                if (board[i, j] == 'a' || board[i, j] == 'p')
-                    Debug.Log(board[i, j]);
-            }
-            Debug.Log('\n');
-        }
-        */
+        //add ref; alpha - beta; optimization; more depth; add 2 distance moves; check not all moves of all hexes, just all possible hexes to go without duplicates;
+        //fix bugs: more depths - incorrect hexes;
 
         //check pos
         if (depth > 0)
@@ -173,30 +165,17 @@ public class Board : MonoBehaviour
                 }
             }
 
-            if (depth >= this.minimaxDepth)
+            /*
+            for (int k = 0; k < 9; k++)
             {
-                int p = 0;
-                int a = 0;
-                for (int i = 0; i < 9; i++)
+                for (int z = 0; z < 9; z++)
                 {
-                    for (int j = 0; j < 9; j++)
-                    {
-                        if (board[i, j] == 'p')
-                        {
-                            //Debug.Log("P: " + i.ToString() + " " + j.ToString());
-                            p++;
-                        }
-                        else if (board[i, j] == 'a')
-                        {
-                            //Debug.Log("A: " + i.ToString() + " " + j.ToString());
-                            a++;
-                        }
-                    }
+                    if (board[k, z] == 'a' || board[k, z] == 'p')
+                        Debug.Log(board[k, z]);
                 }
-                //Debug.Log('\n');
-                //Debug.Log("ANSWER " + a.ToString() + " " + p.ToString());
-                return a - p;
+                Debug.Log('\n');
             }
+            */
             //recursion
             int maxScore = System.Int32.MinValue;
             int tmp;
@@ -210,22 +189,24 @@ public class Board : MonoBehaviour
                         //Debug.Log("Depth: " + depth.ToString() + " " + i.ToString() + " " + j.ToString() + '\n');
                         int y = i;
                         int x = j;
-                        Pair<int, int> newPos = new Pair<int, int>(y, x + 1);
-                        char[,] tmpBoard = new char[9, 9];
+                        Pair<int, int> newPos = new Pair<int, int>(y, x + 1);                                               
+                        char[,] tmpBoard = new char[9, 9];                
                         for (int k = 0; k < 9; k++)
                         {
                             for (int z = 0; z < 9; z++)
                             {
                                 tmpBoard[k, z] = board[k, z];
                             }
-                        }
-                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer,  tmpBoard, depth + 1));
+                        }                   
+                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1));
                         if (tmp > maxScore)
                         {
                             maxScore = tmp;
                             best.First = newPos.First;
                             best.Second = newPos.Second;
                         }
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -243,6 +224,8 @@ public class Board : MonoBehaviour
                             best.First = newPos.First;
                             best.Second = newPos.Second;
                         }
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -260,6 +243,8 @@ public class Board : MonoBehaviour
                             best.First = newPos.First;
                             best.Second = newPos.Second;
                         }
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -277,6 +262,8 @@ public class Board : MonoBehaviour
                             best.First = newPos.First;
                             best.Second = newPos.Second;
                         }
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -294,6 +281,8 @@ public class Board : MonoBehaviour
                             best.First = newPos.First;
                             best.Second = newPos.Second;
                         }
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -374,20 +363,34 @@ public class Board : MonoBehaviour
                     board[curPos.First + 1, curPos.Second] = 'a';
                 }
             }
-            /*
-            if (depth == 1)
+
+            if (depth >= this.minimaxDepth)
             {
+                int p = 0;
+                int a = 0;
                 for (int i = 0; i < 9; i++)
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        if (board[i, j] == 'a' || board[i, j] == 'p')
-                            Debug.Log(board[i, j]);
+                        if (board[i, j] == 'p')
+                        {
+                            if (first)
+                                Debug.Log("P: " + i.ToString() + " " + j.ToString());
+                            p++;
+                        }
+                        else if (board[i, j] == 'a')
+                        {
+                            if (first)
+                                Debug.Log("A: " + i.ToString() + " " + j.ToString());
+                            a++;
+                        }
                     }
-                    Debug.Log('\n');
                 }
+                //Debug.Log('\n');
+                //Debug.Log("ANSWER " + a.ToString() + " " + p.ToString());
+                first = false;
+                return a - p;
             }
-            */
             //recursion
             int minScore = System.Int32.MaxValue;
             for (int i = 0; i < 9; i++)
@@ -412,20 +415,8 @@ public class Board : MonoBehaviour
                             }
                         }
                         minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
-                        /*
-                        if (depth > 0 )
-                        {
-                            for (int k = 0; k < 9; k++)
-                            {
-                                for (int z = 0; z < 9; z++)
-                                {
-                                    if (board[k, z] == 'a' || board[k, z] == 'p')
-                                        Debug.Log(board[k, z]);
-                                }
-                                Debug.Log('\n');
-                            }
-                        }
-                        */
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -437,6 +428,8 @@ public class Board : MonoBehaviour
                         newPos.First = y;
                         newPos.Second = x - 1;
                         minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -448,6 +441,8 @@ public class Board : MonoBehaviour
                         newPos.First = y - 1;
                         newPos.Second = x - 1;
                         minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -459,6 +454,8 @@ public class Board : MonoBehaviour
                         newPos.First = y - 1;
                         newPos.Second = x;
                         minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -470,6 +467,8 @@ public class Board : MonoBehaviour
                         newPos.First = y + 1;
                         newPos.Second = x;
                         minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
+
+                        newPos = new Pair<int, int>();
                         tmpBoard = new char[9, 9];
                         for (int k = 0; k < 9; k++)
                         {
@@ -484,7 +483,6 @@ public class Board : MonoBehaviour
                     }
                 }
             }
-            //Debug.Log('\n');
             return minScore;
         }
     }
