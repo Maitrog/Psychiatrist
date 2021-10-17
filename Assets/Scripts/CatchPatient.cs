@@ -6,8 +6,8 @@ public class CatchPatient : MonoBehaviour
 {
     public GameObject searchPanel;
     public Patient patient;
-    public CurrentTargetsSO currentTargets;
-    public PatientSO currentPatient;
+    public CurrentTargetsObject currentTargets;
+    public PatientObject currentPatient;
 
     public void Catch()
     {

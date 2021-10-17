@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PatientGenerator : MonoBehaviour
 {
-    public CurrentTargetsSO currentTargetsSO;
+    public CurrentTargetsObject currentTargetsSO;
 
     public GameObject searchPanel;
     public Hair[] hairMalePrefabs;
@@ -147,7 +147,7 @@ public class PatientGenerator : MonoBehaviour
         patient.body = _patient.body;
     }
 
-    private void SpawnPatient(int index, PatientSO _patient)
+    private void SpawnPatient(int index, PatientObject _patient)
     {
         var characterTransform = searchPanel.transform.GetChild(index).GetChild(0);
         var gameObject = characterTransform.gameObject;

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Current Targets", menuName = "CurrentTargets")]
-public class CurrentTargetsSO : ScriptableObject
+public class CurrentTargetsObject : ScriptableObject
 {
-    public List<PatientSO> currentTarget;
+    public List<PatientObject> currentTarget;
     public List<bool> isReady = new List<bool> { true, true, true, true };
     public int count;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Patient", menuName = "Patient")]
-public class PatientSO : ScriptableObject
+public class PatientObject : ScriptableObject
 {
 
     public GameObject hair;
@@ -38,13 +38,13 @@ public class PatientSO : ScriptableObject
         Characters = new List<Characters>(patient.Characters);
     }
 
-    public static bool operator ==(PatientSO patientSO, Patient patient)
+    public static bool operator ==(PatientObject patientSO, Patient patient)
     {
         return patientSO.Sex == patient.Sex && patientSO.Name == patient.Name && patientSO.Surname == patient.Surname &&
                 patientSO.Patronymic == patient.Patronymic && patientSO.Age == patient.Age && patientSO.MaxToxic == patient.MaxToxic && 
                 patientSO.Speed == patient.Speed && patientSO.Toxic == patient.Toxic;
     }
-    public static bool operator !=(PatientSO patientSO, Patient patient)
+    public static bool operator !=(PatientObject patientSO, Patient patient)
     {
         return !(patientSO == patient);
     }
