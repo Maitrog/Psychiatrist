@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PickPatient : MonoBehaviour
+public class SelectPatient : MonoBehaviour
 {
     public GameObject searchPanel;
     public GameObject pickedPatientPanel;
@@ -65,7 +65,7 @@ public class PickPatient : MonoBehaviour
         patronymicUGUI.text = "Отчество: " + pickedPatient.Patronymic;
         ageUGUI.text = "Возраст: " + pickedPatient.Age.ToString();
         sexUGUI.text = "Пол: " + (pickedPatient.Sex == Sex.MALE ? "М" : "Ж");
-        strengthUGUI.text = "Сила: " + pickedPatient.Speed.ToString();
+        strengthUGUI.text = "Скорость: " + pickedPatient.Speed.ToString();
     }
 
     private Patient DisplayPatient(int patientNumber)
