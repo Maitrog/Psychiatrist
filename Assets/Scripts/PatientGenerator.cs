@@ -56,7 +56,7 @@ public class PatientGenerator : MonoBehaviour
             Sex = (Sex)UnityEngine.Random.Range(0, 2),
             Age = UnityEngine.Random.Range(18, 75),
             MaxToxic = normal.NextDouble(10f, 30f),
-            Speed = normal.Next(1, 10)
+            Speed = normal.Next(1, 4)
         };
 
         faceSO = facePrefabs[UnityEngine.Random.Range(0, facePrefabs.Length)].gameObject;

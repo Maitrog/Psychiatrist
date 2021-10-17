@@ -45,7 +45,7 @@ public class ParamedicGenerator : MonoBehaviour
         Paramedic paramedic = new Paramedic
         {
             Sex = (Sex)Random.Range(0, 2),
-            Speed = normal.Next(1, 10)
+            Speed = normal.Next(1, 4)
         };
 
         photoSO = photos[Random.Range(0, photos.Length)].gameObject;
