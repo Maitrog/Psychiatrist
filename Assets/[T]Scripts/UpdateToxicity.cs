@@ -7,7 +7,7 @@ public class UpdateToxicity : MonoBehaviour
     public float fill;
     public MethodsObject methods;
     public DrugsObject drugs;
-    public PatientSO patient;
+    public PatientObject patient;
     public bool isAlive = true;
     public bool isSick = true;
 

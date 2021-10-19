@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CurrentPatient : MonoBehaviour
 {
-    public PatientSO patientSO;
+    public PatientObject patientObject;
 
 
     

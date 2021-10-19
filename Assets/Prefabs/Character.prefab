@@ -45,7 +45,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7680752372910713291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0bbd2bf40a8ad4d9dd6e6232aa85eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 37c9d7d887abfef42956cf95243d781b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hair: {fileID: 0}
@@ -58,4 +58,5 @@ MonoBehaviour:
   Age: 0
   MaxToxic: 0
   Toxic: 0
-  Strength: 0
+  Speed: 0
+  Characters: 

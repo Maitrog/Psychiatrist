@@ -22,12 +22,6 @@ public class Patient : MonoBehaviour
     {
         
     }
-
-    }
-    void Update()
-    {
-
-    }
 }
 
 public enum Characters
