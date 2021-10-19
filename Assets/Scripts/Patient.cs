@@ -18,13 +18,12 @@ public class Patient : MonoBehaviour
     public double Speed;
     public List<Characters> Characters = new List<Characters>();
 
-    // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
-    // Update is called once per frame
+    }
     void Update()
     {
 
@@ -33,18 +32,27 @@ public class Patient : MonoBehaviour
 
 public enum Characters
 {
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
-    SEVEN,
-    EIGHT,
-    NINE,
-    TEN
-}
+    IRRITABILITY,
+    ANXIETY,
+    PARANOIA,
+    HYPERACTIVITY,
+    APATHY,
+    FATIGUE,
+    HYSTERICS,
+    PANIC_ATTACKS,
+    DELIRIUM,
+    HALLUCINATIONS,
+    SINCERITY,
+    OPTIMISM,
+    INCREASED_EMPATHY,
+    INDIFFERENCE,
+    ENVY,
+    SUSPICIOUS,
+    VANITY,
+    SELFISHNESS,
+    MAX
 
+}
 public enum Sex
 {
     MALE,

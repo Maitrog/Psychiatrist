@@ -8,7 +8,6 @@ using UnityEngine.Events;
 public class DisplayInventory : MonoBehaviour
 {
     public MouseItem mouseItem = new MouseItem();
-    private CanvasScaler canvasScaler;
     //public GameObject shop;
     public GameObject inventoryPrefab;
     public InventoryObject inventory;
@@ -18,7 +17,11 @@ public class DisplayInventory : MonoBehaviour
     public int Y_SPACE_BETWEEN_ITEMS;
     public int NUMBER_OF_COLUMNS;
     Dictionary<GameObject, InventorySlot> itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
-    
+    bool inSLot = false;
+    private GameObject clickObj;
+
+    public MethodsObject methods;
+    public DrugsObject drugs;
 
     void Start()
     {
@@ -28,22 +31,14 @@ public class DisplayInventory : MonoBehaviour
 
     void Update()
     {
-        //UpdateDisplay();
         UpdateSlots();
+        MouseClicked();
     }
-    /*
-    public void AwakeResources()
-    {
-        var obj = Instantiate(inventory.resources.textGold, Vector3.zero, Quaternion.identity, shop.transform);
-        obj.GetComponent<RectTransform>().localPosition = new Vector3(0f, 225f, 0f);
-        //obj.transform.position = new Vector3(0f, 225f, 0f);
-    }
-    */
     public void UpdateSlots()
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in itemsDisplayed)
         {
-            if (_slot.Value.ID >= 0)
+            if (_slot.Value.ID >= 0 && _slot.Value.amount > 0)
             {
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
@@ -51,33 +46,13 @@ public class DisplayInventory : MonoBehaviour
             }
             else //if (_slot.Value.ID != -1)
             {
+                if (_slot.Value.amount <= 0)
+                    _slot.Value.UpdateSlot(-1, null, 0);
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventoryPrefab.GetComponentInChildren<Image>().sprite;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color32(195, 126, 126, 255);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
             }
         }
-    }
-
-    public void UpdateDisplay()
-    {
-        //for (int i = 0; i < inventory.container.items.Count; i++)
-        //{
-        //    InventorySlot slot = inventory.container.items[i];
-
-        //    if (itemsDisplayed.ContainsKey(slot))
-        //    {
-        //        itemsDisplayed[slot].GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
-        //    }
-        //    else
-        //    {
-        //        var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-        //        Debug.Log(slot.item.Id.ToString());
-        //        obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[slot.item.Id].uiDisplay;
-        //        obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-        //        obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
-        //        itemsDisplayed.Add(slot, obj);
-        //    }
-        //}
     }
 
     public void CreateSlots()
@@ -116,12 +91,39 @@ public class DisplayInventory : MonoBehaviour
         {
             if (obj.tag == "Slot")
             {
+                AddEvent(obj.gameObject, EventTriggerType.PointerEnter, delegate { OnEnter(obj.gameObject); });
+                AddEvent(obj.gameObject, EventTriggerType.PointerExit, delegate { OnExit(obj.gameObject); });
                 itemsDisplayed.Add(obj.gameObject, inventory.container.items[i]);
+                i++;
             }
-            i++;
         }
-        Debug.Log(itemsDisplayed.Count);
     }
+    
+    private void MouseClicked()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (inSLot) {
+                Debug.Log(clickObj.name);
+                InventorySlot slot = itemsDisplayed[clickObj];
+                if (slot.amount > 0)
+                {
+                    inventory.AddItem(slot.item, -1);
+                    if (slot.item.type == ItemType.Methods)
+                    {
+                        Debug.Log("methods");
+                        methods.AddItem(slot.item, 1);
+                    }
+                    else if (slot.item.type == ItemType.Tablets)
+                    {
+                        Debug.Log("tablets");
+                        drugs.AddItem(slot.item, 1);
+                    }
+                }
+            }
+        }
+    }
+    
     private void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
         EventTrigger trigger = obj.GetComponent<EventTrigger>();
@@ -133,13 +135,19 @@ public class DisplayInventory : MonoBehaviour
 
     public void OnEnter(GameObject obj)
     {
+        inSLot = true;
+        clickObj = obj;
         Debug.Log("Enter");
+        /*
         mouseItem.hoverObj = obj;
         if (itemsDisplayed.ContainsKey(obj))
             mouseItem.hoverItem = itemsDisplayed[obj];
+        */
     }
     public void OnExit(GameObject obj)
     {
+        inSLot = false;
+        clickObj = null;
         Debug.Log("Exit");
         mouseItem.hoverObj = null;
         mouseItem.hoverItem = null;
@@ -230,26 +238,6 @@ public class DisplayInventory : MonoBehaviour
     public Vector3 GetPosition(int i)
     {
         return new Vector3(X_START + (X_SPACE_BETWEEN_ITEMS * (i % NUMBER_OF_COLUMNS)),Y_START + ((-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMNS))), 0f);
-    }
-
-    private Vector2 ScreenScale
-    {
-        get
-        {
-            if (canvasScaler == null)
-            {
-                canvasScaler = GetComponentInParent<CanvasScaler>();
-            }
-
-            if (canvasScaler)
-            {
-                return new Vector2(canvasScaler.referenceResolution.x / Screen.width, canvasScaler.referenceResolution.y / Screen.height);
-            }
-            else
-            {
-                return Vector2.one;
-            }
-        }
     }
 }
 
