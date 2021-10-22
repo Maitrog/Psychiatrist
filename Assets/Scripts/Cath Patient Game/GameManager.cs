@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public ParamedicCatcher paramedic;
-    public GameObject patient;
+    public PatientVictim patient;
 
     public PatientObject currentPatient;
     public ParamedicObject currentParamedic;
@@ -16,16 +16,30 @@ public class GameManager : MonoBehaviour
         NewGame();
     }
 
+    private void ResetState()
+    {
+        patient.ResetState();
+        paramedic.ResetState();
+    }
     private void NewGame()
     {
-        paramedic.Speed = currentParamedic.Speed;
+        float spM = 1.0f - (float)(currentParamedic.Speed - currentPatient.Speed) / 16.0f;
+        patient.speedMultiplaier = spM;
+        patient.GetComponent<Movement>().speedMultiplaier = spM;
         paramedic.gameObject.SetActive(true);
-        //patient.SetActive(true);
+        patient.gameObject.SetActive(true);
+    }
+
+    public void PatientVictimCatched(PatientVictim patient)
+    {
+        patient.gameObject.SetActive(false);
+        GameOver();
     }
 
     private void GameOver()
     {
+        Debug.Log("Game Over");
         paramedic.gameObject.SetActive(false);
-        patient.SetActive(false);
+        patient.gameObject.SetActive(false);
     }
 }
