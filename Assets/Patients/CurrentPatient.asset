@@ -22,4 +22,5 @@ MonoBehaviour:
   Age: 56
   MaxToxic: 28.749605178833008
   Toxic: 0
-  Strength: 3
+  Speed: 1
+  Characters: 
