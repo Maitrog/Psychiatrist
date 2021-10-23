@@ -11,7 +11,7 @@ public enum Owners//кому принадлежит гекс
 public class Board : MonoBehaviour
 {
     public AllCells container;
-    public PatientSO curPatient;
+    public PatientObject curPatient;
     public int playerScore = 0;
     public int aiScore = 0;
     public List<Cell> playerCells = new List<Cell>();
