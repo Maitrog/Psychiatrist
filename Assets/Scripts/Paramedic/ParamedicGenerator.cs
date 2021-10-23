@@ -8,6 +8,9 @@ public class ParamedicGenerator : MonoBehaviour
 {
     public CurrentParamedicObject currentParamedicObject;
 
+    public GameObject selectedParamedicPanel;
+    public GameObject background;
+
     public GameObject orderliesPanel;
     public Photo[] photos;
     public GameObject paramedicPrefab;
@@ -129,8 +132,13 @@ public class ParamedicGenerator : MonoBehaviour
         gameObject.AddComponent<CanvasRenderer>();
         gameObject.AddComponent<Image>();
         gameObject.AddComponent<Button>();
+        gameObject.AddComponent<SelectParamedic>();
         gameObject.AddComponent<RectTransform>();
         gameObject.transform.SetParent(orderliesPanel.transform);
+        
+        SelectParamedic sp = gameObject.GetComponent<SelectParamedic>();
+        sp.selectedParamedicPanel = selectedParamedicPanel;
+        sp.background = background;
         RectTransform rt = gameObject.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(200, 200);
         rt.localScale = new Vector3(1, 1, 1);
