@@ -75,10 +75,10 @@ public class SelectParamedic : MonoBehaviour
         sexUGUI.text = "Пол: " + (paramedic.Sex == Sex.MALE ? "М" : "Ж");
         strengthUGUI.text = "Скорость: " + paramedic.Speed.ToString();
 
-        eloquenceUGUI.text = "Красноречие: ";
-        willUGUI.text = "Воля: ";
-        physicalUGUI.text = "Физподготовка: ";
-        empathyUGUI.text = "Эмпатия: ";
-        additionalUGUI.text = "Дополнительные: ";
+        eloquenceUGUI.text = "Красноречие: " + paramedic.skills[0].Level;
+        willUGUI.text = "Воля: " + paramedic.skills[1].Level;
+        physicalUGUI.text = "Физподготовка: " + paramedic.skills[2].Level;
+        empathyUGUI.text = "Эмпатия: " + paramedic.skills[3].Level;
+        additionalUGUI.text = "Дополнительные: " + paramedic.skills[4].Level;
     }
 }
