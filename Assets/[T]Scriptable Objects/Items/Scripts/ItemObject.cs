@@ -22,7 +22,7 @@ public abstract class ItemObject : ScriptableObject
     public string description;
     public ItemAttribute[] attributes;
 
-    public Characters character;
+    public Deviation character;
     public int toxicity;
 
     public Item CreateItem()
@@ -39,7 +39,7 @@ public class Item
     public int Id;
     public ItemType type;
     public int toxicity;
-    public Characters character;
+    public Deviation character;
     public ItemAttribute[] attributes;
     public Item(ItemObject item)
     {

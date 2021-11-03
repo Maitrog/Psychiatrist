@@ -12,6 +12,8 @@ public class ParamedicObject : ScriptableObject
     public string Surname;
     public string Patronymic;
     public int Speed;
+    public List<Skill> skills;
+
 
     public void BecomeCurrent(Paramedic paramedic, GameObject newPhoto)
     {
@@ -22,5 +24,6 @@ public class ParamedicObject : ScriptableObject
         Surname = paramedic.Surname;
         Patronymic = paramedic.Patronymic;
         Speed = paramedic.Speed;
+        skills = new List<Skill>(paramedic.skills);
     }
 }

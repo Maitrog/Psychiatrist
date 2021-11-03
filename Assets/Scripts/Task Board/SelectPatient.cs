@@ -98,7 +98,7 @@ public class SelectPatient : MonoBehaviour
         pickedPatient.MaxToxic = patient.MaxToxic;
         pickedPatient.Toxic = patient.Toxic;
         pickedPatient.Speed = patient.Speed;
-        pickedPatient.Characters = new List<Characters>(patient.Characters);
+        pickedPatient.Diseases = new List<DiseaseType>(patient.Diseases);
 
         return pickedPatient;
     }
@@ -127,6 +127,7 @@ public class SelectPatient : MonoBehaviour
         paramedic.Surname = paramedicObject.Surname;
         paramedic.Patronymic = paramedicObject.Patronymic;
         paramedic.Speed = paramedicObject.Speed;
+        paramedic.skills = new List<Skill>(paramedicObject.skills);
 
         paramedic.photo = paramedicObject.photo.GetComponent<Photo>();
     }

@@ -115,7 +115,7 @@ public class Answer
 public class Characteristic
 {
     public int id { get; set; }//2
-    public Characters Characters { get; set; }//zloy
+    public Deviation Characters { get; set; }//zloy
     public List<Question> questions { get; set; }
 
     public Characteristic(Characteristic c)

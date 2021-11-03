@@ -17,12 +17,21 @@ public class ParamedicGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < currentParamedicObject.currentParamedics.Count; i++)
+        if (currentParamedicObject.currentParamedics.Count != 0)
+        {
+            for (int i = 0; i < currentParamedicObject.currentParamedics.Count; i++)
+            {
+                GameObject parent = CreateEmptyObject();
+                CreatParamedicPrefab(parent);
+                RenderParamedic(currentParamedicObject.currentParamedics[i].photo, parent.transform);
+                SpawnParamedic(parent, currentParamedicObject.currentParamedics[i]);
+            }
+        }
+        else
         {
             GameObject parent = CreateEmptyObject();
             CreatParamedicPrefab(parent);
-            RenderParamedic(currentParamedicObject.currentParamedics[i].photo, parent.transform);
-            SpawnParamedic(parent, currentParamedicObject.currentParamedics[i]);
+            GeneratParamedic(parent);
         }
     }
 
@@ -45,13 +54,41 @@ public class ParamedicGenerator : MonoBehaviour
         NormalRandom normal = new NormalRandom();
         var parentTransform = gameObject.transform;
 
+        photoSO = photos[Random.Range(0, photos.Length)].gameObject;
         Paramedic paramedic = new Paramedic
         {
             Sex = (Sex)Random.Range(0, 2),
             Speed = normal.Next(1, 4)
         };
 
-        photoSO = photos[Random.Range(0, photos.Length)].gameObject;
+
+        System.Array values = System.Enum.GetValues(typeof(SkillType));
+        HashSet<SkillType> positiveSkills = new HashSet<SkillType>();
+        while (positiveSkills.Count < 2)
+        {
+            positiveSkills.Add((SkillType)Random.Range(0, values.Length - 1));
+        }
+
+        foreach (SkillType skill in positiveSkills)
+        {
+            Debug.Log(skill);
+        }
+
+        foreach (SkillType type in values)
+        {
+            SkillLevel level;
+            int lvl = Random.Range(0, 5);
+            if (lvl >= 0 && lvl <= 2)
+                level = SkillLevel.LOW;
+            else if (lvl >= 3 && lvl <= 4)
+                level = SkillLevel.MIDDLE;
+            else
+                level = SkillLevel.HIGH;
+            if (positiveSkills.Contains(type))
+                paramedic.skills.Add(Skill.GetSkill(type, level));
+            else
+                paramedic.skills.Add(Skill.GetSkill(type, SkillLevel.LOWEST));
+        }
 
         if (paramedic.Sex == Sex.MALE)
         {
@@ -71,19 +108,21 @@ public class ParamedicGenerator : MonoBehaviour
             paramedic.Surname = surnames[Random.Range(0, surnames.Count)];
             paramedic.Patronymic = patronymics[Random.Range(0, patronymics.Count)];
         }
-        RenderParamedic(photoSO, parentTransform);
+        Paramedic renderedParamedic = RenderParamedic(photoSO, parentTransform);
+        paramedic.photo = renderedParamedic.photo;
 
         ParamedicObject paramedicObject = CreateParamedicSO(paramedic, photoSO);
         currentParamedicObject.AddParamedic(paramedicObject);
         SpawnParamedic(gameObject, paramedic);
     }
 
-    private void RenderParamedic(GameObject photoSO, Transform parentTransform)
+    private Paramedic RenderParamedic(GameObject photoSO, Transform parentTransform)
     {
         Photo photo = Instantiate(photoSO.GetComponent<Photo>());
         photo.transform.SetParent(parentTransform.GetChild(0));
         photo.transform.position = new Vector3(photo.transform.position.x, photo.transform.position.y, 100);
         photo.transform.localPosition = new Vector3(0, 0, -1);
+        return new Paramedic { photo = photo };
     }
 
     private void CreatParamedicPrefab(GameObject paramedic)
@@ -109,6 +148,7 @@ public class ParamedicGenerator : MonoBehaviour
         paramedic.Surname = newParamedic.Surname;
         paramedic.Patronymic = newParamedic.Patronymic;
         paramedic.Speed = newParamedic.Speed;
+        paramedic.skills.AddRange(newParamedic.skills);
 
         paramedic.photo = newParamedic.photo;
     }
@@ -121,6 +161,7 @@ public class ParamedicGenerator : MonoBehaviour
         paramedic.Surname = paramedicObject.Surname;
         paramedic.Patronymic = paramedicObject.Patronymic;
         paramedic.Speed = paramedicObject.Speed;
+        paramedic.skills.AddRange(paramedicObject.skills);
 
         paramedic.photo = paramedicObject.photo.GetComponent<Photo>();
     }
@@ -135,7 +176,7 @@ public class ParamedicGenerator : MonoBehaviour
         gameObject.AddComponent<SelectParamedic>();
         gameObject.AddComponent<RectTransform>();
         gameObject.transform.SetParent(orderliesPanel.transform);
-        
+
         SelectParamedic sp = gameObject.GetComponent<SelectParamedic>();
         sp.selectedParamedicPanel = selectedParamedicPanel;
         sp.background = background;

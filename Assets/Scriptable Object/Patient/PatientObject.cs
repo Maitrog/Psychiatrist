@@ -18,7 +18,7 @@ public class PatientObject : ScriptableObject
     public double MaxToxic;
     public double Toxic;
     public double Speed;
-    public List<Characters> Characters;
+    public List<DiseaseType> Diseases;
 
     public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace, GameObject newBody)
     {
@@ -35,7 +35,7 @@ public class PatientObject : ScriptableObject
         Toxic = patient.Toxic;
         Speed = patient.Speed;
 
-        Characters = new List<Characters>(patient.Characters);
+        Diseases = new List<DiseaseType>(patient.Diseases);
     }
 
     public static bool operator ==(PatientObject patientSO, Patient patient)
