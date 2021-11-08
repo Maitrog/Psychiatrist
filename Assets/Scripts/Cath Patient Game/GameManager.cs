@@ -11,9 +11,6 @@ public class GameManager : MonoBehaviour
     public ParamedicCatcher paramedic;
     public PatientVictim patient;
 
-    public PatientObject currentPatient;
-    public ParamedicObject currentParamedic;
-
     public GameObject resultPanel;
     public GameObject gridPanel;
 
@@ -34,7 +31,7 @@ public class GameManager : MonoBehaviour
     private void NewGame()
     {
         win = false;
-        float spM = 1.0f - (float)(currentParamedic.Speed + 1 - currentPatient.Speed) / 16.0f;
+        float spM = 1.0f - (float)(StaticCurrentParamedics.SelectedParamedic.Speed + 1 - StaticCurrentPatients.SelectedPatient.Speed) / 16.0f;
         patient.speedMultiplaier = spM;
         patient.GetComponent<Movement>().speedMultiplaier = spM;
         patient.GetComponent<PatientVictimFrightened>().duration = duration;
@@ -54,7 +51,7 @@ public class GameManager : MonoBehaviour
         HashSet<DiseaseType> posidivDisease = new HashSet<DiseaseType>();
         HashSet<DiseaseType> negativeDisease = new HashSet<DiseaseType>();
 
-        foreach (Skill skill in currentParamedic.skills)
+        foreach (Skill skill in StaticCurrentParamedics.SelectedParamedic.skills)
         {
             if (skill.Level == SkillLevel.LOWEST)
             {
@@ -69,7 +66,7 @@ public class GameManager : MonoBehaviour
         }
         negativeDisease = new HashSet<DiseaseType>(negativeDisease.Intersect(posidivDisease).ToList());
         posidivDisease = new HashSet<DiseaseType>(posidivDisease.Except(negativeDisease).ToList());
-        foreach (DiseaseType disease in currentPatient.Diseases)
+        foreach (DiseaseType disease in StaticCurrentPatients.SelectedPatient.Diseases)
         {
             if (posidivDisease.Contains(disease))
                 win = true;
@@ -94,9 +91,9 @@ public class GameManager : MonoBehaviour
         {
             background.color = Color.red;
             text.text = "YOU'R LOOOOOOOOOOOOOOOOOOOOOOOSE";
-            currentPatient.Reset();
+            StaticCurrentPatients.SelectedPatient.Reset();
         }
-        currentParamedic.Reset();
+        StaticCurrentParamedics.SelectedParamedic.Reset();
         gridPanel.SetActive(false);
         resultPanel.SetActive(true);
     }
