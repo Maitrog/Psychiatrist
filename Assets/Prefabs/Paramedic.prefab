@@ -53,5 +53,5 @@ MonoBehaviour:
   Name: 
   Surname: 
   Patronymic: 
-  Age: 0
-  Strength: 0
+  Speed: 0
+  skills: []

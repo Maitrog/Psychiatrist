@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Paramedic", menuName = "Paramedic")]
 public class ParamedicObject : ScriptableObject
 {
@@ -12,6 +14,8 @@ public class ParamedicObject : ScriptableObject
     public string Surname;
     public string Patronymic;
     public int Speed;
+    public List<Skill> skills;
+
 
     public void BecomeCurrent(Paramedic paramedic, GameObject newPhoto)
     {
@@ -22,5 +26,18 @@ public class ParamedicObject : ScriptableObject
         Surname = paramedic.Surname;
         Patronymic = paramedic.Patronymic;
         Speed = paramedic.Speed;
+        skills = new List<Skill>(paramedic.skills);
+    }
+
+    public void Reset()
+    {
+        photo = null;
+
+        Sex = Sex.MALE;
+        Name = null;
+        Surname = null;
+        Patronymic = null;
+        Speed = 0;
+        skills = null;
     }
 }

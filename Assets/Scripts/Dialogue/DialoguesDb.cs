@@ -48,7 +48,7 @@ public class NameDb1 : MonoBehaviour
         while (_dbr.Read())
         {
             _dbr.GetValues(buff);
-            q_buff.Characters=(Characters)(Int32.Parse(buff[1].ToString()));
+            q_buff.Characters=(Deviation)(Int32.Parse(buff[1].ToString()));
             q_buff.id = (Int32.Parse(buff[0].ToString()));
             characteristics.Add(new Characteristic(q_buff));
         }

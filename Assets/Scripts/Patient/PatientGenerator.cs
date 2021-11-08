@@ -32,7 +32,7 @@ public class PatientGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentTargetsSO.count < 4)
+        if (currentTargetsSO.Count < 4)
         {
             for (int i = 0; i < currentTargetsSO.isReady.Count; i++)
             {
@@ -46,6 +46,7 @@ public class PatientGenerator : MonoBehaviour
 
     private void GeneratePatient(int index)
     {
+        int maxDiseases = 2;
         GameObject faceSO;
         GameObject hairSO;
         GameObject bodySO;
@@ -62,14 +63,23 @@ public class PatientGenerator : MonoBehaviour
         faceSO = facePrefabs[UnityEngine.Random.Range(0, facePrefabs.Length)].gameObject;
         bodySO = bodyPrefabs[UnityEngine.Random.Range(0, bodyPrefabs.Length)].gameObject;
 
-        Array values = Enum.GetValues(typeof(Characters));
-        HashSet<Characters> characters = new HashSet<Characters>();
-        while (characters.Count < 3)
+        Array values = Enum.GetValues(typeof(DiseaseType));
+        HashSet<DiseaseType> diseases = new HashSet<DiseaseType>();
+        while (diseases.Count < maxDiseases)
         {
-            characters.Add((Characters)UnityEngine.Random.Range(0, values.Length));
+            DiseaseType disease = (DiseaseType)UnityEngine.Random.Range(0, values.Length - 1);
+            if(disease == DiseaseType.BIPOLAR_DISORDER)
+            {
+                maxDiseases = 3;
+                continue;
+            }
+            diseases.Add(disease);
         }
 
-        patient.Characters.AddRange(characters);
+        foreach (DiseaseType type in diseases)
+        { 
+            patient.Diseases.Add(type);
+        }
 
         if (patient.Sex == Sex.MALE)
         {
@@ -140,7 +150,7 @@ public class PatientGenerator : MonoBehaviour
         patient.MaxToxic = _patient.MaxToxic;
         patient.Speed = _patient.Speed;
         patient.Toxic = _patient.Toxic;
-        patient.Characters = new List<Characters>(_patient.Characters);
+        patient.Diseases = new List<DiseaseType>(_patient.Diseases);
 
         patient.hair = _patient.hair;
         patient.face = _patient.face;
@@ -160,7 +170,7 @@ public class PatientGenerator : MonoBehaviour
         patient.MaxToxic = _patient.MaxToxic;
         patient.Speed = _patient.Speed;
         patient.Toxic = _patient.Toxic;
-        patient.Characters = new List<Characters>(_patient.Characters);
+        patient.Diseases = new List<DiseaseType>(_patient.Diseases);
 
         patient.hair = _patient.hair.GetComponent<Hair>();
         patient.face = _patient.face.GetComponent<Face>();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Patient", menuName = "Patient")]
 public class PatientObject : ScriptableObject
 {
@@ -18,7 +19,7 @@ public class PatientObject : ScriptableObject
     public double MaxToxic;
     public double Toxic;
     public double Speed;
-    public List<Characters> Characters;
+    public List<DiseaseType> Diseases;
 
     public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace, GameObject newBody)
     {
@@ -35,9 +36,26 @@ public class PatientObject : ScriptableObject
         Toxic = patient.Toxic;
         Speed = patient.Speed;
 
-        Characters = new List<Characters>(patient.Characters);
+        Diseases = new List<DiseaseType>(patient.Diseases);
     }
 
+    public void Reset()
+    {
+        hair = null;
+        face = null;
+        body = null;
+
+        Sex = Sex.MALE;
+        Name = null;
+        Surname = null;
+        Patronymic = null;
+        Age = 0;
+        MaxToxic = 0;
+        Toxic = 0;
+        Speed = 0;
+        Diseases = null;
+
+    }
     public static bool operator ==(PatientObject patientSO, Patient patient)
     {
         return patientSO.Sex == patient.Sex && patientSO.Name == patient.Name && patientSO.Surname == patient.Surname &&

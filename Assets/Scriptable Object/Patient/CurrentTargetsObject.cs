@@ -5,12 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Current Targets", menuName = "CurrentTargets")]
 public class CurrentTargetsObject : ScriptableObject
 {
+    [SerializeField]
     public List<PatientObject> currentTarget;
     public List<bool> isReady = new List<bool> { true, true, true, true };
-    public int count;
+    [SerializeField]
+    private int count;
+
+    public int Count
+    {
+        get
+        {
+            return count;
+        }
+        set
+        {
+            count = value;
+        }
+    }
+
 
     public void AddPatient(int index, Patient patient, GameObject newHair, GameObject newFace, GameObject newBody)
     {
