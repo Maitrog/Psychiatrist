@@ -29,6 +29,18 @@ public class ParamedicObject : ScriptableObject
         skills = new List<Skill>(paramedic.skills);
     }
 
+    public void BecomeCurrent(ParamedicObject paramedic)
+    {
+        photo = paramedic.photo;
+
+        Sex = paramedic.Sex;
+        Name = paramedic.Name;
+        Surname = paramedic.Surname;
+        Patronymic = paramedic.Patronymic;
+        Speed = paramedic.Speed;
+        skills = new List<Skill>(paramedic.skills);
+    }
+
     public void Reset()
     {
         photo = null;

@@ -14,7 +14,15 @@ public class ParamedicGenerator : MonoBehaviour
     public GameObject orderliesPanel;
     public Photo[] photos;
     public GameObject paramedicPrefab;
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        for(int i = 0; i < StaticCurrentParamedics.CurrentParamedic.Count; i++)
+        {
+            currentParamedicObject.AddParamedic(StaticCurrentParamedics.CurrentParamedic[i]);
+        }
+    }
+
     void Start()
     {
         if (currentParamedicObject.currentParamedics.Count != 0)
@@ -35,7 +43,6 @@ public class ParamedicGenerator : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -113,6 +120,7 @@ public class ParamedicGenerator : MonoBehaviour
 
         ParamedicObject paramedicObject = CreateParamedicSO(paramedic, photoSO);
         currentParamedicObject.AddParamedic(paramedicObject);
+        StaticCurrentParamedics.CurrentParamedic = currentParamedicObject.currentParamedics;
         SpawnParamedic(gameObject, paramedic);
     }
 

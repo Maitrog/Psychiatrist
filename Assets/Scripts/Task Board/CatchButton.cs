@@ -5,11 +5,9 @@ using UnityEngine.UI;
 
 public class CatchButton : MonoBehaviour
 {
-    [SerializeField]
-    private ParamedicObject selectedParamedic;
     void Update()
     {
-        if(string.IsNullOrEmpty(selectedParamedic.Name) && string.IsNullOrEmpty(selectedParamedic.Surname))
+        if(string.IsNullOrEmpty(StaticCurrentParamedics.SelectedParamedic.Name) && string.IsNullOrEmpty(StaticCurrentParamedics.SelectedParamedic.Surname))
         {
             gameObject.GetComponent<Button>().interactable = false;
         }
