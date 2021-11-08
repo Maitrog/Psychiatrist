@@ -7,7 +7,6 @@ public class CatchPatient : MonoBehaviour
     public GameObject searchPanel;
     public Patient patient;
     public CurrentTargetsObject currentTargets;
-    public PatientObject currentPatient;
 
     public void Catch()
     {
@@ -15,8 +14,9 @@ public class CatchPatient : MonoBehaviour
         { 
             if(currentTargets.currentTarget[i] == patient)
             {
-                currentPatient.BecomeCurrent(patient, currentTargets.currentTarget[i].hair, currentTargets.currentTarget[i].face, currentTargets.currentTarget[i].body);
+                StaticCurrentPatients.SelectedPatient.BecomeCurrent(patient, currentTargets.currentTarget[i].hair, currentTargets.currentTarget[i].face, currentTargets.currentTarget[i].body);
                 currentTargets.DeletePatient(i);
+                StaticCurrentPatients.CurrentPatients = currentTargets.currentTarget;
 
                 var characterGameObject = searchPanel.transform.GetChild(i).GetChild(0).gameObject;
                 Patient renderedPatient = characterGameObject.GetComponent<Patient>();
