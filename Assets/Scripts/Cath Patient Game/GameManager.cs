@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour
     public GameObject resultPanel;
     public GameObject gridPanel;
 
-    private Color green = new Color(27, 147, 32);
-    private Color red = new Color(157, 24, 27);
+    [SerializeField]
+    private int duration;
+    private bool win;
     public void Start()
     {
         NewGame();
@@ -28,14 +29,18 @@ public class GameManager : MonoBehaviour
     {
         patient.ResetState();
         paramedic.ResetState();
+        win = false;
     }
     private void NewGame()
     {
+        win = false;
         float spM = 1.0f - (float)(currentParamedic.Speed + 1 - currentPatient.Speed) / 16.0f;
         patient.speedMultiplaier = spM;
         patient.GetComponent<Movement>().speedMultiplaier = spM;
+        patient.GetComponent<PatientVictimFrightened>().duration = duration;
         paramedic.gameObject.SetActive(true);
         patient.gameObject.SetActive(true);
+        Invoke(nameof(IsWin), duration);
     }
 
     public void PatientVictimCatched(PatientVictim patient)
@@ -46,7 +51,6 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        bool isWin = false;
         HashSet<DiseaseType> posidivDisease = new HashSet<DiseaseType>();
         HashSet<DiseaseType> negativeDisease = new HashSet<DiseaseType>();
 
@@ -68,15 +72,20 @@ public class GameManager : MonoBehaviour
         foreach (DiseaseType disease in currentPatient.Diseases)
         {
             if (posidivDisease.Contains(disease))
-                isWin = true;
+                win = true;
         }
+        IsWin();
+    }
 
+    private void IsWin()
+    {
+        CancelInvoke();
         paramedic.gameObject.SetActive(false);
         patient.gameObject.SetActive(false);
 
         Image background = resultPanel.GetComponent<Image>();
         TextMeshProUGUI text = resultPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        if (isWin)
+        if (win)
         {
             background.color = Color.green;
             text.text = "YOU'R WIN";
@@ -85,9 +94,10 @@ public class GameManager : MonoBehaviour
         {
             background.color = Color.red;
             text.text = "YOU'R LOOOOOOOOOOOOOOOOOOOOOOOSE";
+            currentPatient.Reset();
         }
+        currentParamedic.Reset();
         gridPanel.SetActive(false);
         resultPanel.SetActive(true);
-        Debug.Log("Game Over");
     }
 }

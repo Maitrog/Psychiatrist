@@ -22,4 +22,5 @@ MonoBehaviour:
   Age: 0
   MaxToxic: 0
   Toxic: 0
-  Strength: 0
+  Speed: 0
+  Diseases: 

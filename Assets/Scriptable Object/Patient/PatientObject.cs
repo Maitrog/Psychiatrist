@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Patient", menuName = "Patient")]
 public class PatientObject : ScriptableObject
 {
@@ -38,6 +39,23 @@ public class PatientObject : ScriptableObject
         Diseases = new List<DiseaseType>(patient.Diseases);
     }
 
+    public void Reset()
+    {
+        hair = null;
+        face = null;
+        body = null;
+
+        Sex = Sex.MALE;
+        Name = null;
+        Surname = null;
+        Patronymic = null;
+        Age = 0;
+        MaxToxic = 0;
+        Toxic = 0;
+        Speed = 0;
+        Diseases = null;
+
+    }
     public static bool operator ==(PatientObject patientSO, Patient patient)
     {
         return patientSO.Sex == patient.Sex && patientSO.Name == patient.Name && patientSO.Surname == patient.Surname &&

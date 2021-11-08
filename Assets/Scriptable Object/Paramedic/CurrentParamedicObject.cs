@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Current Paramedic", menuName = "CurrentParamedic")]
 public class CurrentParamedicObject : ScriptableObject
 {

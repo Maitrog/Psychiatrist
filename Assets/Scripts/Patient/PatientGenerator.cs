@@ -32,7 +32,7 @@ public class PatientGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentTargetsSO.count < 4)
+        if (currentTargetsSO.Count < 4)
         {
             for (int i = 0; i < currentTargetsSO.isReady.Count; i++)
             {
