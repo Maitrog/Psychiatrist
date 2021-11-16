@@ -81,7 +81,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         turn = false;
         char[,] tmpBoard = board.gameBoard;
         Pair<int, int> start = new Pair<int, int>(-1, -1);
-        int res = board.Minimax(start, true,  tmpBoard, 0);
+        int res = board.Minimax(start, true,  tmpBoard, 0, System.Int32.MinValue, System.Int32.MaxValue);
         int posy = res / 10;
         int posx = res % 10;
         if (posy > 9 || posx > 9 || posy < 0 || posx < 0)
