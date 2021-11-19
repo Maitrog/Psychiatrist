@@ -17,7 +17,7 @@ public class Board : MonoBehaviour
     public List<Cell> playerCells = new List<Cell>();
     public List<Cell> aiCells = new List<Cell>();
     public char[,] gameBoard = new char[9, 9];
-    private int minimaxDepth = 2;
+    private int minimaxDepth = 3;
 
     public bool CanSelect(Cell curCell, int turn)//ÏÓÊÂÏ ÎË Ï˚ ‚˚·‡Ú¸ ‰‡ÌÌ˚È „ÂÍÒ
     {
@@ -77,7 +77,7 @@ public class Board : MonoBehaviour
     {
         
     }
-    public List<Cell> AfterMove(Cell cell)//œŒÃ≈Õﬂ“‹ œ–Œ¬≈– ” ﬂ◊≈≈  ◊“Œ¡€ Õ≈ ƒ≈À¿“‹ 12 ƒ”œÀ» ¿“Œ¬
+    public List<Cell> AfterMove(Cell cell)
     {
         List<Cell> changedCells = new List<Cell>();
         int i = cell.pos.First;
@@ -95,9 +95,9 @@ public class Board : MonoBehaviour
 
     bool first = true;
 
-    public int Minimax(Pair<int, int> curPos, bool maximizingPlayer, char[,] board, int depth)//ai - maximize, player - minimize
+    public int Minimax(Pair<int, int> curPos, bool maximizingPlayer, char[,] board, int depth, int alpha, int beta)//ai - maximize, player - minimize
     {
-        //add ref; alpha - beta; optimization; more depth; add 2 distance moves; check not all moves of all hexes, just all possible hexes to go without duplicates;
+        //add optimization; more depth; add 2 distance moves; check not all moves of all hexes, just all possible hexes to go without duplicates;
         //fix bugs: more depths - incorrect hexes;
 
         //check pos
@@ -176,6 +176,17 @@ public class Board : MonoBehaviour
                 Debug.Log('\n');
             }
             */
+
+            //check board what hexes we already visited
+            char[,] checkBoard = new char[9, 9];
+            for (int k = 0; k < 9; k++)
+            {
+                for (int z = 0; z < 9; z++)
+                {
+                    checkBoard[k, z] = 'n';
+                }
+            }
+
             //recursion
             int maxScore = System.Int32.MinValue;
             int tmp;
@@ -189,7 +200,9 @@ public class Board : MonoBehaviour
                         //Debug.Log("Depth: " + depth.ToString() + " " + i.ToString() + " " + j.ToString() + '\n');
                         int y = i;
                         int x = j;
-                        Pair<int, int> newPos = new Pair<int, int>(y, x + 1);                                               
+                        Pair<int, int> newPos = new Pair<int, int>(y, x + 1);
+
+                        /*
                         char[,] tmpBoard = new char[9, 9];                
                         for (int k = 0; k < 9; k++)
                         {
@@ -197,108 +210,206 @@ public class Board : MonoBehaviour
                             {
                                 tmpBoard[k, z] = board[k, z];
                             }
-                        }                   
-                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1));
-                        if (tmp > maxScore)
+                        }
+                        */
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8)) 
                         {
-                            maxScore = tmp;
-                            best.First = newPos.First;
-                            best.Second = newPos.Second;
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n') {
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
+                                if (tmp > maxScore)
+                                {
+                                    maxScore = tmp;
+                                    best.First = newPos.First;
+                                    best.Second = newPos.Second;
+                                }
+                                alpha = Mathf.Max(alpha, maxScore);
+                                if (beta <= alpha)
+                                {
+                                    return maxScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
+                            }
                         }
 
                         newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
-                        {
-                            for (int z = 0; z < 9; z++)
-                            {
-                                tmpBoard[k, z] = board[k, z];
-                            }
-                        }
                         newPos.First = y;
                         newPos.Second = x - 1;
-                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1));
-                        if (tmp > maxScore)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            maxScore = tmp;
-                            best.First = newPos.First;
-                            best.Second = newPos.Second;
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
+                            {
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
+                                if (tmp > maxScore)
+                                {
+                                    maxScore = tmp;
+                                    best.First = newPos.First;
+                                    best.Second = newPos.Second;
+                                }
+                                alpha = Mathf.Max(alpha, maxScore);
+                                if (beta <= alpha)
+                                {
+                                    return maxScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
+                            }
                         }
 
                         newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
-                        {
-                            for (int z = 0; z < 9; z++)
-                            {
-                                tmpBoard[k, z] = board[k, z];
-                            }
-                        }
                         newPos.First = y - 1;
                         newPos.Second = x - 1;
-                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1));
-                        if (tmp > maxScore)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            maxScore = tmp;
-                            best.First = newPos.First;
-                            best.Second = newPos.Second;
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
+                            {
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
+                                if (tmp > maxScore)
+                                {
+                                    maxScore = tmp;
+                                    best.First = newPos.First;
+                                    best.Second = newPos.Second;
+                                }
+                                alpha = Mathf.Max(alpha, maxScore);
+                                if (beta <= alpha)
+                                {
+                                    return maxScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
+                            }
                         }
 
                         newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
-                        {
-                            for (int z = 0; z < 9; z++)
-                            {
-                                tmpBoard[k, z] = board[k, z];
-                            }
-                        }
                         newPos.First = y - 1;
                         newPos.Second = x;
-                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1));
-                        if (tmp > maxScore)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            maxScore = tmp;
-                            best.First = newPos.First;
-                            best.Second = newPos.Second;
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
+                            {
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
+                                if (tmp > maxScore)
+                                {
+                                    maxScore = tmp;
+                                    best.First = newPos.First;
+                                    best.Second = newPos.Second;
+                                }
+                                alpha = Mathf.Max(alpha, maxScore);
+                                if (beta <= alpha)
+                                {
+                                    return maxScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
+                            }
                         }
 
                         newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
-                        {
-                            for (int z = 0; z < 9; z++)
-                            {
-                                tmpBoard[k, z] = board[k, z];
-                            }
-                        }
                         newPos.First = y + 1;
                         newPos.Second = x;
-                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1));
-                        if (tmp > maxScore)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            maxScore = tmp;
-                            best.First = newPos.First;
-                            best.Second = newPos.Second;
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
+                            {
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
+                                if (tmp > maxScore)
+                                {
+                                    maxScore = tmp;
+                                    best.First = newPos.First;
+                                    best.Second = newPos.Second;
+                                }
+                                alpha = Mathf.Max(alpha, maxScore);
+                                if (beta <= alpha)
+                                {
+                                    return maxScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
+                            }
                         }
 
                         newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
-                        {
-                            for (int z = 0; z < 9; z++)
-                            {
-                                tmpBoard[k, z] = board[k, z];
-                            }
-                        }
                         newPos.First = y + 1;
                         newPos.Second = x + 1;
-                        tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1));
-                        if (tmp > maxScore)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            maxScore = tmp;
-                            best.First = newPos.First;
-                            best.Second = newPos.Second;
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
+                            {
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                tmp = Mathf.Max(maxScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
+                                if (tmp > maxScore)
+                                {
+                                    maxScore = tmp;
+                                    best.First = newPos.First;
+                                    best.Second = newPos.Second;
+                                }
+                                alpha = Mathf.Max(alpha, maxScore);
+                                if (beta <= alpha)
+                                {
+                                    return maxScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
+                            }
                         }
                     }
                 }
@@ -391,6 +502,17 @@ public class Board : MonoBehaviour
                 first = false;
                 return a - p;
             }
+
+            //check board what hexes we already visited
+            char[,] checkBoard = new char[9, 9];
+            for (int k = 0; k < 9; k++)
+            {
+                for (int z = 0; z < 9; z++)
+                {
+                    checkBoard[k, z] = 'n';
+                }
+            }
+
             //recursion
             int minScore = System.Int32.MaxValue;
             for (int i = 0; i < 9; i++)
@@ -404,7 +526,8 @@ public class Board : MonoBehaviour
                         int x = j;
                         Pair<int, int> newPos = new Pair<int, int>(y, x + 1);
 
-                        char[,] tmpBoard = (char[,])board.Clone();
+                        /*
+                        char[,] tmpBoard = new char[9,9];
                         for (int k = 0; k < 9; k++)
                         {
                             for (int z = 0; z < 9; z++)
@@ -414,72 +537,171 @@ public class Board : MonoBehaviour
                                 tmpBoard[k, z] = temp;
                             }
                         }
-                        minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
-
-                        newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
+                        */
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            for (int z = 0; z < 9; z++)
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
                             {
-                                tmpBoard[k, z] = board[k, z];
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                beta = Mathf.Min(beta, minScore);
+                                if (beta <= alpha)
+                                {
+                                    return minScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
                             }
                         }
+
+                        newPos = new Pair<int, int>();
                         newPos.First = y;
                         newPos.Second = x - 1;
-                        minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
-
-                        newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            for (int z = 0; z < 9; z++)
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
                             {
-                                tmpBoard[k, z] = board[k, z];
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                beta = Mathf.Min(beta, minScore);
+                                if (beta <= alpha)
+                                {
+                                    return minScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
                             }
                         }
+
+                        newPos = new Pair<int, int>();
                         newPos.First = y - 1;
                         newPos.Second = x - 1;
-                        minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
-
-                        newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            for (int z = 0; z < 9; z++)
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
                             {
-                                tmpBoard[k, z] = board[k, z];
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                beta = Mathf.Min(beta, minScore);
+                                if (beta <= alpha)
+                                {
+                                    return minScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
                             }
                         }
+
+                        newPos = new Pair<int, int>();
                         newPos.First = y - 1;
                         newPos.Second = x;
-                        minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
-
-                        newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            for (int z = 0; z < 9; z++)
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
                             {
-                                tmpBoard[k, z] = board[k, z];
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                beta = Mathf.Min(beta, minScore);
+                                if (beta <= alpha)
+                                {
+                                    return minScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
                             }
                         }
+
+                        newPos = new Pair<int, int>();
                         newPos.First = y + 1;
                         newPos.Second = x;
-                        minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
-
-                        newPos = new Pair<int, int>();
-                        tmpBoard = new char[9, 9];
-                        for (int k = 0; k < 9; k++)
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            for (int z = 0; z < 9; z++)
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
                             {
-                                tmpBoard[k, z] = board[k, z];
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                beta = Mathf.Min(beta, minScore);
+                                if (beta <= alpha)
+                                {
+                                    return minScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
                             }
                         }
+
+                        newPos = new Pair<int, int>();
                         newPos.First = y + 1;
                         newPos.Second = x + 1;
-                        minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth));
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
+                        {
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
+                            {
+                                char[,] tmpBoard = new char[9, 9];
+                                for (int k = 0; k < 9; k++)
+                                {
+                                    for (int z = 0; z < 9; z++)
+                                    {
+                                        char temp = new char();
+                                        temp = board[k, z];
+                                        tmpBoard[k, z] = temp;
+                                    }
+                                }
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                beta = Mathf.Min(beta, minScore);
+                                if (beta <= alpha)
+                                {
+                                    return minScore;
+                                }
+
+                                checkBoard[newPos.First, newPos.Second] = 'c';
+                            }
+                        }
                     }
                 }
             }

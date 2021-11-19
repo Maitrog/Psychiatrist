@@ -81,7 +81,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         turn = false;
         char[,] tmpBoard = board.gameBoard;
         Pair<int, int> start = new Pair<int, int>(-1, -1);
-        int res = board.Minimax(start, true,  tmpBoard, 0);
+        int res = board.Minimax(start, true,  tmpBoard, 0, System.Int32.MinValue, System.Int32.MaxValue);
         int posy = res / 10;
         int posx = res % 10;
         if (posy > 9 || posx > 9 || posy < 0 || posx < 0)
@@ -128,7 +128,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         {
             curCell = cellsDisplayed[go];//она становится текущей
         }
-        else if ((curCell.pos.First == cellsDisplayed[go].pos.First) && (curCell.pos.Second== cellsDisplayed[go].pos.Second))//смотрим, попал ли игрок по уже выбранной соте, если да, то его выбор сбрасывается
+        else if ((curCell.pos.First == cellsDisplayed[go].pos.First) && (curCell.pos.Second == cellsDisplayed[go].pos.Second))//смотрим, попал ли игрок по уже выбранной соте, если да, то его выбор сбрасывается
         {
             curCell = new Cell();
             if (cellsDisplayed[go].owner == Owners.Neutral)
@@ -136,7 +136,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                 go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
             }
         }
-        else if (curCell.pos.First >= 0 && cellsDisplayed[go].owner != Owners.Player) //смотрим, можем ли мы туда походить
+        else if (curCell.pos.First >= 0 && cellsDisplayed[go].owner == Owners.Neutral) //смотрим, можем ли мы туда походить
         {
             int distance = board.Move(curCell, cellsDisplayed[go]);
             switch (distance)
