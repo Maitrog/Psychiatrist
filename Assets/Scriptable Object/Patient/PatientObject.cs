@@ -18,7 +18,7 @@ public class PatientObject : ScriptableObject
     public double MaxToxic;
     public double Toxic;
     public double Speed;
-    public List<DiseaseType> Diseases;
+    public List<DiseaseType> Diseases = new List<DiseaseType>();
 
     public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace)
     {

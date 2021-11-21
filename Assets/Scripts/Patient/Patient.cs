@@ -80,6 +80,8 @@ public enum Deviation
     UNCERTAINTY,
     UNCONTROLLED_AGGRESSION
 }
+
+[System.Serializable]
 public enum Sex
 {
     MALE,
