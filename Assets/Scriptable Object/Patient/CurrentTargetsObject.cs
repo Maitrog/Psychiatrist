@@ -28,11 +28,11 @@ public class CurrentTargetsObject : ScriptableObject
     }
 
 
-    public void AddPatient(int index, Patient patient, GameObject newHair, GameObject newFace, GameObject newBody)
+    public void AddPatient(int index, Patient patient, GameObject newHair, GameObject newFace)
     {
         if (isReady[index])
         {
-            currentTarget[index].BecomeCurrent(patient, newHair, newFace, newBody);
+            currentTarget[index].BecomeCurrent(patient, newHair, newFace);
             isReady[index] = false;
             count++;
         }

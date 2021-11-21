@@ -14,7 +14,7 @@ public class CatchPatient : MonoBehaviour
         { 
             if(currentTargets.currentTarget[i] == patient)
             {
-                StaticCurrentPatients.SelectedPatient.BecomeCurrent(patient, currentTargets.currentTarget[i].hair, currentTargets.currentTarget[i].face, currentTargets.currentTarget[i].body);
+                StaticCurrentPatients.SelectedPatient.BecomeCurrent(patient, currentTargets.currentTarget[i].hair, currentTargets.currentTarget[i].face);
                 currentTargets.DeletePatient(i);
                 StaticCurrentPatients.CurrentPatients = currentTargets.currentTarget;
 

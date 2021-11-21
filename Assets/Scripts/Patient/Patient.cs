@@ -6,7 +6,6 @@ public class Patient : MonoBehaviour
 {
     public Hair hair;
     public Face face;
-    public Body body;
 
     public Sex Sex;
     public string Name;
