@@ -17,7 +17,6 @@ public class SelectPatient : MonoBehaviour
         {
             GameObject face = pickedPatientPanel.transform.GetChild(0).GetChild(0).gameObject;
             GameObject hair = pickedPatientPanel.transform.GetChild(0).GetChild(1).gameObject;
-            GameObject body = pickedPatientPanel.transform.GetChild(0).GetChild(2).gameObject;
             if (face != null)
             {
                 Destroy(face);
@@ -25,10 +24,6 @@ public class SelectPatient : MonoBehaviour
             if(hair != null)
             {
                 Destroy(hair);
-            }
-            if (body != null)
-            {
-                Destroy(body);
             }
         }
         catch (UnityException e)
@@ -84,11 +79,6 @@ public class SelectPatient : MonoBehaviour
         pickedPatient.hair.transform.SetParent(pickedPatient.transform);
         pickedPatient.hair.transform.position = pickedPatient.face.transform.position + pickedPatient.face.top.localPosition * scale - pickedPatient.hair.bottom.localPosition * scale;
         pickedPatient.hair.transform.localPosition = new Vector3(pickedPatient.hair.transform.localPosition.x, pickedPatient.hair.transform.localPosition.y, -1);
-
-        pickedPatient.body = Instantiate(patient.body);
-        pickedPatient.body.transform.SetParent(pickedPatient.transform);
-        pickedPatient.body.transform.position = pickedPatient.face.transform.position + pickedPatient.face.bottom.localPosition * scale - pickedPatient.body.top.localPosition * scale;
-        pickedPatient.body.transform.localPosition = new Vector3(pickedPatient.body.transform.localPosition.x, pickedPatient.body.transform.localPosition.y, 0);
 
         pickedPatient.Sex = patient.Sex;
         pickedPatient.Name = patient.Name;

@@ -9,7 +9,6 @@ public class PatientObject : ScriptableObject
 
     public GameObject hair;
     public GameObject face;
-    public GameObject body;
 
     public Sex Sex;
     public string Name;
@@ -21,11 +20,10 @@ public class PatientObject : ScriptableObject
     public double Speed;
     public List<DiseaseType> Diseases;
 
-    public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace, GameObject newBody)
+    public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace)
     {
         hair = newHair;
         face = newFace;
-        body = newBody;
 
         Sex = patient.Sex;
         Name = patient.Name;
@@ -43,7 +41,6 @@ public class PatientObject : ScriptableObject
     {
         hair = patient.hair;
         face = patient.face;
-        body = patient.body;
 
         Sex = patient.Sex;
         Name = patient.Name;
@@ -61,7 +58,6 @@ public class PatientObject : ScriptableObject
     {
         hair = null;
         face = null;
-        body = null;
 
         Sex = Sex.MALE;
         Name = null;
