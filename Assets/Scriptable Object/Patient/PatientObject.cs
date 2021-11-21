@@ -39,6 +39,24 @@ public class PatientObject : ScriptableObject
         Diseases = new List<DiseaseType>(patient.Diseases);
     }
 
+    public void BecomeCurrent(PatientObject patient)
+    {
+        hair = patient.hair;
+        face = patient.face;
+        body = patient.body;
+
+        Sex = patient.Sex;
+        Name = patient.Name;
+        Surname = patient.Surname;
+        Patronymic = patient.Patronymic;
+        Age = patient.Age;
+        MaxToxic = patient.MaxToxic;
+        Toxic = patient.Toxic;
+        Speed = patient.Speed;
+
+        Diseases = new List<DiseaseType>(patient.Diseases);
+    }
+
     public void Reset()
     {
         hair = null;

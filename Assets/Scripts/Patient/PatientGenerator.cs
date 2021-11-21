@@ -12,7 +12,25 @@ public class PatientGenerator : MonoBehaviour
     public Hair[] hairFemalePrefabs;
     public Face[] facePrefabs;
     public Body[] bodyPrefabs;
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        for (int i = 0; i < StaticCurrentPatients.CurrentPatients.Count; i++)
+        {
+            Patient patient = new Patient
+            {
+                Age = StaticCurrentPatients.CurrentPatients[i].Age,
+                Name = StaticCurrentPatients.CurrentPatients[i].Name,
+                Surname = StaticCurrentPatients.CurrentPatients[i].Surname,
+                Patronymic = StaticCurrentPatients.CurrentPatients[i].Patronymic,
+                Sex = StaticCurrentPatients.CurrentPatients[i].Sex,
+                MaxToxic = StaticCurrentPatients.CurrentPatients[i].MaxToxic,
+                Toxic = StaticCurrentPatients.CurrentPatients[i].Toxic,
+                Speed = StaticCurrentPatients.CurrentPatients[i].Speed
+            };
+            currentTargetsSO.AddPatient(i, patient, StaticCurrentPatients.CurrentPatients[i].hair, StaticCurrentPatients.CurrentPatients[i].face, StaticCurrentPatients.CurrentPatients[i].body);
+        }
+    }
     void Start()
     {
         for (int i = 0; i < currentTargetsSO.isReady.Count; i++)
@@ -27,9 +45,9 @@ public class PatientGenerator : MonoBehaviour
                 SpawnPatient(i, currentTargetsSO.currentTarget[i]);
             }
         }
+        StaticCurrentPatients.CurrentPatients = currentTargetsSO.currentTarget;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (currentTargetsSO.Count < 4)
@@ -68,7 +86,7 @@ public class PatientGenerator : MonoBehaviour
         while (diseases.Count < maxDiseases)
         {
             DiseaseType disease = (DiseaseType)UnityEngine.Random.Range(0, values.Length - 1);
-            if(disease == DiseaseType.BIPOLAR_DISORDER)
+            if (disease == DiseaseType.BIPOLAR_DISORDER)
             {
                 maxDiseases = 3;
                 continue;
@@ -77,7 +95,7 @@ public class PatientGenerator : MonoBehaviour
         }
 
         foreach (DiseaseType type in diseases)
-        { 
+        {
             patient.Diseases.Add(type);
         }
 
