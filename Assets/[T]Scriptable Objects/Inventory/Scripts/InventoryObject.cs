@@ -6,7 +6,8 @@ using System.Runtime.Serialization;
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
-    public string savePath;
+    public string saveContainerPath;
+    public string saveResourcesPath;
     public ItemsDatabaseObject database;
     public LocalInventory container;
     public Resources resources;
@@ -74,14 +75,17 @@ public class InventoryObject : ScriptableObject
         //file.Close();
 
         IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(stream, container);
-        stream.Close();
+        Stream streamContainer = new FileStream(string.Concat(Application.persistentDataPath, saveContainerPath), FileMode.Create, FileAccess.Write);
+        formatter.Serialize(streamContainer, container);
+        streamContainer.Close();
+        Stream streamResources = new FileStream(string.Concat(Application.persistentDataPath, saveResourcesPath), FileMode.Create, FileAccess.Write);
+        formatter.Serialize(streamResources, Resources.gold);
+        streamResources.Close();
     }
     [ContextMenu("Load")]
     public void Load()
     {
-        if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+        if (File.Exists(string.Concat(Application.persistentDataPath, saveContainerPath)))
         {
             //BinaryFormatter bf = new BinaryFormatter();
             //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
@@ -89,13 +93,18 @@ public class InventoryObject : ScriptableObject
             //file.Close();
 
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-            LocalInventory newContainer = (LocalInventory)formatter.Deserialize(stream);
+            Stream streamContainer = new FileStream(string.Concat(Application.persistentDataPath, saveContainerPath), FileMode.Open, FileAccess.Read);
+            LocalInventory newContainer = (LocalInventory)formatter.Deserialize(streamContainer);
             for (int i = 0; i < container.items.Length; i++)
             {
                 container.items[i].UpdateSlot(newContainer.items[i].ID, newContainer.items[i].item, newContainer.items[i].amount);
             }
-            stream.Close();
+            streamContainer.Close();
+            
+            Stream streamResources = new FileStream(string.Concat(Application.persistentDataPath, saveResourcesPath), FileMode.Open, FileAccess.Read);
+            int newResources = (int)formatter.Deserialize(streamResources);
+            Resources.gold = newResources;
+            streamResources.Close();
         }
     }
     [ContextMenu("Clear")]
@@ -146,7 +155,7 @@ public class Resources
 {
     public GameObject textGold;
 
-    public int gold = 0;
+    static public int gold;
 
     public Resources(int _gold)
     {

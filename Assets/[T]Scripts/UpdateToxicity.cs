@@ -44,6 +44,7 @@ public class UpdateToxicity : MonoBehaviour
 
         bar.fillAmount = currentToxicity / (float)patient.MaxToxic;
     }
+    /*
     public void Submit()
     {
         foreach (var c in patient.Characters)
@@ -76,5 +77,5 @@ public class UpdateToxicity : MonoBehaviour
                 drugs.container.items[i].UpdateSlot(-1, null, 0);
             }
         }
-    }
+    }*/
 }
