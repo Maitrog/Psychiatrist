@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using UnityEngine;
 
 [DataContract]
+[System.Serializable]
 public class SkillData
 {
     [DataMember]

@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Patient : MonoBehaviour
 {
     public Hair hair;
-    public Face face;
+    public Skin skin;
 
     public Sex Sex;
     public string Name;

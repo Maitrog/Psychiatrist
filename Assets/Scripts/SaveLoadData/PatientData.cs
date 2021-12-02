@@ -1,16 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using UnityEngine;
 
 [DataContract]
+[System.Serializable]
 public class PatientData
 {
     [DataMember]
-    public HairData hair;
+    public int hairId;
     [DataMember]
-    public FaceData face;
+    public int skinId;
 
     [DataMember]
     public Sex sex;
@@ -33,11 +30,11 @@ public class PatientData
 
     public PatientData(PatientObject patient)
     {
-        hair = new HairData(patient.hair);
-        face = new FaceData(patient.face);
+        hairId = patient.hair != null ? patient.hair.GetComponent<Hair>().Id : 0;
+        skinId = patient.skin != null ? patient.skin.GetComponent<Skin>().Id : 0;
 
         sex = patient.Sex;
-        name = patient.name;
+        name = patient.Name;
         surname = patient.Surname;
         patronymic = patient.Patronymic;
         age = patient.Age;
@@ -45,7 +42,7 @@ public class PatientData
         toxic = patient.Toxic;
         speed = patient.Speed;
         diseases = new DiseaseType[patient.Diseases.Count];
-        for(int i = 0; i < patient.Diseases.Count; i++)
+        for (int i = 0; i < patient.Diseases.Count; i++)
         {
             diseases[i] = patient.Diseases[i];
         }

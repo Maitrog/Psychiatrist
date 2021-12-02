@@ -653,6 +653,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b61fa7d1e804cd48b227e91808b5efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  facesDatabaseObject: {fileID: 11400000, guid: 181dbf765401a804da51841089900345, type: 2}
+  photoDatabeseObject: {fileID: 11400000, guid: 417c9d75345053a459583f5334f48b02, type: 2}
 --- !u!4 &161208326
 Transform:
   m_ObjectHideFlags: 0
@@ -1502,8 +1504,7 @@ MonoBehaviour:
   selectedParamedicPanel: {fileID: 139604536}
   background: {fileID: 1629580147}
   orderliesPanel: {fileID: 1093166614}
-  photos:
-  - {fileID: 7895642828118635823, guid: 4ffab381575bb80419c9cc009ce6efd9, type: 3}
+  photoDatabese: {fileID: 11400000, guid: 417c9d75345053a459583f5334f48b02, type: 2}
   paramedicPrefab: {fileID: 1553034684695595348, guid: b1c4bc193160c1345b1bc26f9b39344e, type: 3}
 --- !u!1 &470193195
 GameObject:
@@ -6640,22 +6641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTargetsSO: {fileID: 11400000, guid: 0dc10674e34b1d648bb65758abc972bd, type: 2}
   searchPanel: {fileID: 1602839448}
-  hairMalePrefabs:
-  - {fileID: 7803090545748149759, guid: 321868eeb1ad9114a9ac0caa4d59151c, type: 3}
-  - {fileID: 4555650228456534306, guid: b2e5b90ce062bc346ac287c8034ae332, type: 3}
-  - {fileID: 436660674567411900, guid: 6224e1e45af3a4e4aa9936626dcb71f1, type: 3}
-  hairFemalePrefabs:
-  - {fileID: 2335401910223843441, guid: b95bd987159ae1b4db9c1815c58f001e, type: 3}
-  - {fileID: 2615690815216385502, guid: fcc292464cfc758498a8cc1223b5e7ea, type: 3}
-  facePrefabs:
-  - {fileID: 1224996880388959002, guid: 30d7ae68360f3434da84c928b3d59178, type: 3}
-  - {fileID: 3350333063925803638, guid: aef20035b00803e448094afceea75446, type: 3}
-  - {fileID: 7438146129699802754, guid: 1a4181f541a50604ab94809cd5fa4eea, type: 3}
-  - {fileID: 6904195502455051086, guid: f829d4517c1c7124bb089832af8284d6, type: 3}
-  - {fileID: 4609505552366446856, guid: e8a1cff7e0c6b274ea74bed9b39242cc, type: 3}
-  - {fileID: 4165568287375173535, guid: 9147b57e3502209498919955c933e725, type: 3}
-  - {fileID: 3288610011857094596, guid: 0f37b174b5616604b9a9fbfebbae48c4, type: 3}
-  - {fileID: 5949387644547958099, guid: f45e4b57a3b2fc845866acbbc3dafb1e, type: 3}
+  FacesDatabaseObject: {fileID: 11400000, guid: 181dbf765401a804da51841089900345, type: 2}
 --- !u!114 &1722711572 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7680752372910713289, guid: 7d51fd858ea7780478e630532406113f, type: 3}
@@ -6954,7 +6940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.020019531, y: -0.20007324}
+  m_AnchoredPosition: {x: -0.020019531, y: -0.20019531}
   m_SizeDelta: {x: 767.98, y: 124.78}
   m_Pivot: {x: 1.0000001, y: 1.0000001}
 --- !u!114 &1884380705

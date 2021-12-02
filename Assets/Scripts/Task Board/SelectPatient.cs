@@ -15,11 +15,11 @@ public class SelectPatient : MonoBehaviour
     {
         try
         {
-            GameObject face = pickedPatientPanel.transform.GetChild(0).GetChild(0).gameObject;
+            GameObject skin = pickedPatientPanel.transform.GetChild(0).GetChild(0).gameObject;
             GameObject hair = pickedPatientPanel.transform.GetChild(0).GetChild(1).gameObject;
-            if (face != null)
+            if (skin != null)
             {
-                Destroy(face);
+                Destroy(skin);
             }
             if(hair != null)
             {
@@ -70,14 +70,14 @@ public class SelectPatient : MonoBehaviour
         Patient patient = gameObject.GetComponent<Patient>();
 
         Patient pickedPatient = pickedPatientPanel.transform.GetChild(0).GetComponent<Patient>();
-        pickedPatient.face = Instantiate(patient.face);
-        pickedPatient.face.transform.SetParent(pickedPatient.transform);
-        pickedPatient.face.transform.position = new Vector3(pickedPatient.face.transform.position.x, pickedPatient.face.transform.position.y, 100);
-        pickedPatient.face.transform.localPosition = new Vector3(0, 75f, 0);
+        pickedPatient.skin = Instantiate(patient.skin);
+        pickedPatient.skin.transform.SetParent(pickedPatient.transform);
+        pickedPatient.skin.transform.position = new Vector3(pickedPatient.skin.transform.position.x, pickedPatient.skin.transform.position.y, 100);
+        pickedPatient.skin.transform.localPosition = new Vector3(0, 75f, 0);
 
         pickedPatient.hair = Instantiate(patient.hair);
         pickedPatient.hair.transform.SetParent(pickedPatient.transform);
-        pickedPatient.hair.transform.position = pickedPatient.face.transform.position + pickedPatient.face.top.localPosition * scale - pickedPatient.hair.bottom.localPosition * scale;
+        pickedPatient.hair.transform.position = pickedPatient.skin.transform.position + pickedPatient.skin.top.localPosition * scale - pickedPatient.hair.bottom.localPosition * scale;
         pickedPatient.hair.transform.localPosition = new Vector3(pickedPatient.hair.transform.localPosition.x, pickedPatient.hair.transform.localPosition.y, -1);
 
         pickedPatient.Sex = patient.Sex;

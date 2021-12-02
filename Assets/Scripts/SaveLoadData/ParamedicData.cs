@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [DataContract]
+[System.Serializable]
 public class ParamedicData
 {
     [DataMember]
-    public PhotoData photo;
+    public int photoId;
 
     [DataMember]
     public Sex sex;
@@ -25,15 +26,16 @@ public class ParamedicData
 
     public ParamedicData(ParamedicObject paramedic)
     {
-        photo = new PhotoData(paramedic.photo);
+        photoId = paramedic.photo != null ? paramedic.photo.GetComponent<Photo>().Id : 0;
 
         name = paramedic.Name;
         surname = paramedic.Surname;
         patronymic = paramedic.Patronymic;
+        sex = paramedic.Sex;
         speed = paramedic.Speed;
         skills = new SkillData[paramedic.skills.Count];
 
-        for(int i = 0; i < paramedic.skills.Count; i++)
+        for (int i = 0; i < paramedic.skills.Count; i++)
         {
             skills[i] = new SkillData(paramedic.skills[i]);
         }

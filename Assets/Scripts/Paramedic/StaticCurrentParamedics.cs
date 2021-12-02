@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System;
-using UnityEngine;
 
 public static class StaticCurrentParamedics
 {
@@ -46,7 +44,7 @@ public static class StaticCurrentParamedics
         }
     }
 
-    public static void BecomeCurrent(CurrentParamedicsData paramedicsData)
+    public static void BecomeCurrent(CurrentParamedicsData paramedicsData, PhotoDatabeseObject photoDatabese)
     {
         currentParamedic.Clear();
         foreach (ParamedicData paramedic in paramedicsData.currentParamedics)
@@ -59,7 +57,7 @@ public static class StaticCurrentParamedics
 
             currentParamedic.Add(new ParamedicObject
             {
-                photo = paramedic.photo.photo,
+                photo = photoDatabese.GetPhoto[paramedic.photoId].gameObject,
                 Sex = paramedic.sex,
                 Name = paramedic.name,
                 Surname = paramedic.surname,

@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Xml;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class LoadManager : MonoBehaviour
 {
+    public FacesDatabaseObject facesDatabaseObject;
+    public PhotoDatabeseObject photoDatabeseObject;
     private void Awake()
     {
         Load();
@@ -15,22 +14,15 @@ public class LoadManager : MonoBehaviour
 
     private void Load()
     {
-        // Stream the file with a File Stream. (Note that File.Create() 'Creates' or 'Overwrites' a file.)
-        FileStream fs = File.Create(Application.persistentDataPath + "/PlayerData.dat");
-        XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-
-        // Create a new Player_Data.
-        PlayerData data = new PlayerData();
-
-        //MemoryStream streamer = new MemoryStream();
-        //file.Read(streamer.GetBuffer(), 0, (int)file.Length);
-        //file.Close();
-
-        DataContractSerializer bf = new DataContractSerializer(data.GetType());
-        data = bf.ReadObject(reader, true) as PlayerData;
-        reader.Close();
-
-        StaticCurrentPatients.BecomeCurrent(data.currentPatientsData);
-        StaticCurrentParamedics.BecomeCurrent(data.currentParamedicsData);
+        string filename = Application.persistentDataPath + "/PlayerData.bin";
+        if (File.Exists(filename))
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            PlayerData data = (PlayerData)formatter.Deserialize(stream);
+            stream.Close();
+            StaticCurrentPatients.BecomeCurrent(data.currentPatientsData, facesDatabaseObject);
+            StaticCurrentParamedics.BecomeCurrent(data.currentParamedicsData, photoDatabeseObject);
+        }
     }
 }

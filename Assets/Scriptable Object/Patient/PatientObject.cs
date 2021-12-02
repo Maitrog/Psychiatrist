@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class PatientObject : ScriptableObject
 {
 
     public GameObject hair;
-    public GameObject face;
+    public GameObject skin;
 
     public Sex Sex;
     public string Name;
@@ -20,10 +19,10 @@ public class PatientObject : ScriptableObject
     public double Speed;
     public List<DiseaseType> Diseases = new List<DiseaseType>();
 
-    public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newFace)
+    public void BecomeCurrent(Patient patient, GameObject newHair, GameObject newSkin)
     {
         hair = newHair;
-        face = newFace;
+        skin = newSkin;
 
         Sex = patient.Sex;
         Name = patient.Name;
@@ -40,7 +39,7 @@ public class PatientObject : ScriptableObject
     public void BecomeCurrent(PatientObject patient)
     {
         hair = patient.hair;
-        face = patient.face;
+        skin = patient.skin;
 
         Sex = patient.Sex;
         Name = patient.Name;
@@ -57,7 +56,7 @@ public class PatientObject : ScriptableObject
     public void Reset()
     {
         hair = null;
-        face = null;
+        skin = null;
 
         Sex = Sex.MALE;
         Name = null;
