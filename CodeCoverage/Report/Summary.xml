@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="Summary">
+  <Summary>
+    <Generatedon>03.12.2021 - 22:38:50</Generatedon>
+    <Parser>OpenCoverParser</Parser>
+    <Assemblies>2</Assemblies>
+    <Classes>94</Classes>
+    <Files>80</Files>
+    <Coveredlines>14</Coveredlines>
+    <Uncoveredlines>3177</Uncoveredlines>
+    <Coverablelines>3191</Coverablelines>
+    <Totallines>5468</Totallines>
+    <Linecoverage>0.4</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>0</Totalbranches>
+  </Summary>
+  <Coverage>
+    <Assembly name="GameAssembly" classes="92" coverage="0" coveredlines="2" coverablelines="3179" totallines="9487" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="AllCells" coverage="0" coveredlines="0" coverablelines="4" totallines="843" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Answer" coverage="0" coveredlines="0" coverablelines="12" totallines="157" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Board" coverage="0" coveredlines="0" coverablelines="572" totallines="843" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Body" coverage="0" coveredlines="0" coverablelines="4" totallines="19" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="BTNCHECK" coverage="0" coveredlines="0" coverablelines="49" totallines="154" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ButtonTextManager" coverage="0" coveredlines="0" coverablelines="56" totallines="100" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="CatchButton" coverage="0" coveredlines="0" coverablelines="9" totallines="19" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="CatchPatient" coverage="0" coveredlines="0" coverablelines="15" totallines="29" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Cell" coverage="0" coveredlines="0" coverablelines="45" totallines="843" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Characteristic" coverage="0" coveredlines="0" coverablelines="13" totallines="157" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Click" coverage="0" coveredlines="0" coverablelines="40" totallines="56" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ClickOn" coverage="0" coveredlines="0" coverablelines="18" totallines="37" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Context" coverage="0" coveredlines="0" coverablelines="20" totallines="157" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="CurrentParamedicObject" coverage="0" coveredlines="0" coverablelines="15" totallines="33" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="CurrentPatient" coverage="0" coveredlines="0" coverablelines="4" totallines="21" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="CurrentTargetsObject" coverage="0" coveredlines="0" coverablelines="22" totallines="50" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DDOL" coverage="0" coveredlines="0" coverablelines="5" totallines="12" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DefaultObject" coverage="0" coveredlines="0" coverablelines="3" totallines="10" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DeviceObject" coverage="0" coveredlines="0" coverablelines="3" totallines="10" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DialogueSay" coverage="0" coveredlines="0" coverablelines="55" totallines="157" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Disease" coverage="0" coveredlines="0" coverablelines="18" totallines="104" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DisplayBoard" coverage="0" coveredlines="0" coverablelines="162" totallines="208" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DisplayDrugs" coverage="0" coveredlines="0" coverablelines="74" totallines="101" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DisplayGold" coverage="0" coveredlines="0" coverablelines="13" totallines="31" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DisplayInventory" coverage="0" coveredlines="0" coverablelines="127" totallines="250" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DisplayMethods" coverage="0" coveredlines="0" coverablelines="74" totallines="101" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DisplayShopItems" coverage="0" coveredlines="0" coverablelines="32" totallines="53" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Drugs" coverage="0" coveredlines="0" coverablelines="3" totallines="12" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DrugsObject" coverage="0" coveredlines="0" coverablelines="57" totallines="98" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DynamicJoystick" coverage="0" coveredlines="0" coverablelines="24" totallines="41" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="DynamicJoystickEditor" coverage="0" coveredlines="0" coverablelines="18" totallines="35" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Face" coverage="0" coveredlines="0" coverablelines="4" totallines="20" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="FloatingJoystick" coverage="0" coveredlines="0" coverablelines="13" totallines="26" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="FloatingJoystickEditor" coverage="0" coveredlines="0" coverablelines="10" totallines="21" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="GameManager" coverage="0" coveredlines="0" coverablelines="66" totallines="100" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Hair" coverage="0" coveredlines="0" coverablelines="4" totallines="19" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Inventory" coverage="0" coveredlines="0" coverablelines="16" totallines="41" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="InventoryItem" coverage="0" coveredlines="0" coverablelines="8" totallines="18" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="InventoryObject" coverage="0" coveredlines="0" coverablelines="67" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="InventorySlot" coverage="0" coveredlines="0" coverablelines="21" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Item" coverage="0" coveredlines="0" coverablelines="14" totallines="76" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ItemAttribute" coverage="0" coveredlines="0" coverablelines="9" totallines="76" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ItemObject" coverage="0" coveredlines="0" coverablelines="4" totallines="76" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ItemsDatabaseObject" coverage="0" coveredlines="0" coverablelines="11" totallines="23" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Joystick" coverage="0" coveredlines="0" coverablelines="98" totallines="150" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="JoystickEditor" coverage="0" coveredlines="0" coverablelines="36" totallines="64" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="JoystickPlayerExample" coverage="0" coveredlines="0" coverablelines="4" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="JoystickSetterExample" coverage="0" coveredlines="0" coverablelines="32" totallines="66" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="LocalInventory" coverage="0" coveredlines="0" coverablelines="1" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Manager" coverage="0" coveredlines="0" coverablelines="3" totallines="14" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="MethodObject" coverage="0" coveredlines="0" coverablelines="3" totallines="10" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Methods" coverage="0" coveredlines="0" coverablelines="3" totallines="12" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="MethodsObject" coverage="0" coveredlines="0" coverablelines="57" totallines="98" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Movement" coverage="0" coveredlines="0" coverablelines="46" totallines="72" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="NameDb" coverage="0" coveredlines="0" coverablelines="79" totallines="114" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="NameDb1" coverage="0" coveredlines="0" coverablelines="58" totallines="88" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Navigation" coverage="0" coveredlines="0" coverablelines="3" totallines="12" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Node" coverage="0" coveredlines="0" coverablelines="15" totallines="29" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="NormalRandom" coverage="0" coveredlines="0" coverablelines="35" totallines="56" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Pair[T,U]" coverage="0" coveredlines="0" coverablelines="11" totallines="843" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Paramedic" coverage="0" coveredlines="0" coverablelines="1" totallines="124" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ParamedicCatcher" coverage="0" coveredlines="0" coverablelines="29" totallines="44" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ParamedicGenerator" coverage="0" coveredlines="0" coverablelines="149" totallines="210" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ParamedicObject" coverage="0" coveredlines="0" coverablelines="27" totallines="55" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Passage" coverage="0" coveredlines="0" coverablelines="6" totallines="15" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Patient" coverage="100" coveredlines="2" coverablelines="2" totallines="104" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="PatientGenerator" coverage="0" coveredlines="0" coverablelines="124" totallines="186" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="PatientObject" coverage="0" coveredlines="0" coverablelines="45" totallines="83" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="PatientVictim" coverage="0" coveredlines="0" coverablelines="28" totallines="50" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="PatientVictimBehaviour" coverage="0" coveredlines="0" coverablelines="17" totallines="34" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="PatientVictimFrightened" coverage="0" coveredlines="0" coverablelines="19" totallines="27" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Photo" coverage="0" coveredlines="0" coverablelines="4" totallines="18" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="PreloadManager" coverage="0" coveredlines="0" coverablelines="6" totallines="13" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Question" coverage="0" coveredlines="0" coverablelines="15" totallines="157" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Resources" coverage="0" coveredlines="0" coverablelines="13" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Scaler" coverage="0" coveredlines="0" coverablelines="4" totallines="10" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ScreenSize" coverage="0" coveredlines="0" coverablelines="12" totallines="27" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Scroll" coverage="0" coveredlines="0" coverablelines="4" totallines="18" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="SelectParamedic" coverage="0" coveredlines="0" coverablelines="55" totallines="84" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="SelectPatient" coverage="0" coveredlines="0" coverablelines="93" totallines="124" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Shop" coverage="0" coveredlines="0" coverablelines="10" totallines="19" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ShopDatabaseObject" coverage="0" coveredlines="0" coverablelines="12" totallines="25" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ShopObject" coverage="0" coveredlines="0" coverablelines="5" totallines="16" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="ShopOverlay" coverage="0" coveredlines="0" coverablelines="12" totallines="23" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Skill" coverage="0" coveredlines="0" coverablelines="51" totallines="124" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="StaticCurrentParamedics" coverage="0" coveredlines="0" coverablelines="24" totallines="49" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="StaticCurrentPatients" coverage="0" coveredlines="0" coverablelines="24" totallines="48" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="TabletObject" coverage="0" coveredlines="0" coverablelines="3" totallines="10" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="TransparentClick" coverage="0" coveredlines="0" coverablelines="4" totallines="12" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="UpdateToxicity" coverage="0" coveredlines="0" coverablelines="27" totallines="81" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="VariableJoystick" coverage="0" coveredlines="0" coverablelines="39" totallines="63" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="VariableJoystickEditor" coverage="0" coveredlines="0" coverablelines="18" totallines="37" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+    <Assembly name="Tests" classes="2" coverage="100" coveredlines="12" coverablelines="12" totallines="55" branchcoverage="" coveredbranches="0" totalbranches="0">
+      <Class name="NewTestScript" coverage="100" coveredlines="5" coverablelines="5" totallines="25" branchcoverage="" coveredbranches="0" totalbranches="0" />
+      <Class name="Tests" coverage="100" coveredlines="7" coverablelines="7" totallines="30" branchcoverage="" coveredbranches="0" totalbranches="0" />
+    </Assembly>
+  </Coverage>
+</CoverageReport>
