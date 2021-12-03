@@ -10,10 +10,6 @@ public class DisplayShopItems : MonoBehaviour
     public ShopObject shop;
     public List<int> displayed = new List<int>();
 
-    private void Update()
-    {
-        UpdateShop();
-    }
     private void Start()
     {
         CreateShop();
@@ -38,16 +34,6 @@ public class DisplayShopItems : MonoBehaviour
 
             displayed.Add(shop.openedItems[i]);
         }
-    }
-
-    void UpdateShop()
-    {
-        /*
-        if (displayed.Count != shop.openedItems.Count)
-        {
-            
-        }
-        */
     }
 
     void Buy(int _id, int _price)
