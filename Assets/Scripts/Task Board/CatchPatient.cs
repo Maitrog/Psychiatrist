@@ -22,7 +22,7 @@ public class CatchPatient : MonoBehaviour
                 Patient renderedPatient = characterGameObject.GetComponent<Patient>();
                 Destroy(renderedPatient.transform.GetChild(0).gameObject);
                 Destroy(renderedPatient.transform.GetChild(1).gameObject);
-                Destroy(renderedPatient.transform.GetChild(2).gameObject);
+                //Destroy(renderedPatient.transform.GetChild(2).gameObject);
             }
         }
     }
