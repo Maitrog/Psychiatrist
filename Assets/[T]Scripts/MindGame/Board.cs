@@ -17,7 +17,7 @@ public class Board : MonoBehaviour
     public List<Cell> playerCells = new List<Cell>();
     public List<Cell> aiCells = new List<Cell>();
     public char[,] gameBoard = new char[9, 9];
-    private int minimaxDepth = 3;
+    public int minimaxDepth = 3;
 
     public bool CanSelect(Cell curCell, int turn)//можем ли мы выбрать данный гекс
     {

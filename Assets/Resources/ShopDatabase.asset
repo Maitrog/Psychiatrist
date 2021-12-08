@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff25861cb7c0bcc49ad4a749435501c5, type: 3}
-  m_Name: Shop Database
+  m_Name: ShopDatabase
   m_EditorClassIdentifier: 
   database: {fileID: 11400000, guid: beb28379f3021f448acc291ee14b40dc, type: 2}
   costs: 0400000005000000050000000100000002000000
