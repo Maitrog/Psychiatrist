@@ -15,26 +15,50 @@ public class Dialoges : MonoBehaviour
     public Text Text2;
     public Text Text3;
     public Text Text4;
-    //public static Text Text5;
-    //public static Text Text6;
-    //public static Text Text7;
-    //public static Text Text8;
+    public Image image1;
+    public Image image2;
+    public Image image3;
+    public Image image4;
+    public Image[] ImageMas = new Image[4];
     public static int NumQuadros = 3;
     public static Text[] texts;
     public static int CurrenrPages = 0;
     public int[] quadroNumPages = new int[NumQuadros];
-    private string[] buff;
+    private static string[] buff;
 
     public int CharactNum;
 
     public static string[] Replices = new string[12];
 
-    /*public void fillVector(Vector2[] vectors)
-    {
 
     
+    
+    void ImageMasCreate()
+    {
+        ImageMas[0] = image1;
+        ImageMas[1] = image2;
+        ImageMas[2] = image3;
+        ImageMas[3] = image4;
+    }
 
-    }*/
+    public static void TextBoxSet(Image[] ImageMas)
+    {
+        //clearTextBoxes();
+        for (int i = 0; i < 4; i++)
+        {
+            if (texts[i].text != "")
+            {
+                ImageMas[i].enabled = true;
+            }
+            else
+            {
+                ImageMas[i].enabled = false;
+            }
+        }
+
+        
+    }
+
 
     private void TextsMassiveCreate()
     {
@@ -43,14 +67,8 @@ public class Dialoges : MonoBehaviour
         texts[1] = Text2;
         texts[2] = Text3;
         texts[3] = Text4;
-        /* texts[4] = Text5;
-         texts[5] = Text6;
-         texts[6] = Text7; 
-         texts[7] = Text8;*/
-        //texts[0] = Text1;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         //Debug.Log(StaticClassSave.texts.Length);
@@ -81,8 +99,8 @@ public class Dialoges : MonoBehaviour
             //newText[charactNum * 2 + 1 - 2] = context.answers.Find(x => x.questionId == buff.id).answer;
 
         }
-        
 
+        //UpdateSave();
 
 
         //
@@ -99,8 +117,11 @@ public class Dialoges : MonoBehaviour
 
     }
 
+    
+
     public void ChangePage()
     {
+        ImageMasCreate();
         CurrenrPages = (CurrenrPages+1) % NumQuadros;
         TextsMassiveCreate();
         for (int i = 0; i < 4; i++)
@@ -108,20 +129,14 @@ public class Dialoges : MonoBehaviour
             texts[i].text = Replices[i + CurrenrPages * 4];
 
         }
-        
-
-
-        //Vector2[] buff = new Vector2[4];
-        //Vector2[] page1 = new Vector2[4];
-        //Vector2[] page2 = new Vector2[4];
-
+        TextBoxSet(ImageMas);
     }
 
 
-    public static void ChangePageToCurrent()
+    public static void ChangePageToCurrent(Image[] ImageMas)
     {
-        //CurrenrPages = (CurrenrPages + 1) % NumQuadros;
-        //TextsMassiveCreate();
+
+      
         CurrenrPages = (ButtonTextManager.k-2) / 2;
         Debug.Log("bb"+CurrenrPages);
         for (int i = 0; i < 4; i++)
@@ -130,23 +145,15 @@ public class Dialoges : MonoBehaviour
 
         }
 
-
-
-        //Vector2[] buff = new Vector2[4];
-        //Vector2[] page1 = new Vector2[4];
-        //Vector2[] page2 = new Vector2[4];
+        TextBoxSet(ImageMas);
 
     }
 
 
 
-    public void save()
+    public static void save()
     {
-
-        //Text[] buff;
         Replices.CopyTo(buff, 0);
-        //texts.CopyTo(StaticClassSave.texts, 0);
-        //StaticClassSave.texts = buff;
         StaticClassSave.texts = buff;
        StaticClassSave.CurrenrPage = CurrenrPages ;
         StaticClassSave.saveFlag = true;
@@ -154,9 +161,7 @@ public class Dialoges : MonoBehaviour
         StaticClassSave.questions = ButtonTextManager.questions;
 
     }
-
-    // Update is called once per frame
-    void Update()
+    public static void UpdateSave()
     {
         if (texts.Length!=0)
         {

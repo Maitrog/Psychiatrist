@@ -18,6 +18,7 @@ class DialogueSay
         if (buttonNum != 0)
         {
             buff = context.questions.Find(x => (x.text_short == (buttonMas[buttonNum - 1].GetComponentInChildren<Text>().text.Substring(3)) && x.characteristicId == charact[charactNum - 1]));
+            
             newText[charactNum * 2 - 2].text = buff.question;
             newText[charactNum * 2 + 1 - 2].text = context.answers.Find(x => x.questionId == buff.id).answer;
         }
@@ -37,6 +38,7 @@ class DialogueSay
         foreach (Question i in questions)
         {
             if (k < 5 && i.characteristicId == charact[charactNum] && quest_char.Find(x => i.question == x.question) == null)
+           
             {
                 quest_char.Add(i);
                 buttonMas[k - 1].GetComponentInChildren<Text>().text = (k.ToString() + ". " + i.text_short);
@@ -44,6 +46,7 @@ class DialogueSay
             }
 
         }
+        Debug.Log(questions.Count + "fghj");
         while (k < 5)
         {
             buttonMas[k - 1].GetComponentInChildren<Text>().text = "...";
@@ -74,9 +77,9 @@ class DialogueSay
 
 
     public static List<Question> ButtonTextCreate(Context context, List<Question> questions, int buttonNum, int[] charact, int charactNum, string[] newText, Text[] TextBoxes, Button[] buttonMas)
-    //public static List<Question> ButtonTextCreate(Context context, List<Question> questions, int buttonNum, int[] charact, int charactNum, string[] newText, Button[] buttonMas)
-    {
 
+    {
+        //Debug.Log("DIVIDE");
         if (charactNum > 6) return questions;
         List<Question> questions_non_repeat = new List<Question>();
         int k = 1;
@@ -85,25 +88,25 @@ class DialogueSay
 
         if (charactNum % 2 == 0)
         {
-            Dialoges.CurrenrPages=(Dialoges.CurrenrPages+1)% Dialoges.NumQuadros;
+            Dialoges.CurrenrPages = (Dialoges.CurrenrPages + 1) % Dialoges.NumQuadros;
         }
 
         if (buttonNum != 0)
         {
+
             buff = context.questions.Find(x => (x.text_short == (buttonMas[buttonNum - 1].GetComponentInChildren<Text>().text.Substring(3)) && x.characteristicId == charact[charactNum - 1]));
-            //Debug.Log("aaa"+charactNum);
-            //Debug.Log(newText.Length);
+      
             newText[charactNum * 2 - 2] = buff.question;
             newText[charactNum * 2 + 1 - 2] = context.answers.Find(x => x.questionId == buff.id).answer;
-            if (charactNum %2 == 1)
+            if (charactNum % 2 == 1)
             {
                 for (int i = 0; i < 4; i++)
                 {
                     TextBoxes[i].text = "";
                 }
-                
+
             }
-            if (charactNum % 2!=0)
+            if (charactNum % 2 != 0)
             {
                 TextBoxes[(charactNum % 2) * 2 - 2].text = buff.question;
                 TextBoxes[(charactNum % 2) * 2 + 1 - 2].text = context.answers.Find(x => x.questionId == buff.id).answer;
@@ -115,9 +118,7 @@ class DialogueSay
             }
 
 
-            /*
-            TextBoxes[Math.Max((charactNum%2+1) * 2 - 2,2)].text = buff.question;
-            TextBoxes[Math.Max((charactNum %2+1) * 2 + 1 - 2,3)].text = context.answers.Find(x => x.questionId == buff.id).answer;*/
+            
 
         }
         while (questions.Find(x => ((buff.characteristicId == x.characteristicId) || (buff.question == x.question))) != null)
@@ -133,18 +134,21 @@ class DialogueSay
             }
         }
         k = 1;
-        if (charactNum != 6) { 
-        foreach (Question i in questions)
+        if (charactNum != 6)
         {
-            //Debug.Log("dgfhdhd"+charactNum);
-            if (k < 5 && i.characteristicId == charact[charactNum] && quest_char.Find(x => i.question == x.question) == null)
+            Debug.Log(questions.Count + "questions.Count");
+            foreach (Question i in questions)
             {
-                quest_char.Add(i);
-                buttonMas[k - 1].GetComponentInChildren<Text>().text = (k.ToString() + ". " + i.text_short);
-                k++;
-            }
+               
+                if (k < 5 && i.characteristicId == charact[charactNum] && quest_char.Find(x => i.question == x.question) == null)
+                {
+                    //Debug.Log("asdfghjkl");
+                    quest_char.Add(i);
+                    buttonMas[k - 1].GetComponentInChildren<Text>().text = (k.ToString() + ". " + i.text_short);
+                    k++;
+                }
 
-        }
+            }
         }
         while (k < 5)
         {
@@ -164,14 +168,15 @@ class DialogueSay
                     }
                 }
             }
+            Debug.Log("qnr" + questions_non_repeat.Count);
             return questions_non_repeat;
+
         }
         else
         {
             return questions;
         }
     }
-
 
 }
 
@@ -196,13 +201,7 @@ public class Question
 
     }
 
-    /*public Question(int questionid, int id, string text_short, int characteristic id)
-    {
-        this.questionId = questionid;
-        this.id = id;
-        this.answer = answer;
-
-    }*/
+   
 }
 public class Answer
 {
@@ -229,7 +228,7 @@ public class Answer
         this.answer = answer;
 
     }
-    
+
 }
 public class Characteristic
 {

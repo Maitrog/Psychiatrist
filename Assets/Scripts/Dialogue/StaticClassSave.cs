@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public static class StaticClassSave 
 {
-    public static string[] texts=new string[12];
+    public static string[] texts=new string[4];
     public static string[] ButTexts = new string[4];
     public static int CurrenrPage;
     public static bool saveFlag=false;
