@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 0
   m_EditorClassIdentifier: 
   photo: {fileID: 8917197301013672844, guid: 4ffab381575bb80419c9cc009ce6efd9, type: 3}
-  Sex: 0
-  Name: "\u0410\u0433\u0430\u0444\u043E\u043D"
-  Surname: "\u0421\u043C\u0438\u0440\u043D\u043E\u0432"
-  Patronymic: "\u0410\u0433\u0430\u0444\u043E\u043D\u043E\u0432\u0438\u0447"
-  Speed: 2
+  Sex: 1
+  Name: "\u0410\u0433\u0430\u0444\u044C\u044F"
+  Surname: "\u0421\u043C\u0438\u0440\u043D\u043E\u0432\u0430"
+  Patronymic: 
+  Speed: 1
   skills: []

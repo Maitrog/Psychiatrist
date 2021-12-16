@@ -17,3 +17,5 @@ MonoBehaviour:
   type: 0
   description: Green tablet
   attributes: []
+  character: 1
+  toxicity: 0

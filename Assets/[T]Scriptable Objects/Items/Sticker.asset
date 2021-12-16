@@ -17,3 +17,5 @@ MonoBehaviour:
   type: 0
   description: Simple tablet
   attributes: []
+  character: 3
+  toxicity: 0
