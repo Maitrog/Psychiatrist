@@ -64,35 +64,49 @@ public class MethodsObject : ScriptableObject
     [ContextMenu("Save")]
     public void Save()
     {
-        //string saveData = JsonUtility.ToJson(this, true);
-        //BinaryFormatter bf = new BinaryFormatter();
-        //FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
-        //bf.Serialize(file, saveData);
-        //file.Close();
+        try
+        {
+            //string saveData = JsonUtility.ToJson(this, true);
+            //BinaryFormatter bf = new BinaryFormatter();
+            //FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
+            //bf.Serialize(file, saveData);
+            //file.Close();
 
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(string.Concat(Application.persistentDataPath, saveMethodsPath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(stream, container);
-        stream.Close();
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(string.Concat(Application.persistentDataPath, saveMethodsPath), FileMode.Create, FileAccess.Write);
+            formatter.Serialize(stream, container);
+            stream.Close();
+        }
+        catch
+        {
+            Debug.Log("SAVE ERROR");
+        }
     }
     [ContextMenu("Load")]
     public void Load()
     {
         if (File.Exists(string.Concat(Application.persistentDataPath, saveMethodsPath)))
         {
-            //BinaryFormatter bf = new BinaryFormatter();
-            //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
-            //JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
-            //file.Close();
-
-            IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(string.Concat(Application.persistentDataPath, saveMethodsPath), FileMode.Open, FileAccess.Read);
-            LocalInventory newContainer = (LocalInventory)formatter.Deserialize(stream);
-            for (int i = 0; i < container.items.Length; i++)
+            try
             {
-                container.items[i].UpdateSlot(newContainer.items[i].ID, newContainer.items[i].item, newContainer.items[i].amount);
+                //BinaryFormatter bf = new BinaryFormatter();
+                //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
+                //JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
+                //file.Close();
+
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(string.Concat(Application.persistentDataPath, saveMethodsPath), FileMode.Open, FileAccess.Read);
+                LocalInventory newContainer = (LocalInventory)formatter.Deserialize(stream);
+                for (int i = 0; i < container.items.Length; i++)
+                {
+                    container.items[i].UpdateSlot(newContainer.items[i].ID, newContainer.items[i].item, newContainer.items[i].amount);
+                }
+                stream.Close();
             }
-            stream.Close();
+            catch
+            {
+                Debug.Log("LOAD ERROR");
+            }
         }
     }
 }

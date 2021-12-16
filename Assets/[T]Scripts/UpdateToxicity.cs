@@ -13,6 +13,9 @@ public class UpdateToxicity : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("DISEASES:::");
+        foreach (var c in patient.Diseases) 
+            Debug.Log(c);
         fill = 0f;
     }
     void Update()
@@ -44,10 +47,10 @@ public class UpdateToxicity : MonoBehaviour
 
         bar.fillAmount = currentToxicity / (float)patient.MaxToxic;
     }
-    /*
+    
     public void Submit()
     {
-        foreach (var c in patient.Characters)
+        foreach (var c in patient.Diseases)
             Debug.Log(c);
 
         if (methods.container.items[0].ID >= 0 || drugs.container.items[0].ID >= 0)
@@ -57,18 +60,18 @@ public class UpdateToxicity : MonoBehaviour
             {
                 if (methods.container.items[i].ID >= 0) 
                 {
-                    if (patient.Characters.Contains(methods.container.items[i].item.character))
+                    if (patient.Diseases.Contains(methods.container.items[i].item.character))
                     {
-                        patient.Characters.Remove(methods.container.items[i].item.character);
+                        patient.Diseases.Remove(methods.container.items[i].item.character);
                         Debug.Log(methods.container.items[i].item.character);
                     }
                 }
 
                 if (drugs.container.items[i].ID >= 0)
                 {
-                    if (patient.Characters.Contains(drugs.container.items[i].item.character))
+                    if (patient.Diseases.Contains(drugs.container.items[i].item.character))
                     {
-                        patient.Characters.Remove(drugs.container.items[i].item.character);
+                        patient.Diseases.Remove(drugs.container.items[i].item.character);
                         Debug.Log(drugs.container.items[i].item.character);
                     }
                 }
@@ -77,5 +80,5 @@ public class UpdateToxicity : MonoBehaviour
                 drugs.container.items[i].UpdateSlot(-1, null, 0);
             }
         }
-    }*/
+    }
 }

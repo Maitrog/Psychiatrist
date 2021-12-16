@@ -9,6 +9,6 @@ public class Manager : MonoBehaviour
     public void StartGame()
     {
 
-        navigator.GetComponent<Navigation>().NextScene(4);
+        navigator.GetComponent<Navigation>().NextScene(2);
     }
 }

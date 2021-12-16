@@ -68,43 +68,57 @@ public class InventoryObject : ScriptableObject
     [ContextMenu("Save")]
     public void Save()
     {
-        //string saveData = JsonUtility.ToJson(this, true);
-        //BinaryFormatter bf = new BinaryFormatter();
-        //FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
-        //bf.Serialize(file, saveData);
-        //file.Close();
+        try
+        {
+            //string saveData = JsonUtility.ToJson(this, true);
+            //BinaryFormatter bf = new BinaryFormatter();
+            //FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
+            //bf.Serialize(file, saveData);
+            //file.Close();
 
-        IFormatter formatter = new BinaryFormatter();
-        Stream streamContainer = new FileStream(string.Concat(Application.persistentDataPath, saveContainerPath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(streamContainer, container);
-        streamContainer.Close();
-        Stream streamResources = new FileStream(string.Concat(Application.persistentDataPath, saveResourcesPath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(streamResources, Resources.gold);
-        streamResources.Close();
+            IFormatter formatter = new BinaryFormatter();
+            Stream streamContainer = new FileStream(string.Concat(Application.persistentDataPath, saveContainerPath), FileMode.Create, FileAccess.Write);
+            formatter.Serialize(streamContainer, container);
+            streamContainer.Close();
+            Stream streamResources = new FileStream(string.Concat(Application.persistentDataPath, saveResourcesPath), FileMode.Create, FileAccess.Write);
+            formatter.Serialize(streamResources, Resources.gold);
+            streamResources.Close();
+        }
+        catch
+        {
+            Debug.Log("SAVE ERROR");
+        }
     }
     [ContextMenu("Load")]
     public void Load()
     {
         if (File.Exists(string.Concat(Application.persistentDataPath, saveContainerPath)))
         {
-            //BinaryFormatter bf = new BinaryFormatter();
-            //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
-            //JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
-            //file.Close();
-
-            IFormatter formatter = new BinaryFormatter();
-            Stream streamContainer = new FileStream(string.Concat(Application.persistentDataPath, saveContainerPath), FileMode.Open, FileAccess.Read);
-            LocalInventory newContainer = (LocalInventory)formatter.Deserialize(streamContainer);
-            for (int i = 0; i < container.items.Length; i++)
+            try
             {
-                container.items[i].UpdateSlot(newContainer.items[i].ID, newContainer.items[i].item, newContainer.items[i].amount);
+                //BinaryFormatter bf = new BinaryFormatter();
+                //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
+                //JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
+                //file.Close();
+
+                IFormatter formatter = new BinaryFormatter();
+                Stream streamContainer = new FileStream(string.Concat(Application.persistentDataPath, saveContainerPath), FileMode.Open, FileAccess.Read);
+                LocalInventory newContainer = (LocalInventory)formatter.Deserialize(streamContainer);
+                for (int i = 0; i < container.items.Length; i++)
+                {
+                    container.items[i].UpdateSlot(newContainer.items[i].ID, newContainer.items[i].item, newContainer.items[i].amount);
+                }
+                streamContainer.Close();
+
+                Stream streamResources = new FileStream(string.Concat(Application.persistentDataPath, saveResourcesPath), FileMode.Open, FileAccess.Read);
+                int newResources = (int)formatter.Deserialize(streamResources);
+                Resources.gold = newResources;
+                streamResources.Close();
             }
-            streamContainer.Close();
-            
-            Stream streamResources = new FileStream(string.Concat(Application.persistentDataPath, saveResourcesPath), FileMode.Open, FileAccess.Read);
-            int newResources = (int)formatter.Deserialize(streamResources);
-            Resources.gold = newResources;
-            streamResources.Close();
+            catch
+            {
+                Debug.Log("LOAD ERROR");
+            }
         }
     }
     [ContextMenu("Clear")]

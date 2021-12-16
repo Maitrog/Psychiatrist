@@ -19,17 +19,27 @@ MonoBehaviour:
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
+  saveMethodsPath: /inventory.SaveMethods

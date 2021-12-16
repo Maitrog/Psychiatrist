@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9713ea51b11fa4a43beba4de69d11740, type: 3}
   m_Name: Shop
   m_EditorClassIdentifier: 
-  savePath: /shop..Save
+  savePath: /shop.Save
   database: {fileID: 11400000, guid: cacf07533b9a6664a86ef5b9bd62ea19, type: 2}
   openedItems: 00000000010000000200000003000000
