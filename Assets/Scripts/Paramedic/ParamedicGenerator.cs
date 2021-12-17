@@ -128,8 +128,8 @@ public class ParamedicGenerator : MonoBehaviour
         Paramedic renderedParamedic = RenderParamedic(photoSO, parentTransform);
         paramedic.photo = renderedParamedic.photo;
 
-        ParamedicObject paramedicObject = CreateParamedicSO(paramedic, photoSO);
-        currentParamedicObject.AddParamedic(paramedicObject);
+        //ParamedicObject paramedicObject = CreateParamedicSO(paramedic, photoSO);
+        //currentParamedicObject.AddParamedic(paramedicObject);
         StaticCurrentParamedics.CurrentParamedic = currentParamedicObject.currentParamedics;
         SpawnParamedic(gameObject, paramedic);
     }
@@ -204,12 +204,12 @@ public class ParamedicGenerator : MonoBehaviour
         rt.localPosition = new Vector3(rt.localPosition.x, rt.localPosition.y, 0);
         return gameObject;
     }
-
+    /*
     private ParamedicObject CreateParamedicSO(Paramedic paramedic, GameObject newPhoto)
     {
         ParamedicObject example = ScriptableObject.CreateInstance<ParamedicObject>();
         example.BecomeCurrent(paramedic, newPhoto);
-        string path = $"Assets/Scriptable Object/Paramedic/{currentParamedicObject.currentParamedics.Count}.asset";
+        string path = Application.persistentDataPath + "Assets/Scriptable Object/Paramedic/{currentParamedicObject.currentParamedics.Count}.asset";
         AssetDatabase.CreateAsset(example, path);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -217,4 +217,5 @@ public class ParamedicGenerator : MonoBehaviour
 
         return example;
     }
+    */
 }

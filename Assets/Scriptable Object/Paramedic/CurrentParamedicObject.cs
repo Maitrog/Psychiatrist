@@ -15,19 +15,23 @@ public class CurrentParamedicObject : ScriptableObject
     {
         currentParamedics.Add(paramedic);
     }
+    
     public void DeleteParamedic(int index)
     {
-        AssetDatabase.DeleteAsset($"Assets/Scriptable Object/Paramedic/{index}.asset");
+        //AssetDatabase.DeleteAsset($"Assets/Scriptable Object/Paramedic/{index}.asset");
         currentParamedics.RemoveAt(index);
     }
+    
 
+    
     internal void DeleteAll()
     {
         int count = currentParamedics.Count;
         for (int i = 0; i < count; i++)
         {
-            AssetDatabase.DeleteAsset($"Assets/Scriptable Object/Paramedic/{i}.asset");
+            //AssetDatabase.DeleteAsset($"Assets/Scriptable Object/Paramedic/{i}.asset");
             currentParamedics.RemoveAt(0);
         }
     }
+    
 }

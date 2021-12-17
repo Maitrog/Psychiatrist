@@ -6838,6 +6838,7 @@ MonoBehaviour:
   X_SPACE_BETWEEN_ITEMS: 130
   Y_SPACE_BETWEEN_ITEMS: 130
   NUMBER_OF_COLUMNS: 4
+  inTreatment: 1
   methods: {fileID: 11400000, guid: 0976a694b0a3f7644a4e531e2f1fc1ea, type: 2}
   drugs: {fileID: 11400000, guid: 0ffa9ed912f39554bb5d51ac40eccbdf, type: 2}
 --- !u!1001 &2113737582

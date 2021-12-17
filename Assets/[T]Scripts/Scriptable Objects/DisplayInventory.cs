@@ -18,6 +18,7 @@ public class DisplayInventory : MonoBehaviour
     public int NUMBER_OF_COLUMNS;
     Dictionary<GameObject, InventorySlot> itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
     bool inSLot = false;
+    public bool inTreatment;
     private GameObject clickObj;
 
     public MethodsObject methods;
@@ -32,7 +33,7 @@ public class DisplayInventory : MonoBehaviour
     void Update()
     {
         UpdateSlots();
-        //MouseClicked();
+        if (inTreatment) MouseClicked();
     }
     public void UpdateSlots()
     {
