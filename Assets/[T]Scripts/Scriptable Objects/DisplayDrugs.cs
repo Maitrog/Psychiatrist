@@ -23,6 +23,7 @@ public class DisplayDrugs : MonoBehaviour
     {
         UpdateSlots();
         MouseClicked();
+        //OnTouch();
     }
 
     public void UpdateSlots()

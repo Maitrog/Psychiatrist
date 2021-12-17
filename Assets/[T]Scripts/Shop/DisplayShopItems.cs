@@ -20,6 +20,7 @@ public class DisplayShopItems : MonoBehaviour
     }
     void CreateShop()
     {
+        //Debug.Log(shop.openedItems.Count);
         for (int i = 0; i < shop.openedItems.Count; i++)
         {
             var obj = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform);
@@ -54,7 +55,7 @@ public class DisplayShopItems : MonoBehaviour
     {
         Debug.Log(_id.ToString() + " " + _price.ToString());
         var inv = inventory.GetComponent<Inventory>().inventory;
-        if (inv.resources.gold >= _price)
+        if (Resources.gold >= _price)//inv.resources.gold >= _price)
         {
             inv.AddItem(new Item(inv.database.GetItem[_id]), 1);
             inv.resources.DiscountGold(_price);

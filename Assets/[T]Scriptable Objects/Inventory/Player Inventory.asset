@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d20d36878b4eab48a220ad80b0734a7, type: 3}
   m_Name: Player Inventory
   m_EditorClassIdentifier: 
-  savePath: /inventory.Save
+  saveContainerPath: /inventory.SaveContainer
+  saveResourcesPath: /inventory.SaveResources
   database: {fileID: 11400000, guid: beb28379f3021f448acc291ee14b40dc, type: 2}
   container:
     items:
@@ -20,92 +21,136 @@ MonoBehaviour:
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 10
+        character: 1
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
     - ID: -1
       item:
         Name: 
         Id: 0
+        type: 0
+        toxicity: 0
+        character: 0
         attributes: []
       amount: 0
   resources:
     textGold: {fileID: 3563294986647984597, guid: 5a61f45340977b04290ada33fa34fdc5, type: 3}
-    gold: 0

@@ -18,12 +18,14 @@ public class DisplayGold : MonoBehaviour
 
     public void UpdateGold()
     {
-        displayGold = inventory.GetComponent<Inventory>().inventory.resources.gold;
+        //displayGold = inventory.GetComponent<Inventory>().inventory.resources.gold;
+        displayGold = Resources.gold;
         this.GetComponent<TextMeshProUGUI>().text = displayGold.ToString() + '$';
     }
 
     public void SetGold()
     {
-        displayGold = inventory.GetComponent<Inventory>().inventory.resources.gold;
+        //displayGold = inventory.GetComponent<Inventory>().inventory.resources.gold;
+        displayGold = Resources.gold;
     }
 }

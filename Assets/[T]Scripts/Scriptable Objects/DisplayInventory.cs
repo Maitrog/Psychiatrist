@@ -32,7 +32,7 @@ public class DisplayInventory : MonoBehaviour
     void Update()
     {
         UpdateSlots();
-        MouseClicked();
+        //MouseClicked();
     }
     public void UpdateSlots()
     {

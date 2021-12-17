@@ -3,6 +3,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public InventoryObject inventory;
+    private static bool loaded = false;
 
     private void Update()
     {
@@ -17,13 +18,24 @@ public class Inventory : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        inventory.container.items = new InventorySlot[15];
-        inventory.resources.gold = 0;
+        inventory.Save();
+        //inventory.container.items = new InventorySlot[15];
+        //inventory.resources.gold = 0;
     }
     /*
     private void Start()
     {
-        inventory.container.items = new InventorySlot[15];
+        inventory.Load();
+        //inventory.container.items = new InventorySlot[15];
+    }*/
+
+    private void Awake()
+    {
+        /*
+        if (!loaded)
+        {
+            inventory.Load();
+            loaded = true;
+        }*/
     }
-    */
 }
