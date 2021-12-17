@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf33121f4d392048b93dfa7c99834bd, type: 3}
+  m_Name: FacesDatabase
+  m_EditorClassIdentifier: 
+  skins:
+  - {fileID: 3350333063925803638, guid: aef20035b00803e448094afceea75446, type: 3}
+  - {fileID: 7438146129699802754, guid: 1a4181f541a50604ab94809cd5fa4eea, type: 3}
+  - {fileID: 1224996880388959002, guid: 30d7ae68360f3434da84c928b3d59178, type: 3}
+  - {fileID: 6904195502455051086, guid: f829d4517c1c7124bb089832af8284d6, type: 3}
+  - {fileID: 4609505552366446856, guid: e8a1cff7e0c6b274ea74bed9b39242cc, type: 3}
+  - {fileID: 4165568287375173535, guid: 9147b57e3502209498919955c933e725, type: 3}
+  - {fileID: 3288610011857094596, guid: 0f37b174b5616604b9a9fbfebbae48c4, type: 3}
+  - {fileID: 5949387644547958099, guid: f45e4b57a3b2fc845866acbbc3dafb1e, type: 3}
+  maleHairs:
+  - {fileID: 436660674567411900, guid: 6224e1e45af3a4e4aa9936626dcb71f1, type: 3}
+  - {fileID: 4555650228456534306, guid: b2e5b90ce062bc346ac287c8034ae332, type: 3}
+  - {fileID: 7803090545748149759, guid: 321868eeb1ad9114a9ac0caa4d59151c, type: 3}
+  femaleHairs:
+  - {fileID: 2615690815216385502, guid: fcc292464cfc758498a8cc1223b5e7ea, type: 3}
+  - {fileID: 2335401910223843441, guid: b95bd987159ae1b4db9c1815c58f001e, type: 3}

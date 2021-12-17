@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class Hair : MonoBehaviour
+public class Skin : MonoBehaviour
 {
     public int Id;
+    public Transform top;
     public Transform bottom;
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +7,7 @@ public class PatientGenerator : MonoBehaviour
     public CurrentTargetsObject currentTargetsSO;
 
     public GameObject searchPanel;
-    public Hair[] hairMalePrefabs;
-    public Hair[] hairFemalePrefabs;
-    public Face[] facePrefabs;
+    public FacesDatabaseObject FacesDatabaseObject;
 
     private void Awake()
     {
@@ -27,7 +24,7 @@ public class PatientGenerator : MonoBehaviour
                 Toxic = StaticCurrentPatients.CurrentPatients[i].Toxic,
                 Speed = StaticCurrentPatients.CurrentPatients[i].Speed
             };
-            currentTargetsSO.AddPatient(i, patient, StaticCurrentPatients.CurrentPatients[i].hair, StaticCurrentPatients.CurrentPatients[i].face);
+            currentTargetsSO.AddPatient(i, patient, StaticCurrentPatients.CurrentPatients[i].hair, StaticCurrentPatients.CurrentPatients[i].skin);
         }
     }
     void Start()
@@ -40,7 +37,7 @@ public class PatientGenerator : MonoBehaviour
             }
             else
             {
-                RenderPatient(i, currentTargetsSO.currentTarget[i].face, currentTargetsSO.currentTarget[i].hair);
+                RenderPatient(i, currentTargetsSO.currentTarget[i].skin, currentTargetsSO.currentTarget[i].hair);
                 SpawnPatient(i, currentTargetsSO.currentTarget[i]);
             }
         }
@@ -64,7 +61,7 @@ public class PatientGenerator : MonoBehaviour
     private void GeneratePatient(int index)
     {
         int maxDiseases = 2;
-        GameObject faceSO;
+        GameObject skinSO;
         GameObject hairSO;
         NameDb nameDb = new NameDb();
         NormalRandom normal = new NormalRandom();
@@ -76,7 +73,7 @@ public class PatientGenerator : MonoBehaviour
             Speed = normal.Next(1, 4)
         };
 
-        faceSO = facePrefabs[UnityEngine.Random.Range(0, facePrefabs.Length)].gameObject;
+        skinSO = FacesDatabaseObject.GetSkin[UnityEngine.Random.Range(0, FacesDatabaseObject.GetSkin.Count)].gameObject;
 
         Array values = Enum.GetValues(typeof(DiseaseType));
         HashSet<DiseaseType> diseases = new HashSet<DiseaseType>();
@@ -105,7 +102,7 @@ public class PatientGenerator : MonoBehaviour
             patient.Surname = surnames[UnityEngine.Random.Range(0, surnames.Count)];
             patient.Patronymic = patronymics[UnityEngine.Random.Range(0, patronymics.Count)];
 
-            hairSO = hairMalePrefabs[UnityEngine.Random.Range(0, hairMalePrefabs.Length)].gameObject;
+            hairSO = FacesDatabaseObject.GetMaleHair[UnityEngine.Random.Range(0, FacesDatabaseObject.GetMaleHair.Count)].gameObject;
         }
         else
         {
@@ -116,34 +113,34 @@ public class PatientGenerator : MonoBehaviour
             patient.Surname = surnames[UnityEngine.Random.Range(0, surnames.Count)];
             patient.Patronymic = patronymics[UnityEngine.Random.Range(0, patronymics.Count)];
 
-            hairSO = hairFemalePrefabs[UnityEngine.Random.Range(0, hairFemalePrefabs.Length)].gameObject;
+            hairSO = FacesDatabaseObject.GetFemaleHair[UnityEngine.Random.Range(0, FacesDatabaseObject.GetFemaleHair.Count)].gameObject;
         }
 
-        Patient spawnedPatient = RenderPatient(index, faceSO, hairSO);
+        Patient spawnedPatient = RenderPatient(index, skinSO, hairSO);
 
         patient.hair = spawnedPatient.hair;
-        patient.face = spawnedPatient.face;
+        patient.skin = spawnedPatient.skin;
 
         SpawnPatient(index, patient);
-        currentTargetsSO.AddPatient(index, patient, hairSO, faceSO);
+        currentTargetsSO.AddPatient(index, patient, hairSO, skinSO);
     }
 
-    private Patient RenderPatient(int index, GameObject faceSO, GameObject hairSO)
+    private Patient RenderPatient(int index, GameObject skinSO, GameObject hairSO)
     {
         float scale = ScreenSize.GetScreenToWorldWidth * 0.8f;
         var parentTransform = searchPanel.transform.GetChild(index).GetChild(0);
 
-        Face newFace = Instantiate(faceSO.GetComponent<Face>());
-        newFace.transform.SetParent(parentTransform);
-        newFace.transform.position = new Vector3(newFace.transform.position.x, newFace.transform.position.y, 100);
-        newFace.transform.localPosition = new Vector3(0, -5f, 0);
+        Skin newSkin = Instantiate(skinSO.GetComponent<Skin>());
+        newSkin.transform.SetParent(parentTransform);
+        newSkin.transform.position = new Vector3(newSkin.transform.position.x, newSkin.transform.position.y, 100);
+        newSkin.transform.localPosition = new Vector3(0, -5f, 0);
 
         Hair newHair = Instantiate(hairSO.GetComponent<Hair>());
         newHair.transform.SetParent(parentTransform);
-        newHair.transform.position = newFace.transform.position + newFace.top.localPosition * scale - newHair.bottom.localPosition * scale;
+        newHair.transform.position = newSkin.transform.position + newSkin.top.localPosition * scale - newHair.bottom.localPosition * scale;
         newHair.transform.localPosition = new Vector3(newHair.transform.localPosition.x, newHair.transform.localPosition.y, -1);
 
-        return new Patient() { hair = newHair, face = newFace };
+        return new Patient() { hair = newHair, skin = newSkin };
     }
 
     private void SpawnPatient(int index, Patient _patient)
@@ -162,7 +159,7 @@ public class PatientGenerator : MonoBehaviour
         patient.Diseases = new List<DiseaseType>(_patient.Diseases);
 
         patient.hair = _patient.hair;
-        patient.face = _patient.face;
+        patient.skin = _patient.skin;
     }
 
     private void SpawnPatient(int index, PatientObject _patient)
@@ -181,6 +178,6 @@ public class PatientGenerator : MonoBehaviour
         patient.Diseases = new List<DiseaseType>(_patient.Diseases);
 
         patient.hair = _patient.hair.GetComponent<Hair>();
-        patient.face = _patient.face.GetComponent<Face>();
+        patient.skin = _patient.skin.GetComponent<Skin>();
     }
 }

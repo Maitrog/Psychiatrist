@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -12,14 +11,25 @@ public class ParamedicGenerator : MonoBehaviour
     public GameObject background;
 
     public GameObject orderliesPanel;
-    public Photo[] photos;
+    public PhotoDatabeseObject photoDatabese;
     public GameObject paramedicPrefab;
 
     private void Awake()
     {
         for(int i = 0; i < StaticCurrentParamedics.CurrentParamedic.Count; i++)
         {
-            currentParamedicObject.AddParamedic(StaticCurrentParamedics.CurrentParamedic[i]);
+            Paramedic paramedic = new Paramedic
+            {
+                Name = StaticCurrentParamedics.CurrentParamedic[i].Name,
+                Surname = StaticCurrentParamedics.CurrentParamedic[i].Surname,
+                Patronymic = StaticCurrentParamedics.CurrentParamedic[i].Patronymic,
+                Sex = StaticCurrentParamedics.CurrentParamedic[i].Sex,
+                Speed = StaticCurrentParamedics.CurrentParamedic[i].Speed,
+                skills = new List<Skill>(StaticCurrentParamedics.CurrentParamedic[i].skills)
+            };
+            ParamedicObject paramedicObject = new ParamedicObject();
+            paramedicObject.BecomeCurrent(paramedic, StaticCurrentParamedics.CurrentParamedic[i].photo);
+            currentParamedicObject.AddParamedic(paramedicObject);
         }
     }
 
@@ -61,7 +71,7 @@ public class ParamedicGenerator : MonoBehaviour
         NormalRandom normal = new NormalRandom();
         var parentTransform = gameObject.transform;
 
-        photoSO = photos[Random.Range(0, photos.Length)].gameObject;
+        photoSO = photoDatabese.GetPhoto[Random.Range(0, photoDatabese.GetPhoto.Count)].gameObject;
         Paramedic paramedic = new Paramedic
         {
             Sex = (Sex)Random.Range(0, 2),
