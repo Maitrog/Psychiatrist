@@ -20,6 +20,7 @@ public class DisplayShopItems : MonoBehaviour
     }
     void CreateShop()
     {
+        //Debug.Log(shop.openedItems.Count);
         for (int i = 0; i < shop.openedItems.Count; i++)
         {
             var obj = Instantiate(prefab, Vector3.zero, Quaternion.identity, transform);

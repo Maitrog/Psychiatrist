@@ -7,10 +7,12 @@ public class Shop : MonoBehaviour
     public void Start()
     {
         Debug.Log("shop");
+        /*
         for (int i = 0; i < 4; i++)
         {
             shop.openedItems.Add(i);
         }
+        */
     }
     private void OnApplicationQuit()
     {
