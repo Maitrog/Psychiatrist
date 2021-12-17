@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CatchPatient : MonoBehaviour
@@ -14,7 +12,7 @@ public class CatchPatient : MonoBehaviour
         { 
             if(currentTargets.currentTarget[i] == patient)
             {
-                StaticCurrentPatients.SelectedPatient.BecomeCurrent(patient, currentTargets.currentTarget[i].hair, currentTargets.currentTarget[i].face);
+                StaticCurrentPatients.SelectedPatient.BecomeCurrent(patient, currentTargets.currentTarget[i].hair, currentTargets.currentTarget[i].skin);
                 currentTargets.DeletePatient(i);
                 StaticCurrentPatients.CurrentPatients = currentTargets.currentTarget;
 
@@ -22,7 +20,6 @@ public class CatchPatient : MonoBehaviour
                 Patient renderedPatient = characterGameObject.GetComponent<Patient>();
                 Destroy(renderedPatient.transform.GetChild(0).gameObject);
                 Destroy(renderedPatient.transform.GetChild(1).gameObject);
-                Destroy(renderedPatient.transform.GetChild(2).gameObject);
             }
         }
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -28,11 +24,11 @@ public class CurrentTargetsObject : ScriptableObject
     }
 
 
-    public void AddPatient(int index, Patient patient, GameObject newHair, GameObject newFace)
+    public void AddPatient(int index, Patient patient, GameObject newHair, GameObject newSkin)
     {
         if (isReady[index])
         {
-            currentTarget[index].BecomeCurrent(patient, newHair, newFace);
+            currentTarget[index].BecomeCurrent(patient, newHair, newSkin);
             isReady[index] = false;
             count++;
         }
