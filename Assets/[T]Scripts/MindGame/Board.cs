@@ -112,6 +112,33 @@ public class Board : MonoBehaviour
 
         if (maximizingPlayer)
         {
+            if (depth >= this.minimaxDepth)
+            {
+                int p = 0;
+                int a = 0;
+                for (int i = 0; i < 9; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        if (board[i, j] == 'p')
+                        {
+                            //if (first)
+                            //Debug.Log("P: " + i.ToString() + " " + j.ToString());
+                            p++;
+                        }
+                        else if (board[i, j] == 'a')
+                        {
+                            //if (first)
+                            //Debug.Log("A: " + i.ToString() + " " + j.ToString());
+                            a++;
+                        }
+                    }
+                }
+                //Debug.Log('\n');
+                //Debug.Log("ANSWER " + a.ToString() + " " + p.ToString());
+                first = true;
+                return a - p;
+            }
             //move & aftermove
             if (depth > 0)
             {
@@ -474,7 +501,7 @@ public class Board : MonoBehaviour
                     board[curPos.First + 1, curPos.Second] = 'a';
                 }
             }
-
+            /*
             if (depth >= this.minimaxDepth)
             {
                 int p = 0;
@@ -485,23 +512,23 @@ public class Board : MonoBehaviour
                     {
                         if (board[i, j] == 'p')
                         {
-                            if (first)
-                                Debug.Log("P: " + i.ToString() + " " + j.ToString());
+                            //if (first)
+                                //Debug.Log("P: " + i.ToString() + " " + j.ToString());
                             p++;
                         }
                         else if (board[i, j] == 'a')
                         {
-                            if (first)
-                                Debug.Log("A: " + i.ToString() + " " + j.ToString());
+                            //if (first)
+                                //Debug.Log("A: " + i.ToString() + " " + j.ToString());
                             a++;
                         }
                     }
                 }
                 //Debug.Log('\n');
                 //Debug.Log("ANSWER " + a.ToString() + " " + p.ToString());
-                first = false;
+                first = true;
                 return a - p;
-            }
+            }*/
 
             //check board what hexes we already visited
             char[,] checkBoard = new char[9, 9];
@@ -552,7 +579,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -580,7 +607,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -608,7 +635,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -636,7 +663,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -664,7 +691,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -692,7 +719,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
