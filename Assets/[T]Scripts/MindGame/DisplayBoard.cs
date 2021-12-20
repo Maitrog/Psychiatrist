@@ -12,6 +12,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
     public Cell curCell = new Cell();
     public GameObject playerScore;
     public GameObject aiScore;
+    public GameObject endButton;
     public float AlphaThreshold = 0.001f;
 
     void Start()
@@ -60,7 +61,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                 cellsDisplayed.Add(obj.gameObject, board.container.cells[i]);
                 objectsDisplayed.Add(board.container.cells[i], obj.gameObject);
                 board.gameBoard[row, col] = 'n';
-                //Debug.Log(board.container.cells[i].pos.ToString()/* + " " + board.container.cells[i].id*/);
+                //Debug.Log(row.ToString() + " " + col.ToString() + " " + board.gameBoard[row, col].ToString()/* + " " + board.container.cells[i].id*/);
                 i++;
                 col++;
             }
@@ -75,6 +76,15 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
 
         objectsDisplayed[board.container.cells[0]].GetComponent<Image>().color = ChangeColor(objectsDisplayed[board.container.cells[0]].GetComponent<Image>().color, 1f);
         objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color = ChangeColor(objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color, 1f, 0f, 0f, 0f);
+        /*
+        for (int z = 0; z < 9; z++)
+        {
+            for (int v = 0; v < 9; v++)
+            {
+                Debug.Log(z.ToString() + " " + v.ToString() + " " + board.gameBoard[z, v].ToString());
+            }
+        }*/
+
     }
     public void ChangeTurn()
     {
@@ -82,8 +92,21 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         char[,] tmpBoard = board.gameBoard;
         Pair<int, int> start = new Pair<int, int>(-1, -1);
         int res = board.Minimax(start, true,  tmpBoard, 0, System.Int32.MinValue, System.Int32.MaxValue);
+        if (res == int.MinValue)//player wins
+        {
+            Debug.Log("Min");
+            endButton.GetComponentInChildren<Text>().text = "WIN";
+            endButton.SetActive(true);
+        }
+        else if (res == int.MaxValue)//ai wins
+        {
+            Debug.Log("Max");
+            endButton.GetComponentInChildren<Text>().text = "LOSE";
+            endButton.SetActive(true);
+        }
         int posy = res / 10;
         int posx = res % 10;
+        Debug.Log("AI TURN: " + posy.ToString() + " " + posx.ToString());
         if (posy > 9 || posx > 9 || posy < 0 || posx < 0)
             return;
         Cell change = new Cell(posy, posx);
@@ -103,7 +126,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         GameObject go = eventData.pointerCurrentRaycast.gameObject;
         if (go.transform.tag == "Slot" && turn)
         {
-            Debug.Log(cellsDisplayed[go].ToString() + " " + board.gameBoard[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second].ToString());
+            Debug.Log(cellsDisplayed[go].ToString() + " " + board.gameBoard[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second].ToString() + "; CurCell: " + curCell.ToString());
             HandleTouch(go);
         }
     }
