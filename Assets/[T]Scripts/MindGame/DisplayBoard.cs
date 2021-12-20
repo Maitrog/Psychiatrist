@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,6 +12,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
     public Cell curCell = new Cell();
     public GameObject playerScore;
     public GameObject aiScore;
+    public GameObject endButton;
     public float AlphaThreshold = 0.001f;
 
     void Start()
@@ -42,13 +43,13 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
             {
                 if (col > count || second && col > 8)
                 {
-                    if (count < 8 && second == false) 
+                    if (count < 8 && second == false)
                     {
                         row++;
                         count++;
                         col = 0;
                     }
-                    else 
+                    else
                     {
                         second = true;
                         row++;
@@ -60,7 +61,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                 cellsDisplayed.Add(obj.gameObject, board.container.cells[i]);
                 objectsDisplayed.Add(board.container.cells[i], obj.gameObject);
                 board.gameBoard[row, col] = 'n';
-                //Debug.Log(board.container.cells[i].pos.ToString()/* + " " + board.container.cells[i].id*/);
+                //Debug.Log(row.ToString() + " " + col.ToString() + " " + board.gameBoard[row, col].ToString()/* + " " + board.container.cells[i].id*/);
                 i++;
                 col++;
             }
@@ -75,15 +76,37 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
 
         objectsDisplayed[board.container.cells[0]].GetComponent<Image>().color = ChangeColor(objectsDisplayed[board.container.cells[0]].GetComponent<Image>().color, 1f);
         objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color = ChangeColor(objectsDisplayed[board.container.cells[60]].GetComponent<Image>().color, 1f, 0f, 0f, 0f);
+        /*
+        for (int z = 0; z < 9; z++)
+        {
+            for (int v = 0; v < 9; v++)
+            {
+                Debug.Log(z.ToString() + " " + v.ToString() + " " + board.gameBoard[z, v].ToString());
+            }
+        }*/
+
     }
     public void ChangeTurn()
     {
         turn = false;
         char[,] tmpBoard = board.gameBoard;
         Pair<int, int> start = new Pair<int, int>(-1, -1);
-        int res = board.Minimax(start, true,  tmpBoard, 0, System.Int32.MinValue, System.Int32.MaxValue);
+        int res = board.Minimax(start, true, tmpBoard, 0, System.Int32.MinValue, System.Int32.MaxValue);
+        if (res == int.MinValue)//player wins
+        {
+            Debug.Log("Min");
+            endButton.GetComponentInChildren<Text>().text = "WIN";
+            endButton.SetActive(true);
+        }
+        else if (res == int.MaxValue)//ai wins
+        {
+            Debug.Log("Max");
+            endButton.GetComponentInChildren<Text>().text = "LOSE";
+            endButton.SetActive(true);
+        }
         int posy = res / 10;
         int posx = res % 10;
+        Debug.Log("AI TURN: " + posy.ToString() + " " + posx.ToString());
         if (posy > 9 || posx > 9 || posy < 0 || posx < 0)
             return;
         Cell change = new Cell(posy, posx);
@@ -98,12 +121,12 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
     {
 
     }
-    public void OnPointerClick(PointerEventData eventData) //разбить на функции
+    public void OnPointerClick(PointerEventData eventData) //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         GameObject go = eventData.pointerCurrentRaycast.gameObject;
         if (go.transform.tag == "Slot" && turn)
         {
-            Debug.Log(cellsDisplayed[go].ToString() + " " + board.gameBoard[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second].ToString());
+            Debug.Log(cellsDisplayed[go].ToString() + " " + board.gameBoard[cellsDisplayed[go].pos.First, cellsDisplayed[go].pos.Second].ToString() + "; CurCell: " + curCell.ToString());
             HandleTouch(go);
         }
     }
@@ -124,11 +147,11 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
 
     public void HandleTouch(GameObject go)
     {
-        if (curCell.pos.First == -1 && cellsDisplayed[go].owner == Owners.Player)//смотрим можем ли мы передвинуть эту соту (если она принадлежит игроку, то она может стать текущей)
+        if (curCell.pos.First == -1 && cellsDisplayed[go].owner == Owners.Player)//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         {
-            curCell = cellsDisplayed[go];//она становится текущей
+            curCell = cellsDisplayed[go];//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         }
-        else if ((curCell.pos.First == cellsDisplayed[go].pos.First) && (curCell.pos.Second == cellsDisplayed[go].pos.Second))//смотрим, попал ли игрок по уже выбранной соте, если да, то его выбор сбрасывается
+        else if ((curCell.pos.First == cellsDisplayed[go].pos.First) && (curCell.pos.Second == cellsDisplayed[go].pos.Second))//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             curCell = new Cell();
             if (cellsDisplayed[go].owner == Owners.Neutral)
@@ -136,14 +159,14 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                 go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
             }
         }
-        else if (curCell.pos.First >= 0 && cellsDisplayed[go].owner == Owners.Neutral) //смотрим, можем ли мы туда походить
+        else if (curCell.pos.First >= 0 && cellsDisplayed[go].owner == Owners.Neutral) //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             int distance = board.Move(curCell, cellsDisplayed[go]);
             switch (distance)
             {
                 case 1:
                     go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
-                    curCell = new Cell();//сбрасываем curCell, так как мы походили
+                    curCell = new Cell();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ curCell, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     if (turn)
                     {
                         cellsDisplayed[go].ChangeOwner(Owners.Player);
@@ -167,7 +190,7 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
                     }
 
                     go.GetComponent<Image>().color = ChangeColor(go.GetComponent<Image>().color, 1f);
-                    curCell = new Cell();//сбрасываем curCell, так как мы походили
+                    curCell = new Cell();//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ curCell, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
                     AfterMoveChangeDisplay(cellsDisplayed[go]);
                     ChangeTurn();
@@ -205,4 +228,3 @@ public class DisplayBoard : MonoBehaviour, IPointerDownHandler, IPointerClickHan
         }
     }
 }
-

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 
-public enum Owners//кому принадлежит гекс
+public enum Owners//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 {
     Player,
     AI,
@@ -17,9 +17,9 @@ public class Board : MonoBehaviour
     public List<Cell> playerCells = new List<Cell>();
     public List<Cell> aiCells = new List<Cell>();
     public char[,] gameBoard = new char[9, 9];
-    private int minimaxDepth = 3;
+    public int minimaxDepth = 3;
 
-    public bool CanSelect(Cell curCell, int turn)//можем ли мы выбрать данный гекс
+    public bool CanSelect(Cell curCell, int turn)//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     {
         return false;
     }
@@ -75,7 +75,7 @@ public class Board : MonoBehaviour
     }
     public void UpdateScore()
     {
-        
+
     }
     public List<Cell> AfterMove(Cell cell)
     {
@@ -112,6 +112,33 @@ public class Board : MonoBehaviour
 
         if (maximizingPlayer)
         {
+            if (depth >= this.minimaxDepth)
+            {
+                int p = 0;
+                int a = 0;
+                for (int i = 0; i < 9; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        if (board[i, j] == 'p')
+                        {
+                            //if (first)
+                            //Debug.Log("P: " + i.ToString() + " " + j.ToString());
+                            p++;
+                        }
+                        else if (board[i, j] == 'a')
+                        {
+                            //if (first)
+                            //Debug.Log("A: " + i.ToString() + " " + j.ToString());
+                            a++;
+                        }
+                    }
+                }
+                //Debug.Log('\n');
+                //Debug.Log("ANSWER " + a.ToString() + " " + p.ToString());
+                first = true;
+                return a - p;
+            }
             //move & aftermove
             if (depth > 0)
             {
@@ -212,9 +239,10 @@ public class Board : MonoBehaviour
                             }
                         }
                         */
-                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8)) 
+                        if (!(newPos.First < 0 || newPos.First > 8 || newPos.Second < 0 || newPos.Second > 8))
                         {
-                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n') {
+                            if (checkBoard[newPos.First, newPos.Second] != 'c' && board[newPos.First, newPos.Second] == 'n')
+                            {
                                 char[,] tmpBoard = new char[9, 9];
                                 for (int k = 0; k < 9; k++)
                                 {
@@ -418,13 +446,14 @@ public class Board : MonoBehaviour
             if (depth == 0)
             {
                 Debug.Log("Best position: " + best.First.ToString() + best.Second.ToString() + " Max score: " + maxScore.ToString());
+                if (maxScore == int.MinValue) return int.MinValue;
                 return System.Int32.Parse((best.First.ToString() + best.Second.ToString()));
             }
             else
                 return maxScore;
         }
         else
-        {          
+        {
             //move & aftermove
             board[curPos.First, curPos.Second] = 'a';
             if (curPos.Second - 1 >= 0)
@@ -474,7 +503,7 @@ public class Board : MonoBehaviour
                     board[curPos.First + 1, curPos.Second] = 'a';
                 }
             }
-
+            /*
             if (depth >= this.minimaxDepth)
             {
                 int p = 0;
@@ -485,23 +514,23 @@ public class Board : MonoBehaviour
                     {
                         if (board[i, j] == 'p')
                         {
-                            if (first)
-                                Debug.Log("P: " + i.ToString() + " " + j.ToString());
+                            //if (first)
+                                //Debug.Log("P: " + i.ToString() + " " + j.ToString());
                             p++;
                         }
                         else if (board[i, j] == 'a')
                         {
-                            if (first)
-                                Debug.Log("A: " + i.ToString() + " " + j.ToString());
+                            //if (first)
+                                //Debug.Log("A: " + i.ToString() + " " + j.ToString());
                             a++;
                         }
                     }
                 }
                 //Debug.Log('\n');
                 //Debug.Log("ANSWER " + a.ToString() + " " + p.ToString());
-                first = false;
+                first = true;
                 return a - p;
-            }
+            }*/
 
             //check board what hexes we already visited
             char[,] checkBoard = new char[9, 9];
@@ -552,7 +581,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -580,7 +609,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -608,7 +637,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -636,7 +665,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -664,7 +693,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -692,7 +721,7 @@ public class Board : MonoBehaviour
                                         tmpBoard[k, z] = temp;
                                     }
                                 }
-                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth, alpha, beta));
+                                minScore = Mathf.Min(minScore, Minimax(newPos, !maximizingPlayer, tmpBoard, depth + 1, alpha, beta));
                                 beta = Mathf.Min(beta, minScore);
                                 if (beta <= alpha)
                                 {
@@ -723,16 +752,16 @@ public class Board : MonoBehaviour
 }
 
 //[System.Serializable]
-public class AllCells//массив всех гексов доски
+public class AllCells//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 {
-    public Cell[] cells;//зависит от уровня сложности пациента
+    public Cell[] cells;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public AllCells()
     {
         cells = new Cell[61];
     }
 }
 //[System.Serializable]
-public class Cell //: System.IComparable<Cell>//отдельный гекс
+public class Cell //: System.IComparable<Cell>//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 {
     public Pair<int, int> pos = new Pair<int, int>();
     public Owners owner;
@@ -769,7 +798,7 @@ public class Cell //: System.IComparable<Cell>//отдельный гекс
     {
         //this.id = id;
     }
-    
+
     public static bool operator ==(Cell cell1, Cell cell2)
     {
         return (cell1.pos.First == cell2.pos.First) && (cell1.pos.Second == cell2.pos.Second);
@@ -779,7 +808,7 @@ public class Cell //: System.IComparable<Cell>//отдельный гекс
     {
         return !(cell1.pos.First == cell2.pos.First) && (cell1.pos.Second == cell2.pos.Second);
     }
-    
+
     public override string ToString()
     {
         return this.pos.ToString() + " " /*+ this.id.ToString()*/ + " " + this.owner.ToString();
@@ -825,7 +854,7 @@ public class Cell //: System.IComparable<Cell>//отдельный гекс
 
 public class Pair<T, U>
 {
-    public Pair() {}
+    public Pair() { }
 
     public Pair(T first, U second)
     {
