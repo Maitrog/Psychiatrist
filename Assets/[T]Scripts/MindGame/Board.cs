@@ -17,7 +17,7 @@ public class Board : MonoBehaviour
     public List<Cell> playerCells = new List<Cell>();
     public List<Cell> aiCells = new List<Cell>();
     public char[,] gameBoard = new char[9, 9];
-    private int minimaxDepth = 3;
+    private int minimaxDepth = 6;
 
     public bool CanSelect(Cell curCell, int turn)//можем ли мы выбрать данный гекс
     {
@@ -445,6 +445,7 @@ public class Board : MonoBehaviour
             if (depth == 0)
             {
                 Debug.Log("Best position: " + best.First.ToString() + best.Second.ToString() + " Max score: " + maxScore.ToString());
+                if (maxScore == int.MinValue) return int.MinValue;
                 return System.Int32.Parse((best.First.ToString() + best.Second.ToString()));
             }
             else
