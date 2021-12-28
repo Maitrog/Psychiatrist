@@ -5877,6 +5877,7 @@ MonoBehaviour:
   X_SPACE_BETWEEN_ITEMS: 130
   Y_SPACE_BETWEEN_ITEMS: 130
   NUMBER_OF_COLUMNS: 4
+  inTreatment: 0
   methods: {fileID: 0}
   drugs: {fileID: 0}
 --- !u!224 &3548276491364928370 stripped

@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc77709f3154e748b46aa7bb8e7acb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patientObject: {fileID: 0}
+  patientObject: {fileID: 11400000, guid: 6754720dd635a5248b02a7d65f67bcd5, type: 2}
 --- !u!1001 &251815564
 PrefabInstance:
   m_ObjectHideFlags: 0

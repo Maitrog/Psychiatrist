@@ -19,6 +19,7 @@ public class DisplayInventory : MonoBehaviour
     Dictionary<GameObject, InventorySlot> itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
     bool inSLot = false;
     private GameObject clickObj;
+    public bool inTreatment = true;
 
     public MethodsObject methods;
     public DrugsObject drugs;
@@ -32,7 +33,7 @@ public class DisplayInventory : MonoBehaviour
     void Update()
     {
         UpdateSlots();
-        //MouseClicked();
+        if (inTreatment) MouseClicked();
     }
     public void UpdateSlots()
     {
